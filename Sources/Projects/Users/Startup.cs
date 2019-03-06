@@ -1,5 +1,7 @@
 ﻿namespace Users
 {
+    using System;
+    using Autofac;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -9,41 +11,54 @@
 
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+        public IContainer ApplicationContainer { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        // ConfigureServices is where you register dependencies.
+        // This gets called by the runtime before the Configure method.
+        // Use this method to add services to the container.
+        public IServiceProvider ConfigureServices(IServiceCollection serviceCollection)
         {
-            AutofacConfigurator.ConfigureDependencyInjection();
+            // Add services to the collection.
+            serviceCollection.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //services.AddTransient
-            
+
             //services.AddScoped
-            
+
             //services.AddSingleton
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            // Create the IServiceProvider based on the container.
+            return AutofacConfigurator.GetAutofacServiceProvider(
+                serviceCollection,
+                ApplicationContainer
+            );
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        // This method gets called by the runtime.
+        // Use this method to configure the HTTP request pipeline.
+        public void Configure(
+            IApplicationBuilder applicationBuilder, 
+            IHostingEnvironment hostingEnvironment)
         {
-            if (env.IsDevelopment())
+            if (hostingEnvironment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                applicationBuilder.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseHsts();
+                applicationBuilder.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            applicationBuilder.UseHttpsRedirection();
+            applicationBuilder.UseMvc();
         }
     }
 }
