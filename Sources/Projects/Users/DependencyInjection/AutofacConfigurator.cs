@@ -6,6 +6,8 @@
     using Users.DataAccess.Database.Repositories;
     using Users.DataAccess.Database.Contexts;
     using Microsoft.Extensions.DependencyInjection;
+    using Users.CommonNames;
+    using Users.Extensions;
 
     public class AutofacConfigurator
     {
@@ -27,11 +29,11 @@
             // you can override the controller registration after populating services.
             builder.RegisterType<UserRepository>()
                 .As<IUserRepository>()
-                .WithParameter("dbContext", new UserContext());
+                .WithParameter(Parameters.DbContext.FirstCharToLower(), new UserContext());
 
             builder.RegisterType<UserRoleRepository>()
                 .As<IUserRoleRepository>()
-                .WithParameter("dbContext", new UserContext());
+                .WithParameter(Parameters.DbContext.FirstCharToLower(), new UserContext());
 
             container = builder.Build();
 
