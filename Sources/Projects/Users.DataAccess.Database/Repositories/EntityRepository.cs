@@ -6,7 +6,7 @@
     /// <summary>
     ///     Base class for repository.
     /// </summary>
-    internal abstract class EntityRepository
+    public abstract class EntityRepository
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="EntityRepository" /> class.

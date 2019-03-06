@@ -6,7 +6,7 @@
     using Users.DataAccess.Repository;
 
     /// <inheritdoc cref="IAccountRepository" />
-    internal sealed class AccountRepository : EntityRepository, IAccountRepository
+    public sealed class AccountRepository : EntityRepository, IAccountRepository
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="AccountRepository" /> class.

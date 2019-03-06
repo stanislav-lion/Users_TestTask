@@ -7,7 +7,7 @@
     using Users.DataAccess.Repository;
 
     /// <inheritdoc cref="IUserRepository" />
-    internal sealed class UserRepository : EntityRepository, IUserRepository
+    public sealed class UserRepository : EntityRepository, IUserRepository
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="UserRepository" /> class.
