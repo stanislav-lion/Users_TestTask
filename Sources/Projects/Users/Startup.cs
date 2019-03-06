@@ -21,7 +21,7 @@
         }
 
         // ConfigureServices is where you register dependencies.
-        // This gets called by the runtime before the Configure method.
+        // This method gets called by the runtime.
         // Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection serviceCollection)
         {
@@ -29,18 +29,28 @@
             serviceCollection.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            //services.AddTransient
-
-            //services.AddScoped
-
-            //services.AddSingleton
-
             // Create the IServiceProvider based on the container.
             return AutofacConfigurator.GetAutofacServiceProvider(
                 serviceCollection,
                 ApplicationContainer
             );
         }
+
+        // ConfigureServices is where you register dependencies.
+        // This method gets called by the runtime.
+        // Use this method to add services to the container.
+        /*public void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            // Add services to the collection.
+            serviceCollection.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            EmbeddedServicesConfigurator.AddScoped(serviceCollection);
+
+            // EmbeddedServicesConfigurator.AddSingleton(serviceCollection);
+
+            // EmbeddedServicesConfigurator.AddTransient(serviceCollection);
+        }*/
 
         // This method gets called by the runtime.
         // Use this method to configure the HTTP request pipeline.
