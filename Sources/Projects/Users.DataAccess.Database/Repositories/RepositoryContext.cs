@@ -5,13 +5,14 @@
     using Microsoft.EntityFrameworkCore;
     using Users.DataAccess.Database;
     using Users.DataAccess.Database.Common;
+    using Users.DataAccess.Database.Contexts;
     using Users.DataAccess.Repository;
 
     /// <inheritdoc />
     public sealed class RepositoryContext : IRepositoryContext
     {
         private readonly string[] _connectionStrings;
-        private readonly DbContext[] _dbContexts;
+        private readonly UserContext[] _userContexts;
 
         private readonly Lazy<AccountAddressRepository> _accountAddressRepository;
         private readonly Lazy<AccountRepository> _accountRepository;
@@ -33,7 +34,7 @@
                 /*Settings.Default.DbConnectionString*/
                 "Data Source=localhost;Initial Catalog=Users;Integrated Security=True;")
         {
-            
+
         }
 
         /// <summary>
@@ -53,24 +54,24 @@
                 dbConnectionString
             };
 
-            _dbContexts = new DbContext[_connectionStrings.Length];
+            _userContexts = new UserContext[_connectionStrings.Length];
 
             _accountAddressRepository =
                 new Lazy<AccountAddressRepository>(
-                    () => new AccountAddressRepository(GetDbContext(DatabaseType.DbPrimary)));
+                    () => new AccountAddressRepository(GetUserContext(DatabaseType.DbPrimary)));
 
             _accountRepository =
-                new Lazy<AccountRepository>(() => new AccountRepository(GetDbContext(DatabaseType.DbPrimary)));
+                new Lazy<AccountRepository>(() => new AccountRepository(GetUserContext(DatabaseType.DbPrimary)));
 
             _accountRoleRepository =
                 new Lazy<AccountRoleRepository>(
-                    () => new AccountRoleRepository(GetDbContext(DatabaseType.DbPrimary)));
+                    () => new AccountRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
 
             _userRepository =
-                new Lazy<UserRepository>(() => new UserRepository(GetDbContext(DatabaseType.DbPrimary)));
+                new Lazy<UserRepository>(() => new UserRepository(GetUserContext(DatabaseType.DbPrimary)));
 
             _userRoleRepository =
-                new Lazy<UserRoleRepository>(() => new UserRoleRepository(GetDbContext(DatabaseType.DbPrimary)));
+                new Lazy<UserRoleRepository>(() => new UserRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
 
             /*_serviceBrokerRepository =
                 new Lazy<ServiceBrokerRepository>(
@@ -88,7 +89,7 @@
         {
             Dispose(false);
         }
-        
+
         /// <inheritdoc />
         public IAccountAddressRepository AccountAddressRepository => _accountAddressRepository.Value;
 
@@ -106,8 +107,7 @@
 
         /// <inheritdoc />
         // public IServiceBrokerRepository ServiceBrokerRepository => _serviceBrokerRepository.Value;
-
-
+        
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -122,7 +122,7 @@
         {
             if (!_inChanges)
             {
-                foreach (DbContext dbContext in _dbContexts)
+                foreach (DbContext dbContext in _userContexts)
                 {
                     dbContext?.Database.BeginTransaction();
                 }
@@ -143,7 +143,7 @@
 
             if (_inChanges && _changesCount == 0)
             {
-                foreach (DbContext dbContext in _dbContexts)
+                foreach (DbContext dbContext in _userContexts)
                 {
                     dbContext?.SaveChanges();
                 }
@@ -159,7 +159,7 @@
 
             if (_inChanges)
             {
-                foreach (DbContext dbContext in _dbContexts)
+                foreach (DbContext dbContext in _userContexts)
                 {
                     dbContext?.Database.RollbackTransaction();
                 }
@@ -200,11 +200,6 @@
                 RetrierHelper.IsRetriableSqlError);
         }
 
-        private DbContext GetDbContext(DatabaseType databaseType)
-        {
-            return _dbContexts[(int) databaseType];
-        }
-
         private void Dispose(bool disposing)
         {
             if (_disposed)
@@ -214,17 +209,22 @@
 
             if (disposing)
             {
-                for (var i = 0; i < _dbContexts.Length; i++)
+                for (var i = 0; i < _userContexts.Length; i++)
                 {
-                    if (_dbContexts[i] != null)
+                    if (_userContexts[i] != null)
                     {
-                        _dbContexts[i].Dispose();
-                        _dbContexts[i] = null;
+                        _userContexts[i].Dispose();
+                        _userContexts[i] = null;
                     }
                 }
             }
 
             _disposed = true;
+        }
+
+        private UserContext GetUserContext(DatabaseType databaseType)
+        {
+            return _userContexts[(int) databaseType];
         }
     }
 }
