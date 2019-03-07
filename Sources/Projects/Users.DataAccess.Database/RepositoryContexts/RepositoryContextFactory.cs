@@ -1,4 +1,4 @@
-﻿namespace Users.DataAccess.Database.Repositories
+﻿namespace Users.DataAccess.Database.RepositoryContexts
 {
     using System;
     using Users.DataAccess.Repository;

@@ -1,4 +1,4 @@
-﻿namespace Users.DataAccess.Database.Repositories
+﻿namespace Users.DataAccess.Database.RepositoryContexts
 {
     using System;
     using System.Runtime.ExceptionServices;
@@ -6,6 +6,7 @@
     using Users.DataAccess.Database;
     using Users.DataAccess.Database.Common;
     using Users.DataAccess.Database.Contexts;
+    using Users.DataAccess.Database.Repositories;
     using Users.DataAccess.Repository;
 
     /// <inheritdoc />
@@ -34,9 +35,7 @@
             : this(
                 /*Settings.Default.DbConnectionString*/
                 "Data Source=localhost;Initial Catalog=Users;Integrated Security=True;")
-        {
-
-        }
+        { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="RepositoryContext" /> class.
