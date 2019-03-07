@@ -9,10 +9,7 @@
         private static readonly Lazy<RepositoryContextFactory> Lazy =
             new Lazy<RepositoryContextFactory>(() => new RepositoryContextFactory());
 
-        private RepositoryContextFactory()
-        {
-
-        }
+        private RepositoryContextFactory() { }
 
         /// <summary>
         ///     Gets the instance.
