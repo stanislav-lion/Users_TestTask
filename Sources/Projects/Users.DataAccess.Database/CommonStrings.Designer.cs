@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Users.DataAccess.Database.Common {
+namespace Users.DataAccess.Database {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Users.DataAccess.Database.Common {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Users.DataAccess.Database.Common.CommonStrings", typeof(CommonStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Users.DataAccess.Database.CommonStrings", typeof(CommonStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

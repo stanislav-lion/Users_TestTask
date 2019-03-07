@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Common\CommonStrings.Designer.cs">
+    <Compile Update="CommonStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>CommonStrings.resx</DependentUpon>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Common\CommonStrings.resx">
+    <EmbeddedResource Update="CommonStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
