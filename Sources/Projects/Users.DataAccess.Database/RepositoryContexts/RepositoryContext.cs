@@ -35,7 +35,9 @@
             : this(
                 /*Settings.Default.DbConnectionString*/
                 "Data Source=localhost;Initial Catalog=Users;Integrated Security=True;")
-        { }
+        {
+
+        }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="RepositoryContext" /> class.

@@ -15,7 +15,10 @@
         /// </summary>
         /// <param name="userContext">Database user context.</param>
         public AccountAddressRepository(UserContext userContext)
-            : base(userContext) { }
+            : base(userContext)
+        {
+
+        }
 
         public IQueryable<AccountAddress> AccountAddresses => UserContext.AccountAddresses;
 

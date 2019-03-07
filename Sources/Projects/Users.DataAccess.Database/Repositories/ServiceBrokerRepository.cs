@@ -14,12 +14,15 @@
         /// </summary>
         /// <param name="dbContext">Database context.</param>
         public ServiceBrokerRepository(DbContext dbContext)
-            : base(dbContext) { }
-        
+            : base(dbContext)
+        {
+
+        }
+
         /// <inheritdoc />
         public Guid BeginDialog(
-            string initiatorServiceName, 
-            string targetServiceName, 
+            string initiatorServiceName,
+            string targetServiceName,
             string contractName,
             int dialogLifetimeSeconds)
         {
