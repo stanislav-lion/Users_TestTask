@@ -1,0 +1,8 @@
+CREATE TABLE [dbo].[RoleType]
+(
+    [RoleTypeId] INT NOT NULL, 
+    [RoleTypeName] NVARCHAR(100) NOT NULL, 
+    [CreatedUtc] DATETIME2(7) NOT NULL DEFAULT SYSUTCDATETIME(), 
+    [ModifiedUtc] DATETIME2(7) NOT NULL DEFAULT SYSUTCDATETIME(), 
+    CONSTRAINT [RoleType_PK] PRIMARY KEY ([RoleTypeId])
+)
