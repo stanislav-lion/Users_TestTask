@@ -11,14 +11,15 @@
     /// <inheritdoc />
     public sealed class RepositoryContext : IRepositoryContext
     {
-        private readonly string[] _connectionStrings;
         private readonly UserContext[] _userContexts;
 
-        private readonly Lazy<AccountAddressRepository> _accountAddressRepository;
-        private readonly Lazy<AccountRepository> _accountRepository;
-        private readonly Lazy<AccountRoleRepository> _accountRoleRepository;
+        private readonly string[] _connectionStrings;
+
         private readonly Lazy<UserRepository> _userRepository;
         private readonly Lazy<UserRoleRepository> _userRoleRepository;
+        private readonly Lazy<AccountRepository> _accountRepository;
+        private readonly Lazy<AccountRoleRepository> _accountRoleRepository;
+        private readonly Lazy<AccountAddressRepository> _accountAddressRepository;
 
         // private readonly Lazy<ServiceBrokerRepository> _serviceBrokerRepository;
 
@@ -55,9 +56,11 @@
 
             _userContexts = new UserContext[_connectionStrings.Length];
 
-            _accountAddressRepository =
-                new Lazy<AccountAddressRepository>(
-                    () => new AccountAddressRepository(GetUserContext(DatabaseType.DbPrimary)));
+            _userRepository =
+                new Lazy<UserRepository>(() => new UserRepository(GetUserContext(DatabaseType.DbPrimary)));
+
+            _userRoleRepository =
+                new Lazy<UserRoleRepository>(() => new UserRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
 
             _accountRepository =
                 new Lazy<AccountRepository>(() => new AccountRepository(GetUserContext(DatabaseType.DbPrimary)));
@@ -66,11 +69,9 @@
                 new Lazy<AccountRoleRepository>(
                     () => new AccountRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
 
-            _userRepository =
-                new Lazy<UserRepository>(() => new UserRepository(GetUserContext(DatabaseType.DbPrimary)));
-
-            _userRoleRepository =
-                new Lazy<UserRoleRepository>(() => new UserRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
+            _accountAddressRepository =
+                new Lazy<AccountAddressRepository>(
+                    () => new AccountAddressRepository(GetUserContext(DatabaseType.DbPrimary)));
 
             /*_serviceBrokerRepository =
                 new Lazy<ServiceBrokerRepository>(
@@ -90,7 +91,10 @@
         }
 
         /// <inheritdoc />
-        public IAccountAddressRepository AccountAddressRepository => _accountAddressRepository.Value;
+        public IUserRepository UserRepository => _userRepository.Value;
+
+        /// <inheritdoc />
+        public IUserRoleRepository UserRoleRepository => _userRoleRepository.Value;
 
         /// <inheritdoc />
         public IAccountRepository AccountRepository => _accountRepository.Value;
@@ -99,14 +103,11 @@
         public IAccountRoleRepository AccountRoleRepository => _accountRoleRepository.Value;
 
         /// <inheritdoc />
-        public IUserRepository UserRepository => _userRepository.Value;
-
-        /// <inheritdoc />
-        public IUserRoleRepository UserRoleRepository => _userRoleRepository.Value;
+        public IAccountAddressRepository AccountAddressRepository => _accountAddressRepository.Value;
 
         /// <inheritdoc />
         // public IServiceBrokerRepository ServiceBrokerRepository => _serviceBrokerRepository.Value;
-        
+
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
