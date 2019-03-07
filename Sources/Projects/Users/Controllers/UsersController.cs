@@ -10,13 +10,22 @@
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountRoleRepository _accountRoleRepository;
+        private readonly IAccountAddressRepository _accountAddressRepository;
 
         public UsersController(
             IUserRepository userRepository,
-            IUserRoleRepository userRoleRepository)
+            IUserRoleRepository userRoleRepository,
+            IAccountRepository accountRepository,
+            IAccountRoleRepository accountRoleRepository,
+            IAccountAddressRepository accountAddressRepository)
         {
             _userRepository = userRepository;
             _userRoleRepository = userRoleRepository;
+            _accountRepository = accountRepository;
+            _accountRoleRepository = accountRoleRepository;
+            _accountAddressRepository = accountAddressRepository;
         }
 
         // GET api/users

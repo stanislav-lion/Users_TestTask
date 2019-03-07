@@ -41,6 +41,27 @@
                     Settings.GetUserContext()
                 );
 
+            builder.RegisterType<AccountRepository>()
+                .As<IAccountRepository>()
+                .WithParameter(
+                    Parameters.UserContext.FirstCharToLower(),
+                    Settings.GetUserContext()
+                );
+
+            builder.RegisterType<AccountRoleRepository>()
+                .As<IAccountRoleRepository>()
+                .WithParameter(
+                    Parameters.UserContext.FirstCharToLower(),
+                    Settings.GetUserContext()
+                );
+
+            builder.RegisterType<AccountAddressRepository>()
+                .As<IAccountAddressRepository>()
+                .WithParameter(
+                    Parameters.UserContext.FirstCharToLower(),
+                    Settings.GetUserContext()
+                );
+
             applicationContainer = builder.Build();
 
             // Create the IServiceProvider based on the container.
