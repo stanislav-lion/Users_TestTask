@@ -41,8 +41,7 @@
         ///     Initializes a new instance of the <see cref="RepositoryContext" /> class.
         /// </summary>
         /// <param name="dbConnectionString">DbConnectionString.</param>
-        public RepositoryContext(
-            string dbConnectionString)
+        public RepositoryContext(string dbConnectionString)
         {
             if (string.IsNullOrWhiteSpace(dbConnectionString))
             {
