@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Users.DataAccess.DataModel.Types;
 
     /// <summary>
@@ -9,6 +10,11 @@
     /// </summary>
     public interface IUserRepository
     {
+        /// <summary>
+        ///     Gets all users.
+        /// </summary>
+        IQueryable<User> Users { get; }
+
         /// <summary>
         ///     Gets user by identifier.
         /// </summary>

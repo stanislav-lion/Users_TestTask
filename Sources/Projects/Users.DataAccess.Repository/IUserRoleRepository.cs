@@ -1,6 +1,7 @@
 ﻿namespace Users.DataAccess.Repository
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Users.DataAccess.DataModel.Types;
 
     /// <summary>
@@ -8,6 +9,11 @@
     /// </summary>
     public interface IUserRoleRepository
     {
+        /// <summary>
+        ///     Gets all user roles.
+        /// </summary>
+        IQueryable<UserRole> UserRoles { get; }
+
         /// <summary>
         ///     Gets user role by user identifier and account role identifier.
         /// </summary>

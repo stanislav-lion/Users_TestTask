@@ -1,5 +1,6 @@
 ﻿namespace Users.DataAccess.Repository
 {
+    using System.Linq;
     using Users.DataAccess.DataModel.Types;
 
     /// <summary>
@@ -7,6 +8,11 @@
     /// </summary>
     public interface IAccountAddressRepository
     {
+        /// <summary>
+        ///     Gets all account adresses.
+        /// </summary>
+        IQueryable<AccountAddress> AccountAddresses { get; }
+
         /// <summary>
         ///     Gets account address.
         /// </summary>
