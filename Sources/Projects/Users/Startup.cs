@@ -8,6 +8,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Users.DependencyInjection;
+    using Swashbuckle.AspNetCore.Swagger;
 
     public class Startup
     {
@@ -23,15 +24,24 @@
         // ConfigureServices is where you register dependencies.
         // This method gets called by the runtime.
         // Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection serviceCollection)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add services to the collection.
-            serviceCollection.AddMvc()
+            services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Users Service API",
+                    Version = "v1"
+                });
+            });
 
             // Create the IServiceProvider based on the container.
             return AutofacConfigurator.GetAutofacServiceProvider(
-                serviceCollection,
+                services,
                 ApplicationContainer
             );
         }
@@ -39,23 +49,23 @@
         // ConfigureServices is where you register dependencies.
         // This method gets called by the runtime.
         // Use this method to add services to the container.
-        /*public void ConfigureServices(IServiceCollection serviceCollection)
+        /*public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the collection.
-            serviceCollection.AddMvc()
+            services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            EmbeddedServicesConfigurator.AddScoped(serviceCollection);
+            EmbeddedServicesConfigurator.AddScoped(services);
 
-            // EmbeddedServicesConfigurator.AddSingleton(serviceCollection);
+            // EmbeddedServicesConfigurator.AddSingleton(services);
 
-            // EmbeddedServicesConfigurator.AddTransient(serviceCollection);
+            // EmbeddedServicesConfigurator.AddTransient(services);
         }*/
 
         // This method gets called by the runtime.
         // Use this method to configure the HTTP request pipeline.
         public void Configure(
-            IApplicationBuilder applicationBuilder, 
+            IApplicationBuilder applicationBuilder,
             IHostingEnvironment hostingEnvironment)
         {
             if (hostingEnvironment.IsDevelopment())
@@ -69,6 +79,12 @@
 
             applicationBuilder.UseHttpsRedirection();
             applicationBuilder.UseMvc();
+
+            applicationBuilder.UseSwagger();
+            applicationBuilder.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users Service API V1");
+            });
         }
     }
 }
