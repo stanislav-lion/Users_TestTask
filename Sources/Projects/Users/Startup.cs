@@ -94,7 +94,7 @@
             {
                 c.SwaggerEndpoint(
                     "/swagger/v1/swagger.json", 
-                    "Users Service API V1"
+                    "Users Service API"
                 );
             });
         }
