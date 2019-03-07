@@ -20,6 +20,7 @@
 
         }
 
+        /// <inheritdoc />
         public IQueryable<Account> Accounts => UserContext.Accounts;
 
         /// <inheritdoc />

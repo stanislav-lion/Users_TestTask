@@ -21,6 +21,7 @@
 
         }
 
+        /// <inheritdoc />
         public IQueryable<User> Users => UserContext.Users;
 
         /// <inheritdoc />

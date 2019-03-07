@@ -21,6 +21,7 @@
 
         }
 
+        /// <inheritdoc />
         public IQueryable<UserRole> UserRoles => UserContext.UserRoles;
 
         /// <inheritdoc />
