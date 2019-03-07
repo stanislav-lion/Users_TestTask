@@ -30,14 +30,14 @@
             builder.RegisterType<UserRepository>()
                 .As<IUserRepository>()
                 .WithParameter(
-                    Parameters.DbContext.FirstCharToLower(),
+                    Parameters.UserContext.FirstCharToLower(),
                     Settings.GetUserContext()
                 );
 
             builder.RegisterType<UserRoleRepository>()
                 .As<IUserRoleRepository>()
                 .WithParameter(
-                    Parameters.DbContext.FirstCharToLower(),
+                    Parameters.UserContext.FirstCharToLower(),
                     Settings.GetUserContext()
                 );
 
