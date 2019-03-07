@@ -2,6 +2,7 @@
 {
     using System;
     using Microsoft.EntityFrameworkCore;
+    using Users.DataAccess.Database.BaseRepositories;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
 
@@ -13,13 +14,13 @@
         /// </summary>
         /// <param name="dbContext">Database context.</param>
         public ServiceBrokerRepository(DbContext dbContext)
-            : base(dbContext)
-        {
-
-        }
-
+            : base(dbContext) { }
+        
         /// <inheritdoc />
-        public Guid BeginDialog(string initiatorServiceName, string targetServiceName, string contractName,
+        public Guid BeginDialog(
+            string initiatorServiceName, 
+            string targetServiceName, 
+            string contractName,
             int dialogLifetimeSeconds)
         {
             throw new NotImplementedException();

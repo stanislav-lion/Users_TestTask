@@ -2,23 +2,22 @@
 {
     using System;
     using System.Linq;
+    using Users.DataAccess.Database.BaseRepositories;
     using Users.DataAccess.Database.Contexts;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
 
     /// <inheritdoc cref="IAccountRepository" />
-    public sealed class AccountRepository : EntityRepository, IAccountRepository
+    public sealed class AccountRepository : UserContextEntityRepository, IAccountRepository
     {
-        private readonly UserContext _userContext;
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="AccountRepository" /> class.
         /// </summary>
         /// <param name="userContext">Database user context.</param>
         public AccountRepository(UserContext userContext)
-            : base(userContext) => _userContext = userContext;
+            : base(userContext) { }
 
-        public IQueryable<Account> Accounts => _userContext.Accounts;
+        public IQueryable<Account> Accounts => UserContext.Accounts;
 
         /// <inheritdoc />
         public Account Get(int accountId)

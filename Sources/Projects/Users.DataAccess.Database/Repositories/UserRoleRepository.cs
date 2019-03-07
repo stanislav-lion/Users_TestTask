@@ -3,23 +3,22 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Users.DataAccess.Database.BaseRepositories;
     using Users.DataAccess.Database.Contexts;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
 
     /// <inheritdoc cref="IUserRoleRepository" />
-    public sealed class UserRoleRepository : EntityRepository, IUserRoleRepository
+    public sealed class UserRoleRepository : UserContextEntityRepository, IUserRoleRepository
     {
-        private readonly UserContext _userContext;
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="UserRoleRepository" /> class.
         /// </summary>
         /// <param name="userContext">Database user context.</param>
         public UserRoleRepository(UserContext userContext)
-            : base(userContext) => _userContext = userContext;
+            : base(userContext) { }
 
-        public IQueryable<UserRole> UserRoles => _userContext.UserRoles;
+        public IQueryable<UserRole> UserRoles => UserContext.UserRoles;
 
         /// <inheritdoc />
         public UserRole Get(int userId, int accountRoleId)
