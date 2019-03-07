@@ -55,6 +55,15 @@
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Users Service API",
+                    Version = "v1"
+                });
+            });
+
             EmbeddedServicesConfigurator.AddScoped(services);
 
             // EmbeddedServicesConfigurator.AddSingleton(services);
@@ -83,7 +92,10 @@
             applicationBuilder.UseSwagger();
             applicationBuilder.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users Service API V1");
+                c.SwaggerEndpoint(
+                    "/swagger/v1/swagger.json", 
+                    "Users Service API V1"
+                );
             });
         }
     }
