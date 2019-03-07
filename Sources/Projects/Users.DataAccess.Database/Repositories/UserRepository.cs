@@ -2,22 +2,24 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
+    using Users.DataAccess.Database.Contexts;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
 
     /// <inheritdoc cref="IUserRepository" />
     public sealed class UserRepository : EntityRepository, IUserRepository
     {
+        private readonly UserContext _userContext;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="UserRepository" /> class.
         /// </summary>
-        /// <param name="dbContext">Database context.</param>
-        public UserRepository(DbContext dbContext)
-            : base(dbContext)
-        {
+        /// <param name="userContext">Database user context.</param>
+        public UserRepository(UserContext userContext)
+            : base(userContext) => _userContext = userContext;
 
-        }
+        public IQueryable<User> Users => _userContext.Users;
 
         /// <inheritdoc />
         public User Get(int userId)

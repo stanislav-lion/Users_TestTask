@@ -2,22 +2,24 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
+    using Users.DataAccess.Database.Contexts;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
 
     /// <inheritdoc cref="IAccountRoleRepository" />
     public sealed class AccountRoleRepository : EntityRepository, IAccountRoleRepository
     {
+        private readonly UserContext _userContext;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="AccountRoleRepository" /> class.
         /// </summary>
-        /// <param name="dbContext">Database context.</param>
-        public AccountRoleRepository(DbContext dbContext)
-            : base(dbContext)
-        {
+        /// <param name="userContext">Database user context.</param>
+        public AccountRoleRepository(UserContext userContext)
+            : base(userContext) => _userContext = userContext;
 
-        }
+        public IQueryable<AccountRole> AccountRoles => _userContext.AccountRoles;
 
         /// <inheritdoc />
         public AccountRole Get(int accountRoleId)
