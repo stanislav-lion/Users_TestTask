@@ -1,4 +1,4 @@
-﻿namespace Users.DataAccess.Database.Repositories
+﻿namespace Users.DataAccess.Database.BaseRepositories
 {
     using System;
     using Microsoft.EntityFrameworkCore;
@@ -8,16 +8,18 @@
     /// </summary>
     public abstract class EntityRepository
     {
+        private readonly DbContext _dbContext;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="EntityRepository" /> class.
         /// </summary>
         /// <param name="dbContext">Database context.</param>
         protected EntityRepository(DbContext dbContext) =>
-            DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+
         /// <summary>
         ///     Gets database context.
         /// </summary>
-        protected DbContext DbContext { get; }
+        protected DbContext DbContext => _dbContext;
     }
 }
