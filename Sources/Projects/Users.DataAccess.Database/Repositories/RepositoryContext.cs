@@ -31,7 +31,7 @@
         public RepositoryContext()
             : this(
                 /*Settings.Default.DbConnectionString*/
-                "Data Source=localhost;Initial Catalog=ABDB;Integrated Security=True;")
+                "Data Source=localhost;Initial Catalog=Users;Integrated Security=True;")
         {
             
         }
@@ -39,18 +39,18 @@
         /// <summary>
         ///     Initializes a new instance of the <see cref="RepositoryContext" /> class.
         /// </summary>
-        /// <param name="abDbConnectionString">abDbConnectionString</param>
+        /// <param name="dbConnectionString">DbConnectionString.</param>
         public RepositoryContext(
-            string abDbConnectionString)
+            string dbConnectionString)
         {
-            if (string.IsNullOrWhiteSpace(abDbConnectionString))
+            if (string.IsNullOrWhiteSpace(dbConnectionString))
             {
-                throw new ArgumentNullException(nameof(abDbConnectionString));
+                throw new ArgumentNullException(nameof(dbConnectionString));
             }
 
             _connectionStrings = new[]
             {
-                abDbConnectionString
+                dbConnectionString
             };
 
             _dbContexts = new DbContext[_connectionStrings.Length];

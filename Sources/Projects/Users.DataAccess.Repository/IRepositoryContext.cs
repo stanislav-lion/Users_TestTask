@@ -23,11 +23,6 @@
         IAccountRoleRepository AccountRoleRepository { get; }
 
         /// <summary>
-        ///     Gets service broker repository.
-        /// </summary>
-        // IServiceBrokerRepository ServiceBrokerRepository { get; }
-
-        /// <summary>
         ///     Gets user repository.
         /// </summary>
         IUserRepository UserRepository { get; }
@@ -36,6 +31,11 @@
         ///     Gets user role repository.
         /// </summary>
         IUserRoleRepository UserRoleRepository { get; }
+
+        /// <summary>
+        ///     Gets service broker repository.
+        /// </summary>
+        // IServiceBrokerRepository ServiceBrokerRepository { get; }
 
         /// <summary>
         ///     Begins changes.
