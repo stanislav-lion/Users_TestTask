@@ -30,6 +30,8 @@
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddMemoryCache();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -54,6 +56,8 @@
             // Add services to the collection.
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
+            services.AddMemoryCache();
 
             services.AddSwaggerGen(c =>
             {
