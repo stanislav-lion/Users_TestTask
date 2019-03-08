@@ -18,11 +18,11 @@
         public UserRepository(UserContext userContext)
             : base(userContext)
         {
-
+            
         }
 
         /// <inheritdoc />
-        public IQueryable<User> Users => UserContext.Users;
+        public IQueryable<User> Users => UserContext.User;
 
         /// <inheritdoc />
         public User Get(int userId)

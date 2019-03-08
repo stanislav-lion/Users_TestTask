@@ -21,7 +21,7 @@
         }
 
         /// <inheritdoc />
-        public IQueryable<AccountAddress> AccountAddresses => UserContext.AccountAddresses;
+        public IQueryable<AccountAddress> AccountAddresses => UserContext.AccountAddress;
 
         /// <inheritdoc />
         public AccountAddress Get(int accountId)

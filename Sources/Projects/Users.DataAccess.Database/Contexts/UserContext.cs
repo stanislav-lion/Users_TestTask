@@ -6,21 +6,24 @@
     public class UserContext : DbContext
     {
         public UserContext(DbContextOptions<UserContext> options)
-            : base(options) { }
+            : base(options)
+        {
 
-        public DbSet<User> Users { get; set; }
+        }
 
-        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<User> User { get; set; }
 
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
 
-        public DbSet<AccountRole> AccountRoles { get; set; }
+        public DbSet<Account> Account { get; set; }
 
-        public DbSet<AccountAddress> AccountAddresses { get; set; }
+        public DbSet<AccountRole> AccountRole { get; set; }
+
+        public DbSet<AccountAddress> AccountAddress { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            
         }
     }
 }

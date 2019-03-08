@@ -22,7 +22,7 @@
         }
 
         /// <inheritdoc />
-        public IQueryable<UserRole> UserRoles => UserContext.UserRoles;
+        public IQueryable<UserRole> UserRoles => UserContext.UserRole;
 
         /// <inheritdoc />
         public UserRole Get(int userId, int accountRoleId)
