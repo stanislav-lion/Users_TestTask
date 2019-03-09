@@ -9,6 +9,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Users.DependencyInjection;
     using Swashbuckle.AspNetCore.Swagger;
+    using Users.AppSettings;
 
     public class Startup
     {
@@ -31,6 +32,10 @@
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMemoryCache();
+
+            services.Configure<ConnectionString>(Configuration.GetSection(nameof(ConnectionString)));
+            services.Configure<Users.AppSettings.AppSettings>(
+                Configuration.GetSection(nameof(Users.AppSettings.AppSettings)));
 
             services.AddSwaggerGen(c =>
             {
@@ -58,6 +63,10 @@
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
             services.AddMemoryCache();
+
+            services.Configure<ConnectionString>(Configuration.GetSection(nameof(ConnectionString)));
+            services.Configure<Users.AppSettings.AppSettings>(
+                Configuration.GetSection(nameof(Users.AppSettings.AppSettings)));
 
             services.AddSwaggerGen(c =>
             {

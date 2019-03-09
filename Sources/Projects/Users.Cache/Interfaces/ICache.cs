@@ -1,13 +1,12 @@
 ﻿namespace Users.Cache.Interfaces
 {
-    public interface ICache<T> where T : class
+    public interface ICache<TData> 
+        where TData : class
     {
-        T GetValue();
+        TData GetValue();
 
-        bool Add(T value);
+        void Set(TData value);
 
-        void Update(T value);
-
-        void Delete();
+        void Remove();
     }
 }

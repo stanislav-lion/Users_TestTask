@@ -2,38 +2,45 @@
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Options;
+    using Users.Cache;
+    using Users.CommonNames;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
+    using Users.AppSettings;
 
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUserRoleRepository _userRoleRepository;
-        private readonly IAccountRepository _accountRepository;
-        private readonly IAccountRoleRepository _accountRoleRepository;
-        private readonly IAccountAddressRepository _accountAddressRepository;
+        private readonly IMemoryCache _memoryCache;
+        private readonly AppSettings _appSettings;
+
+        private readonly CacheList<User> _userCacheList;
 
         public UsersController(
             IUserRepository userRepository,
-            IUserRoleRepository userRoleRepository,
-            IAccountRepository accountRepository,
-            IAccountRoleRepository accountRoleRepository,
-            IAccountAddressRepository accountAddressRepository)
+            IMemoryCache memoryCache,
+            IOptions<AppSettings> appSettings)
         {
             _userRepository = userRepository;
-            _userRoleRepository = userRoleRepository;
-            _accountRepository = accountRepository;
-            _accountRoleRepository = accountRoleRepository;
-            _accountAddressRepository = accountAddressRepository;
+            _memoryCache = memoryCache;
+            _appSettings = appSettings.Value;
+
+            _userCacheList = new CacheList<User>(
+                _memoryCache,
+                _userRepository.Users,
+                CacheKeys.Users.UsersItems,
+                _appSettings.CacheExpirationAddMinutes);
         }
 
         // GET api/users
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {
-            return _userRepository.Users;
+            return _userCacheList.GetValues();
         }
 
         // GET: api/users/[userId]

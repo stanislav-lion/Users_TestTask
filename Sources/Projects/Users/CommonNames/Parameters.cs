@@ -2,7 +2,7 @@
 {
     public struct Parameters
     {
-        public const string DbContext = nameof(DbContext);
-        public const string UserContext = nameof(UserContext);
+        public static string DbContext = nameof(DbContext);
+        public static string UserContext = nameof(UserContext);
     }
 }

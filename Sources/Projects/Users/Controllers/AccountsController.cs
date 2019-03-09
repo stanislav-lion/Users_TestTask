@@ -2,25 +2,45 @@
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
+    using Users.Cache;
+    using Users.CommonNames;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
+    using Users.AppSettings;
+    using Microsoft.Extensions.Options;
 
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IMemoryCache _memoryCache;
+        private readonly AppSettings _appSettings;
 
-        public AccountsController(IAccountRepository accountRepository)
+        private readonly CacheList<Account> _accountCacheList;
+
+        public AccountsController(
+            IAccountRepository accountRepository,
+            IMemoryCache memoryCache,
+            IOptions<AppSettings> appSettings)
         {
             _accountRepository = accountRepository;
+            _memoryCache = memoryCache;
+            _appSettings = appSettings.Value;
+
+            _accountCacheList = new CacheList<Account>(
+                _memoryCache,
+                _accountRepository.Accounts,
+                CacheKeys.Accounts.AccountsItems,
+                _appSettings.CacheExpirationAddMinutes);
         }
 
         // GET: api/accounts
         [HttpGet]
         public IEnumerable<Account> GetAccounts()
         {
-            return _accountRepository.Accounts;
+            return _accountCacheList.GetValues();
         }
 
         // GET: api/accounts/[accountId]

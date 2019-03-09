@@ -2,14 +2,13 @@
 {
     using System.Collections.Generic;
 
-    public interface ICacheList<T> where T : class
+    public interface ICacheList<TData> 
+        where TData : class
     {
-        IList<T> GetValues();
+        IEnumerable<TData> GetValues();
 
-        bool Add(IList<T> values);
+        void Set(IEnumerable<TData> values);
 
-        void Update(IList<T> values);
-
-        void Delete();
+        void Remove();
     }
 }
