@@ -12,6 +12,7 @@
 
     [Route("api/[controller]")]
     [ApiController]
+    [FormatFilter]
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;

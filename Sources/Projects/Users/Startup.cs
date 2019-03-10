@@ -10,6 +10,7 @@
     using Users.DependencyInjection;
     using Swashbuckle.AspNetCore.Swagger;
     using Users.AppSettings;
+    using Microsoft.Net.Http.Headers;
 
     public class Startup
     {
@@ -29,7 +30,14 @@
         {
             // Add services to the collection.
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddXmlDataContractSerializerFormatters()
+                .AddMvcOptions(options =>
+                {
+                    options.FormatterMappings.SetMediaTypeMappingForFormat(
+                        "xml", 
+                        new MediaTypeHeaderValue("application/xml"));
+                });
 
             services.AddMemoryCache();
 
@@ -60,7 +68,14 @@
         {
             // Add services to the collection.
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddXmlDataContractSerializerFormatters()
+                .AddMvcOptions(options =>
+                {
+                    options.FormatterMappings.SetMediaTypeMappingForFormat(
+                        "xml", 
+                        new MediaTypeHeaderValue("application/xml"));
+                });
             
             services.AddMemoryCache();
 
