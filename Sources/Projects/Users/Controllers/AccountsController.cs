@@ -12,7 +12,7 @@
 
     [Route("api/[controller]")]
     [ApiController]
-    [FormatFilter]
+    [FormatFilter] // api/[controller]?format=xml
     public class AccountsController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
