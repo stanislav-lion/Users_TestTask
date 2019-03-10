@@ -15,22 +15,23 @@
 
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-
-        public IContainer ApplicationContainer { get; private set; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        public IConfiguration Configuration { get; }
+
+        public IContainer ApplicationContainer { get; private set; }
+        
         // ConfigureServices is where you register dependencies.
         // This method gets called by the runtime.
         // Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add services to the collection.
-            services.AddMvc()
+            services
+                .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddXmlDataContractSerializerFormatters()
                 .AddMvcOptions(options =>
@@ -42,9 +43,11 @@
 
             services.AddMemoryCache();
 
-            services.Configure<ConnectionString>(Configuration.GetSection(nameof(ConnectionString)));
-            services.Configure<Users.AppSettings.AppSettings>(
-                Configuration.GetSection(nameof(Users.AppSettings.AppSettings)));
+            services
+                .Configure<ConnectionString>(
+                    Configuration.GetSection(nameof(ConnectionString)))
+                .Configure<Users.AppSettings.AppSettings>(
+                    Configuration.GetSection(nameof(Users.AppSettings.AppSettings)));
 
             services.AddSwaggerGen(c =>
             {
@@ -68,7 +71,8 @@
         /*public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the collection.
-            services.AddMvc()
+            services
+                .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddXmlDataContractSerializerFormatters()
                 .AddMvcOptions(options =>
@@ -80,9 +84,11 @@
             
             services.AddMemoryCache();
 
-            services.Configure<ConnectionString>(Configuration.GetSection(nameof(ConnectionString)));
-            services.Configure<Users.AppSettings.AppSettings>(
-                Configuration.GetSection(nameof(Users.AppSettings.AppSettings)));
+            services
+                .Configure<ConnectionString>(
+                    Configuration.GetSection(nameof(ConnectionString)))
+                .Configure<Users.AppSettings.AppSettings>(
+                    Configuration.GetSection(nameof(Users.AppSettings.AppSettings)));
 
             services.AddSwaggerGen(c =>
             {
