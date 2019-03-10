@@ -11,6 +11,7 @@
     using Swashbuckle.AspNetCore.Swagger;
     using Users.AppSettings;
     using Microsoft.Net.Http.Headers;
+    using Users.CommonNames;
 
     public class Startup
     {
@@ -35,8 +36,8 @@
                 .AddMvcOptions(options =>
                 {
                     options.FormatterMappings.SetMediaTypeMappingForFormat(
-                        "xml", 
-                        new MediaTypeHeaderValue("application/xml"));
+                        Format.XmlFormat.Xml, 
+                        new MediaTypeHeaderValue(Format.XmlFormat.ApplicationXml));
                 });
 
             services.AddMemoryCache();
@@ -73,8 +74,8 @@
                 .AddMvcOptions(options =>
                 {
                     options.FormatterMappings.SetMediaTypeMappingForFormat(
-                        "xml", 
-                        new MediaTypeHeaderValue("application/xml"));
+                        Format.XmlFormat.Xml, 
+                        new MediaTypeHeaderValue(Format.XmlFormat.ApplicationXml));
                 });
             
             services.AddMemoryCache();
