@@ -20,6 +20,7 @@
     using Users.DataAccess.Database.AppSettings;
     using Users.Authentication.AppSettings;
     using Users.Cache.AppSettings;
+    using Users.DataAccess.Database.Contexts;
 
     public class Startup
     {
@@ -56,6 +57,10 @@
                         new MediaTypeHeaderValue(Format.XmlFormat.ApplicationXml));
                 });
 
+            services.AddDbContext<UserContext>();
+
+            services.AddMemoryCache();
+
             _jwtSetting = Configuration.GetSection(nameof(JwtSetting))
                 .Get<JwtSetting>();
             _connectionString = Configuration.GetSection(nameof(ConnectionString))
@@ -104,25 +109,22 @@
                     };
                 });
 
-            services.AddMemoryCache();
-            
             // Register the Swagger generator, defining 1 or more Swagger documents.
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(swagger =>
             {
-                c.SwaggerDoc("v1", new Info
+                swagger.SwaggerDoc("v1", new Info
                 {
                     Title = Parameters.Authorization,
                     Version = "v1"
                 });
-                c.AddSecurityDefinition(Parameters.Bearer, new ApiKeyScheme
+                swagger.AddSecurityDefinition(Parameters.Bearer, new ApiKeyScheme
                 {
                     In = Parameters.Header.FirstCharToLower(),
                     Description = Resource.SwaggerSecurityDefinition,
                     Name = Parameters.Authorization,
                     Type = Parameters.ApiKey.FirstCharToLower()
                 });
-
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                swagger.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                 {
                     { Parameters.Bearer, new string[] { } }
                 });
@@ -153,6 +155,10 @@
                         new MediaTypeHeaderValue(Format.XmlFormat.ApplicationXml));
                 });
 
+            services.AddDbContext<UserContext>();
+
+            services.AddMemoryCache();
+
             _jwtSetting = Configuration.GetSection(nameof(JwtSetting))
                 .Get<JwtSetting>();
             _connectionString = Configuration.GetSection(nameof(ConnectionString))
@@ -200,8 +206,6 @@
                             Encoding.ASCII.GetBytes(_jwtSetting.Key))
                     };
                 });
-
-            services.AddMemoryCache();
             
             EmbeddedServicesConfigurator.AddScoped(
                 services,
@@ -216,22 +220,21 @@
             //    _sqlServerConnectionString.UsersConnectionString);
 
             // Register the Swagger generator, defining 1 or more Swagger documents.
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(swagger =>
             {
-                c.SwaggerDoc("v1", new Info
+                swagger.SwaggerDoc("v1", new Info
                 {
                     Title = Parameters.Authorization,
                     Version = "v1"
                 });
-                c.AddSecurityDefinition(Parameters.Bearer, new ApiKeyScheme
+                swagger.AddSecurityDefinition(Parameters.Bearer, new ApiKeyScheme
                 {
                     In = Parameters.Header.FirstCharToLower(),
                     Description = Resource.SwaggerSecurityDefinition,
                     Name = Parameters.Authorization,
                     Type = Parameters.ApiKey.FirstCharToLower()
                 });
-
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                swagger.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                 {
                     { Parameters.Bearer, new string[] { } }
                 });
@@ -242,7 +245,8 @@
         // Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder applicationBuilder,
-            IHostingEnvironment hostingEnvironment)
+            IHostingEnvironment hostingEnvironment,
+            UserContext userContext)
         {
             if (hostingEnvironment.IsDevelopment())
             {
@@ -258,6 +262,8 @@
             applicationBuilder.UseHttpsRedirection();
 
             applicationBuilder.UseMvc();
+
+            userContext.Database.EnsureCreated();
 
             applicationBuilder.UseSwagger();
             applicationBuilder.UseSwaggerUI(c =>
