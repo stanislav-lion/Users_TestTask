@@ -8,6 +8,8 @@
     using Users.CommonNames;
     using Users.Extensions;
     using Users.CommonSettings;
+    using Users.Authentication.Interfaces;
+    using Users.Services;
 
     public class AutofacConfigurator
     {
@@ -27,6 +29,13 @@
 
             // If you want to set up a controller for, say, property injection
             // you can override the controller registration after populating services.
+            builder.RegisterType<UserService>()
+                .As<IUserService>()
+                .WithParameter(
+                    Parameters.UserContext.FirstCharToLower(),
+                    Settings.GetUserContext()
+                );
+
             builder.RegisterType<UserRepository>()
                 .As<IUserRepository>()
                 .WithParameter(

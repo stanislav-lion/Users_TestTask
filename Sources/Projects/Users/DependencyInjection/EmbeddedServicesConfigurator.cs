@@ -1,15 +1,18 @@
 ﻿namespace Users.DependencyInjection
 {
     using Microsoft.Extensions.DependencyInjection;
+    using Users.Authentication.Interfaces;
     using Users.CommonSettings;
-    using Users.DataAccess.Database.Contexts;
     using Users.DataAccess.Database.Repositories;
     using Users.DataAccess.Repository;
+    using Users.Services;
 
     public class EmbeddedServicesConfigurator
     {
         public static void AddScoped(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddScoped<IUserService, UserService>();
+
             serviceCollection.AddScoped<IUserRepository>(
                 userRepository => new UserRepository(Settings.GetUserContext())
             );
@@ -33,6 +36,8 @@
 
         public static void AddSingleton(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddSingleton<IUserService, UserService>();
+
             serviceCollection.AddSingleton<IUserRepository>(
                 userRepository => new UserRepository(Settings.GetUserContext())
             );
@@ -56,6 +61,8 @@
 
         public static void AddTransient(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddTransient<IUserService, UserService>();
+
             serviceCollection.AddTransient<IUserRepository>(
                 userRepository => new UserRepository(Settings.GetUserContext())
             );

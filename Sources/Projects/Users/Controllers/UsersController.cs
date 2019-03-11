@@ -1,5 +1,6 @@
 ﻿namespace Users.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
@@ -9,9 +10,11 @@
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
     using Users.AppSettings;
+    using Microsoft.AspNetCore.Authorization;
 
-    [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [Route("api/[controller]")]
     [FormatFilter] // api/[controller]?format=xml
     public class UsersController : ControllerBase
     {
@@ -36,7 +39,7 @@
                 CacheKeys.Users.UsersItems,
                 _appSettings.CacheExpirationAddMinutes);
         }
-
+        
         // GET api/users
         [HttpGet]
         public IEnumerable<User> GetUsers()
@@ -48,28 +51,28 @@
         [HttpGet("{userId}", Name = "GetUser")]
         public User GetUser(int userId)
         {
-            return new User();
+            throw new NotImplementedException();
         }
 
         // POST: api/users
         [HttpPost]
         public void AddUser([FromBody] User user)
         {
-
+            throw new NotImplementedException();
         }
 
         // PUT: api/users/[userId]
         [HttpPut("{userId}")]
         public void UpdateUser(int userId, [FromBody] User user)
         {
-
+            throw new NotImplementedException();
         }
 
         // DELETE: api/users/[userId]
         [HttpDelete("{userId}")]
         public void DeleteUser(int userId)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
