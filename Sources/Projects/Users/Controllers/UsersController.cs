@@ -35,7 +35,7 @@
 
             _userCacheList = new CacheList<User>(
                 _memoryCache,
-                _userRepository.Users,
+                _userRepository.UsersWithoutPasswords,
                 CacheKeys.Users.UsersItems,
                 _сacheSetting.ExpireMinutes);
         }

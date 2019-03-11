@@ -40,7 +40,7 @@
 
             _userCacheList = new CacheList<User>(
                 _memoryCache,
-                _userRepository.Users,
+                _userRepository.UsersWithoutPasswords,
                 CacheKeys.Users.UsersItems,
                 _cacheSetting.ExpireMinutes);
         }
@@ -49,8 +49,7 @@
 
         public UserShort Authenticate(string userName, string password)
         {
-            User user = Users.FirstOrDefault(u =>
-                u.LogonName.Equals(userName) /*&& u.PasswordSalt.Equals(password)*/);
+            User user = GetUser(userName, password);
 
             if (user == null)
             {
@@ -80,6 +79,14 @@
                 LastName = user.LastName,
                 Token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor))
             };
+        }
+
+        private User GetUser(string userName, string password)
+        {
+            return _userRepository.Users
+                .FirstOrDefault(user =>
+                    user.LogonName.Equals(userName) &&
+                    user.PasswordSalt.Equals(password));
         }
     }
 }

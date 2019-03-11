@@ -16,6 +16,11 @@
         IQueryable<User> Users { get; }
 
         /// <summary>
+        ///     Gets all users without passwords.
+        /// </summary>
+        IQueryable<User> UsersWithoutPasswords { get; }
+
+        /// <summary>
         ///     Gets user by identifier.
         /// </summary>
         /// <param name="userId">User identifier.</param>

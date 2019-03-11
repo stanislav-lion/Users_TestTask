@@ -25,6 +25,9 @@
         public IQueryable<User> Users => UserContext.User;
 
         /// <inheritdoc />
+        public IQueryable<User> UsersWithoutPasswords => GetUsersWithoutPasswords();
+
+        /// <inheritdoc />
         public User Get(int userId)
         {
             throw new NotImplementedException();
@@ -70,6 +73,20 @@
         public void DeleteByAccount(int accountId)
         {
             throw new NotImplementedException();
+        }
+
+        private IQueryable<User> GetUsersWithoutPasswords()
+        {
+            return UserContext.User
+                .ToList()
+                .Select(user =>
+                {
+                    user.PasswordSalt = null;
+                    user.PasswordHash = null;
+
+                    return user;
+                })
+                .AsQueryable();
         }
     }
 }
