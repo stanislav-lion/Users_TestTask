@@ -10,18 +10,18 @@
         private readonly IMemoryCache _memoryCache;
         private readonly TData _data;
         private readonly string _key;
-        private readonly int _cacheExpirationAddMinutes;
+        private readonly int _expireMinutes;
 
         public Cache(
             IMemoryCache memoryCache,
             TData data,
             string key = nameof(ICache<TData>),
-            int cacheExpirationAddMinutes = 10)
+            int expireMinutes = 10)
         {
             _memoryCache = memoryCache;
             _data = data;
             _key = key;
-            _cacheExpirationAddMinutes = cacheExpirationAddMinutes;
+            _expireMinutes = expireMinutes;
         }
 
         public TData GetValue()
@@ -31,7 +31,6 @@
                 if (_data != null)
                 {
                     value = _data;
-
                     Set(value);
                 }
             }
@@ -43,7 +42,7 @@
         {
             _memoryCache.Set(_key, value, new MemoryCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_cacheExpirationAddMinutes)
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_expireMinutes)
             });
         }
 

@@ -26,7 +26,7 @@
         /// <inheritdoc />
         public override string FormatErrorMessage(string name)
         {
-            return string.Format(ValidationStrings.DateTimeFieldValueMustHaveUtcKind, name);
+            return string.Format(Resource.DateTimeFieldValueMustHaveUtcKind, name);
         }
     }
 }

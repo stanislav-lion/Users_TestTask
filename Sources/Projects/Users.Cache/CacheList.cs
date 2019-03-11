@@ -12,18 +12,18 @@
         private readonly IMemoryCache _memoryCache;
         private readonly IQueryable<TData> _dataList;
         private readonly string _key;
-        private readonly int _cacheExpirationAddMinutes;
+        private readonly int _expireMinutes;
 
         public CacheList(
             IMemoryCache memoryCache,
             IQueryable<TData> dataList,
             string key = nameof(ICacheList<TData>),
-            int cacheExpirationAddMinutes = 10)
+            int expireMinutes = 10)
         {
             _memoryCache = memoryCache;
             _dataList = dataList;
             _key = key;
-            _cacheExpirationAddMinutes = cacheExpirationAddMinutes;
+            _expireMinutes = expireMinutes;
         }
 
         public IEnumerable<TData> GetValues()
@@ -33,7 +33,6 @@
                 if (_dataList != null)
                 {
                     values = _dataList;
-
                     Set(values);
                 }
             }
@@ -45,7 +44,7 @@
         {
             _memoryCache.Set(_key, values, new MemoryCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_cacheExpirationAddMinutes)
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_expireMinutes)
             });
         }
 

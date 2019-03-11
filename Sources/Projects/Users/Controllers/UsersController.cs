@@ -9,8 +9,8 @@
     using Users.CommonNames;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
-    using Users.AppSettings;
     using Microsoft.AspNetCore.Authorization;
+    using Users.Cache.AppSettings;
 
     [ApiController]
     [Authorize]
@@ -20,24 +20,24 @@
     {
         private readonly IUserRepository _userRepository;
         private readonly IMemoryCache _memoryCache;
-        private readonly AppSettings _appSettings;
+        private readonly CacheSetting _сacheSetting;
 
         private readonly CacheList<User> _userCacheList;
 
         public UsersController(
             IUserRepository userRepository,
             IMemoryCache memoryCache,
-            IOptions<AppSettings> appSettings)
+            IOptions<CacheSetting> сacheSetting)
         {
             _userRepository = userRepository;
             _memoryCache = memoryCache;
-            _appSettings = appSettings.Value;
+            _сacheSetting = сacheSetting.Value;
 
             _userCacheList = new CacheList<User>(
                 _memoryCache,
                 _userRepository.Users,
                 CacheKeys.Users.UsersItems,
-                _appSettings.CacheExpirationAddMinutes);
+                _сacheSetting.ExpireMinutes);
         }
         
         // GET api/users

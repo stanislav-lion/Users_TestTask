@@ -7,7 +7,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Users.CommonNames;
     using Users.Extensions;
-    using Users.CommonSettings;
+    using Users.Settings;
     using Users.Authentication.Interfaces;
     using Users.Services;
 
@@ -15,7 +15,8 @@
     {
         public static AutofacServiceProvider GetAutofacServiceProvider(
             IServiceCollection services,
-            IContainer applicationContainer)
+            IContainer applicationContainer,
+            string connectionString)
         {
             // Create the container builder.
             var builder = new ContainerBuilder();
@@ -33,42 +34,42 @@
                 .As<IUserService>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    Settings.GetUserContext()
+                    DBSetting.GetUserContext(connectionString)
                 );
 
             builder.RegisterType<UserRepository>()
                 .As<IUserRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    Settings.GetUserContext()
+                    DBSetting.GetUserContext(connectionString)
                 );
 
             builder.RegisterType<UserRoleRepository>()
                 .As<IUserRoleRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    Settings.GetUserContext()
+                    DBSetting.GetUserContext(connectionString)
                 );
 
             builder.RegisterType<AccountRepository>()
                 .As<IAccountRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    Settings.GetUserContext()
+                    DBSetting.GetUserContext(connectionString)
                 );
 
             builder.RegisterType<AccountRoleRepository>()
                 .As<IAccountRoleRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    Settings.GetUserContext()
+                    DBSetting.GetUserContext(connectionString)
                 );
 
             builder.RegisterType<AccountAddressRepository>()
                 .As<IAccountAddressRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    Settings.GetUserContext()
+                    DBSetting.GetUserContext(connectionString)
                 );
 
             applicationContainer = builder.Build();

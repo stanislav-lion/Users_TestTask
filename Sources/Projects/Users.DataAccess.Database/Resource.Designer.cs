@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Users.DataAccess.DataModel {
+namespace Users.DataAccess.Database {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Users.DataAccess.DataModel {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ValidationStrings {
+    internal class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ValidationStrings() {
+        internal Resource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Users.DataAccess.DataModel {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Users.DataAccess.DataModel.ValidationStrings", typeof(ValidationStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Users.DataAccess.Database.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace Users.DataAccess.DataModel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} datetime field value must have Utc kind.
+        ///   Looks up a localized string similar to Data Source=localhost;Initial Catalog=Users;Integrated Security=SSPI;.
         /// </summary>
-        internal static string DateTimeFieldValueMustHaveUtcKind {
+        internal static string DefaultConnectionString {
             get {
-                return ResourceManager.GetString("DateTimeFieldValueMustHaveUtcKind", resourceCulture);
+                return ResourceManager.GetString("DefaultConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; value cannot be negative.
+        /// </summary>
+        internal static string ValueCannotBeNegative {
+            get {
+                return ResourceManager.GetString("ValueCannotBeNegative", resourceCulture);
             }
         }
     }

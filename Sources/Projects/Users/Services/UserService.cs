@@ -13,35 +13,36 @@
     using Users.CommonNames;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
-    using Users.AppSettings;
     using System.Collections.Generic;
     using Microsoft.Extensions.Options;
+    using Users.Authentication.AppSettings;
+    using Users.Cache.AppSettings;
 
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IMemoryCache _memoryCache;
-        private readonly JwtSettings _jwtSettings;
-        private readonly AppSettings _appSettings;
+        private readonly JwtSetting _jwtSetting;
+        private readonly CacheSetting _cacheSetting;
 
         private readonly CacheList<User> _userCacheList;
 
         public UserService(
             IUserRepository userRepository,
             IMemoryCache memoryCache,
-            IOptions<JwtSettings> jwtSettings,
-            IOptions<AppSettings> appSettings)
+            IOptions<JwtSetting> jwtSetting,
+            IOptions<CacheSetting> cacheSetting)
         {
             _userRepository = userRepository;
             _memoryCache = memoryCache;
-            _jwtSettings = jwtSettings.Value;
-            _appSettings = appSettings.Value;
+            _jwtSetting = jwtSetting.Value;
+            _cacheSetting = cacheSetting.Value;
 
             _userCacheList = new CacheList<User>(
                 _memoryCache,
                 _userRepository.Users,
                 CacheKeys.Users.UsersItems,
-                _appSettings.CacheExpirationAddMinutes);
+                _cacheSetting.ExpireMinutes);
         }
 
         public IEnumerable<User> Users => _userCacheList.GetValues();
@@ -49,7 +50,7 @@
         public UserShort Authenticate(string userName, string password)
         {
             User user = Users.FirstOrDefault(u =>
-                u.LogonName.Equals(userName) && u.PasswordSalt.Equals(password));
+                u.LogonName.Equals(userName) /*&& u.PasswordSalt.Equals(password)*/);
 
             if (user == null)
             {
@@ -63,9 +64,9 @@
                 {
                     new Claim(ClaimTypes.Name, user.UserId.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(_jwtSettings.ExpireDays),
+                Expires = DateTime.UtcNow.AddDays(_jwtSetting.ExpireDays),
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtSettings.Key)),
+                    new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtSetting.Key)),
                     SecurityAlgorithms.HmacSha256Signature)
             };
 

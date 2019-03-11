@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Users.DataAccess.Database {
+namespace Users.DataAccess.DataModel {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Users.DataAccess.Database {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CommonStrings {
+    internal class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CommonStrings() {
+        internal Resource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Users.DataAccess.Database {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Users.DataAccess.Database.CommonStrings", typeof(CommonStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Users.DataAccess.DataModel.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,11 @@ namespace Users.DataAccess.Database {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;{0}&quot; value cannot be negative.
+        ///   Looks up a localized string similar to The {0} datetime field value must have Utc kind.
         /// </summary>
-        internal static string ValueCannotBeNegative {
+        internal static string DateTimeFieldValueMustHaveUtcKind {
             get {
-                return ResourceManager.GetString("ValueCannotBeNegative", resourceCulture);
+                return ResourceManager.GetString("DateTimeFieldValueMustHaveUtcKind", resourceCulture);
             }
         }
     }

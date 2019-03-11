@@ -2,85 +2,106 @@
 {
     using Microsoft.Extensions.DependencyInjection;
     using Users.Authentication.Interfaces;
-    using Users.CommonSettings;
+    using Users.Settings;
     using Users.DataAccess.Database.Repositories;
     using Users.DataAccess.Repository;
     using Users.Services;
 
     public class EmbeddedServicesConfigurator
     {
-        public static void AddScoped(IServiceCollection serviceCollection)
+        public static void AddScoped(
+            IServiceCollection services,
+            string connectionString)
         {
-            serviceCollection.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
 
-            serviceCollection.AddScoped<IUserRepository>(
-                userRepository => new UserRepository(Settings.GetUserContext())
+            services.AddScoped<IUserRepository>(
+                userRepository => new UserRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddScoped<IUserRoleRepository>(
-                userRoleRepository => new UserRoleRepository(Settings.GetUserContext())
+            services.AddScoped<IUserRoleRepository>(
+                userRoleRepository => new UserRoleRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddScoped<IAccountRepository>(
-                userRepository => new AccountRepository(Settings.GetUserContext())
+            services.AddScoped<IAccountRepository>(
+                userRepository => new AccountRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddScoped<IAccountRoleRepository>(
-                userRepository => new AccountRoleRepository(Settings.GetUserContext())
+            services.AddScoped<IAccountRoleRepository>(
+                userRepository => new AccountRoleRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddScoped<IAccountAddressRepository>(
-                userRepository => new AccountAddressRepository(Settings.GetUserContext())
+            services.AddScoped<IAccountAddressRepository>(
+                userRepository => new AccountAddressRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
         }
 
-        public static void AddSingleton(IServiceCollection serviceCollection)
+        public static void AddSingleton(
+            IServiceCollection services,
+            string connectionString)
         {
-            serviceCollection.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IUserService, UserService>();
 
-            serviceCollection.AddSingleton<IUserRepository>(
-                userRepository => new UserRepository(Settings.GetUserContext())
+            services.AddSingleton<IUserRepository>(
+                userRepository => new UserRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddSingleton<IUserRoleRepository>(
-                userRoleRepository => new UserRoleRepository(Settings.GetUserContext())
+            services.AddSingleton<IUserRoleRepository>(
+                userRoleRepository => new UserRoleRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddSingleton<IAccountRepository>(
-                userRepository => new AccountRepository(Settings.GetUserContext())
+            services.AddSingleton<IAccountRepository>(
+                userRepository => new AccountRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddSingleton<IAccountRoleRepository>(
-                userRepository => new AccountRoleRepository(Settings.GetUserContext())
+            services.AddSingleton<IAccountRoleRepository>(
+                userRepository => new AccountRoleRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddSingleton<IAccountAddressRepository>(
-                userRepository => new AccountAddressRepository(Settings.GetUserContext())
+            services.AddSingleton<IAccountAddressRepository>(
+                userRepository => new AccountAddressRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
         }
 
-        public static void AddTransient(IServiceCollection serviceCollection)
+        public static void AddTransient(
+            IServiceCollection services,
+            string connectionString)
         {
-            serviceCollection.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
 
-            serviceCollection.AddTransient<IUserRepository>(
-                userRepository => new UserRepository(Settings.GetUserContext())
+            services.AddTransient<IUserRepository>(
+                userRepository => new UserRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddTransient<IUserRoleRepository>(
-                userRoleRepository => new UserRoleRepository(Settings.GetUserContext())
+            services.AddTransient<IUserRoleRepository>(
+                userRoleRepository => new UserRoleRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddTransient<IAccountRepository>(
-                userRepository => new AccountRepository(Settings.GetUserContext())
+            services.AddTransient<IAccountRepository>(
+                userRepository => new AccountRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddTransient<IAccountRoleRepository>(
-                userRepository => new AccountRoleRepository(Settings.GetUserContext())
+            services.AddTransient<IAccountRoleRepository>(
+                userRepository => new AccountRoleRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
 
-            serviceCollection.AddTransient<IAccountAddressRepository>(
-                userRepository => new AccountAddressRepository(Settings.GetUserContext())
+            services.AddTransient<IAccountAddressRepository>(
+                userRepository => new AccountAddressRepository(
+                    DBSetting.GetUserContext(connectionString))
             );
         }
     }

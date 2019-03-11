@@ -8,9 +8,9 @@
     using Users.CommonNames;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository;
-    using Users.AppSettings;
     using Microsoft.Extensions.Options;
     using Microsoft.AspNetCore.Authorization;
+    using Users.Cache.AppSettings;
 
     [ApiController]
     [Authorize]
@@ -20,24 +20,24 @@
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IMemoryCache _memoryCache;
-        private readonly AppSettings _appSettings;
+        private readonly CacheSetting _cacheSetting;
 
         private readonly CacheList<Account> _accountCacheList;
 
         public AccountsController(
             IAccountRepository accountRepository,
             IMemoryCache memoryCache,
-            IOptions<AppSettings> appSettings)
+            IOptions<CacheSetting> cacheSetting)
         {
             _accountRepository = accountRepository;
             _memoryCache = memoryCache;
-            _appSettings = appSettings.Value;
+            _cacheSetting = cacheSetting.Value;
 
             _accountCacheList = new CacheList<Account>(
                 _memoryCache,
                 _accountRepository.Accounts,
                 CacheKeys.Accounts.AccountsItems,
-                _appSettings.CacheExpirationAddMinutes);
+                _cacheSetting.ExpireMinutes);
         }
 
         // GET: api/accounts

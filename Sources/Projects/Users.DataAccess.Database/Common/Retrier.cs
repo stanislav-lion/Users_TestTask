@@ -33,13 +33,13 @@
 
             if (retriesNumber < 0)
             {
-                throw new ArgumentException(string.Format(CommonStrings.ValueCannotBeNegative, "retriesNumber"));
+                throw new ArgumentException(string.Format(Resource.ValueCannotBeNegative, "retriesNumber"));
             }
 
             if (sleepBetweenRetriesMilliSeconds < 0)
             {
                 throw new ArgumentException(
-                    string.Format(CommonStrings.ValueCannotBeNegative, "sleepBetweenRetriesMilliSeconds"));
+                    string.Format(Resource.ValueCannotBeNegative, "sleepBetweenRetriesMilliSeconds"));
             }
 
             if (isErrorRetriable == null)

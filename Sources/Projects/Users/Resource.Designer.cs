@@ -70,6 +70,15 @@ namespace Users {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Users Service API.
+        /// </summary>
+        internal static string SwaggerEndpointName {
+            get {
+                return ResourceManager.GetString("SwaggerEndpointName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please insert JWT with Bearer into field..
         /// </summary>
         internal static string SwaggerSecurityDefinition {

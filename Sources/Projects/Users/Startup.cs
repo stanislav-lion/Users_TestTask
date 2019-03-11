@@ -17,9 +17,19 @@
     using System.Text;
     using System.Collections.Generic;
     using Users.Extensions;
+    using Users.DataAccess.Database.AppSettings;
+    using Users.Authentication.AppSettings;
+    using Users.Cache.AppSettings;
 
     public class Startup
     {
+        private JwtSetting _jwtSetting;
+        private ConnectionString _connectionString;
+        private SQLServerConnectionString _sqlServerConnectionString;
+        private PostgreSQLConnectionString _postgreSQLConnectionString;
+        private CacheSetting _cacheSetting;
+        private AppSetting _appSetting;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -46,16 +56,32 @@
                         new MediaTypeHeaderValue(Format.XmlFormat.ApplicationXml));
                 });
 
+            _jwtSetting = Configuration.GetSection(nameof(JwtSetting))
+                .Get<JwtSetting>();
+            _connectionString = Configuration.GetSection(nameof(ConnectionString))
+                .Get<ConnectionString>();
+            _sqlServerConnectionString = Configuration.GetSection(nameof(SQLServerConnectionString))
+                .Get<SQLServerConnectionString>();
+            _postgreSQLConnectionString = Configuration.GetSection(nameof(PostgreSQLConnectionString))
+                .Get<PostgreSQLConnectionString>();
+            _cacheSetting = Configuration.GetSection(nameof(CacheSetting))
+                .Get<CacheSetting>();
+            _appSetting = Configuration.GetSection(nameof(AppSetting))
+                .Get<AppSetting>();
+
             services
+                .Configure<JwtSetting>(
+                    Configuration.GetSection(nameof(JwtSetting)))
                 .Configure<ConnectionString>(
                     Configuration.GetSection(nameof(ConnectionString)))
-                .Configure<JwtSettings>(
-                    Configuration.GetSection(nameof(JwtSettings)))
-                .Configure<Users.AppSettings.AppSettings>(
-                    Configuration.GetSection(nameof(Users.AppSettings.AppSettings)));
-
-            var jwtSettings = Configuration.GetSection(nameof(JwtSettings))
-                .Get<JwtSettings>();
+                .Configure<SQLServerConnectionString>(
+                    Configuration.GetSection(nameof(SQLServerConnectionString)))
+                .Configure<PostgreSQLConnectionString>(
+                    Configuration.GetSection(nameof(PostgreSQLConnectionString)))
+                .Configure<CacheSetting>(
+                    Configuration.GetSection(nameof(CacheSetting)))
+                .Configure<AppSetting>(
+                    Configuration.GetSection(nameof(AppSetting)));
             
             // Set authentication scheme for JWT and set JWT provider configuration.
             services.AddAuthentication(options =>
@@ -74,7 +100,7 @@
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.ASCII.GetBytes(jwtSettings.Key))
+                            Encoding.ASCII.GetBytes(_jwtSetting.Key))
                     };
                 });
 
@@ -105,7 +131,8 @@
             // Create the IServiceProvider based on the container.
             return AutofacConfigurator.GetAutofacServiceProvider(
                 services,
-                ApplicationContainer
+                ApplicationContainer,
+                _sqlServerConnectionString.UsersConnectionString
             );
         }
 
@@ -126,16 +153,32 @@
                         new MediaTypeHeaderValue(Format.XmlFormat.ApplicationXml));
                 });
 
+            _jwtSetting = Configuration.GetSection(nameof(JwtSetting))
+                .Get<JwtSetting>();
+            _connectionString = Configuration.GetSection(nameof(ConnectionString))
+                .Get<ConnectionString>();
+            _sqlServerConnectionString = Configuration.GetSection(nameof(SQLServerConnectionString))
+                .Get<SQLServerConnectionString>();
+            _postgreSQLConnectionString = Configuration.GetSection(nameof(PostgreSQLConnectionString))
+                .Get<PostgreSQLConnectionString>();
+            _cacheSetting = Configuration.GetSection(nameof(CacheSetting))
+                .Get<CacheSetting>();
+            _appSetting = Configuration.GetSection(nameof(AppSetting))
+                .Get<AppSetting>();
+
             services
+                .Configure<JwtSetting>(
+                    Configuration.GetSection(nameof(JwtSetting)))
                 .Configure<ConnectionString>(
                     Configuration.GetSection(nameof(ConnectionString)))
-                .Configure<ConnectionString>(
-                    Configuration.GetSection(nameof(JwtSettings)))
-                .Configure<JwtSettings>(
-                    Configuration.GetSection(nameof(Users.AppSettings.AppSettings)));
-
-            var jwtSettings = Configuration.GetSection(nameof(JwtSettings))
-                .Get<JwtSettings>();
+                .Configure<SQLServerConnectionString>(
+                    Configuration.GetSection(nameof(SQLServerConnectionString)))
+                .Configure<PostgreSQLConnectionString>(
+                    Configuration.GetSection(nameof(PostgreSQLConnectionString)))
+                .Configure<CacheSetting>(
+                    Configuration.GetSection(nameof(CacheSetting)))
+                .Configure<AppSetting>(
+                    Configuration.GetSection(nameof(AppSetting)));
             
             // Set authentication scheme for JWT and set JWT provider configuration.
             services.AddAuthentication(options =>
@@ -154,15 +197,23 @@
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.ASCII.GetBytes(jwtSettings.Key))
+                            Encoding.ASCII.GetBytes(_jwtSetting.Key))
                     };
                 });
 
             services.AddMemoryCache();
             
-            EmbeddedServicesConfigurator.AddScoped(services);
-            // EmbeddedServicesConfigurator.AddSingleton(services);
-            // EmbeddedServicesConfigurator.AddTransient(services);
+            EmbeddedServicesConfigurator.AddScoped(
+                services,
+                _sqlServerConnectionString.UsersConnectionString);
+            
+            //EmbeddedServicesConfigurator.AddSingleton(
+            //    services,
+            //    _sqlServerConnectionString.UsersConnectionString);
+            
+            //EmbeddedServicesConfigurator.AddTransient(
+            //    services,
+            //    _sqlServerConnectionString.UsersConnectionString);
 
             // Register the Swagger generator, defining 1 or more Swagger documents.
             services.AddSwaggerGen(c =>
@@ -175,7 +226,7 @@
                 c.AddSecurityDefinition(Parameters.Bearer, new ApiKeyScheme
                 {
                     In = Parameters.Header.FirstCharToLower(),
-                    Description = CommonStrings.SwaggerSecurityDefinition,
+                    Description = Resource.SwaggerSecurityDefinition,
                     Name = Parameters.Authorization,
                     Type = Parameters.ApiKey.FirstCharToLower()
                 });
@@ -212,8 +263,8 @@
             applicationBuilder.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint(
-                    "/swagger/v1/swagger.json", 
-                    "Users Service API"
+                    _appSetting.SwaggerEndpoint,
+                    Resource.SwaggerEndpointName
                 );
             });
         }

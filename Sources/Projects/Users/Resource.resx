@@ -120,6 +120,9 @@
   <data name="ErrorMessageByAuthenticate" xml:space="preserve">
     <value>UserName or password is incorrect.</value>
   </data>
+  <data name="SwaggerEndpointName" xml:space="preserve">
+    <value>Users Service API</value>
+  </data>
   <data name="SwaggerSecurityDefinition" xml:space="preserve">
     <value>Please insert JWT with Bearer into field.</value>
   </data>
