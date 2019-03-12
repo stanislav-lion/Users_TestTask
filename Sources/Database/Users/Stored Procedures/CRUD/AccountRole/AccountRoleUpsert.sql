@@ -3,9 +3,8 @@
     @AccountRoleGuid UNIQUEIDENTIFIER,
     @AccountId INT,
     @RoleName NVARCHAR(40),
-    @RoleTypeId INT,
-    @PrivCodeManagementApp TINYINT,
-    @PrivEMsApp TINYINT,
+    @RoleType INT,
+    @PrivilegeType TINYINT,
     @AccountRoleId INT OUT
 )
 AS
@@ -20,18 +19,16 @@ BEGIN
                 @AccountRoleGuid,
                 @AccountId,
                 @RoleName,
-                @RoleTypeId,
-                @PrivCodeManagementApp,
-                @PrivEMsApp
+                @RoleType,
+                @PrivilegeType
         )
         AS [source]
         (
             [AccountRoleGuid],
             [AccountId],
             [RoleName],
-            [RoleTypeId],
-            [PrivCodeManagementApp],
-            [PrivEMsApp]
+            [RoleType],
+            [PrivilegeType]
         )
     ON
         [target].[AccountRoleGuid] = [source].[AccountRoleGuid]
@@ -40,9 +37,8 @@ BEGIN
             @AccountRoleId = [target].[AccountRoleId],
             [target].[AccountId] = [source].[AccountId],
             [target].[RoleName] = [source].[RoleName],
-            [target].[RoleTypeId] = [source].[RoleTypeId],
-            [target].[PrivCodeManagementApp] = [source].[PrivCodeManagementApp],
-            [target].[PrivEMsApp] = [source].[PrivEMsApp],
+            [target].[RoleType] = [source].[RoleType],
+            [target].[PrivilegeType] = [source].[PrivilegeType],
             [target].[ModifiedUtc] = SYSUTCDATETIME()
     WHEN NOT MATCHED THEN
         INSERT
@@ -50,18 +46,16 @@ BEGIN
             [AccountRoleGuid],
             [AccountId],
             [RoleName],
-            [RoleTypeId],
-            [PrivCodeManagementApp],
-            [PrivEMsApp]
+            [RoleType],
+            [PrivilegeType]
         )
         VALUES
         (
             [source].[AccountRoleGuid],
             [source].[AccountId],
             [source].[RoleName],
-            [source].[RoleTypeId],
-            [source].[PrivCodeManagementApp],
-            [source].[PrivEMsApp]
+            [source].[RoleType],
+			[source].[PrivilegeType]
         );
 
     SET @AccountRoleId = ISNULL(@AccountRoleId, SCOPE_IDENTITY())

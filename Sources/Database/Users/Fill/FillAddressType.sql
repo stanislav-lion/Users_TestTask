@@ -3,12 +3,10 @@ DECLARE @AddressType TABLE
     [AddressTypeId] INT NOT NULL,
     [AddressTypeName] NVARCHAR(100) NOT NULL
 )
-
 INSERT INTO @AddressType
 VALUES
     (1, 'Billing'),
     (2, 'Physical')
-
 MERGE
     [dbo].[AddressType] WITH (HOLDLOCK) AS [target]
 USING

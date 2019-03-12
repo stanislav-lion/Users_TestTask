@@ -11,9 +11,8 @@ BEGIN
         [AccountRoleGuid],
         [AccountId],
         [RoleName],
-        [RoleTypeId],
-        [PrivCodeManagementApp],
-        [PrivEMsApp]
+        [RoleType],
+        [PrivilegeType]
     FROM
         [dbo].[AccountRole]
     WHERE
