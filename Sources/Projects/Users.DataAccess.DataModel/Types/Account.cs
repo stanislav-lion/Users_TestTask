@@ -16,7 +16,7 @@
         /// <summary>
         ///     Gets or sets account unique identifier.
         /// </summary>
-        public Guid AccountGuid { get; set; }
+        public Guid? AccountGuid { get; set; }
 
         /// <summary>
         ///     Gets or sets account number.
@@ -29,7 +29,7 @@
         ///     Gets or sets account name.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [StringLength(56)]
+        [StringLength(50)]
         public string AccountName { get; set; }
 
         /// <summary>
@@ -40,7 +40,7 @@
         /// <summary>
         ///     Gets or sets account time zone.
         /// </summary>
-        public int TimeZone { get; set; }
+        public int? TimeZone { get; set; }
 
         /// <summary>
         ///     Gets or sets password expiration period in days.
@@ -56,10 +56,5 @@
         ///     Gets or sets number of allowed Code Management applications.
         /// </summary>
         public int NumberOfCodeManagementApps { get; set; }
-
-        /// <summary>
-        ///     Gets or sets number of allowed EMS applications.
-        /// </summary>
-        public int NumberOfEMsApps { get; set; }
     }
 }
