@@ -22,7 +22,7 @@
         private readonly Lazy<AccountRoleRepository> _accountRoleRepository;
         private readonly Lazy<AccountAddressRepository> _accountAddressRepository;
 
-        // private readonly Lazy<ServiceBrokerRepository> _serviceBrokerRepository;
+        //private readonly Lazy<ServiceBrokerRepository> _serviceBrokerRepository;
 
         private int _changesCount;
         private bool _disposed;
@@ -32,9 +32,7 @@
         ///     Initializes a new instance of the <see cref="RepositoryContext" /> class.
         /// </summary>
         public RepositoryContext()
-            : this(
-                /*Settings.Default.DbConnectionString*/
-                "Data Source=localhost;Initial Catalog=Users;Integrated Security=True;")
+            : this(Resource.DefaultConnectionString)
         {
 
         }
@@ -74,9 +72,9 @@
                 new Lazy<AccountAddressRepository>(
                     () => new AccountAddressRepository(GetUserContext(DatabaseType.DbPrimary)));
 
-            /*_serviceBrokerRepository =
-                new Lazy<ServiceBrokerRepository>(
-                    () => new ServiceBrokerRepository(GetDbContext(DatabaseType.DbMsg)));*/
+            //_serviceBrokerRepository =
+            //    new Lazy<ServiceBrokerRepository>(
+            //        () => new ServiceBrokerRepository(GetDbContext(DatabaseType.DbMsg)));
 
             _inChanges = false;
             _changesCount = 0;
@@ -107,7 +105,7 @@
         public IAccountAddressRepository AccountAddressRepository => _accountAddressRepository.Value;
 
         /// <inheritdoc />
-        // public IServiceBrokerRepository ServiceBrokerRepository => _serviceBrokerRepository.Value;
+        //public IServiceBrokerRepository ServiceBrokerRepository => _serviceBrokerRepository.Value;
 
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
