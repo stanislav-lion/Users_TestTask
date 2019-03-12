@@ -15,8 +15,7 @@ BEGIN
         [TimeZone],
         [PasswordExpirationPeriodInDays],
         [DataStorageTimeHrs],
-        [NumberOfCodeManagementApps],
-        [NumberOfEMsApps]
+        [NumberOfCodeManagementApps]
     FROM
         [dbo].[Account]
     WHERE

@@ -8,7 +8,6 @@
     @PasswordExpirationPeriodInDays INT,
     @DataStorageTimeHrs INT,
     @NumberOfCodeManagementApps INT,
-    @NumberOfEMsApps INT,
     @AccountId INT OUT
 )
 AS
@@ -27,8 +26,7 @@ BEGIN
                 @TimeZone,
                 @PasswordExpirationPeriodInDays,
                 @DataStorageTimeHrs,
-                @NumberOfCodeManagementApps,
-                @NumberOfEMsApps
+                @NumberOfCodeManagementApps
         )
         AS [source]
         (
@@ -39,8 +37,7 @@ BEGIN
             [TimeZone],
             [PasswordExpirationPeriodInDays],
             [DataStorageTimeHrs],
-            [NumberOfCodeManagementApps],
-            [NumberOfEMsApps]
+            [NumberOfCodeManagementApps]
         )
     ON
         [target].[AccountGuid] = [source].[AccountGuid]
@@ -54,7 +51,6 @@ BEGIN
             [target].[PasswordExpirationPeriodInDays] = [source].[PasswordExpirationPeriodInDays],
             [target].[DataStorageTimeHrs] = [source].[DataStorageTimeHrs],
             [target].[NumberOfCodeManagementApps] = [source].[NumberOfCodeManagementApps],
-            [target].[NumberOfEMsApps] = [source].[NumberOfEMsApps],
             [target].[ModifiedUtc] = SYSUTCDATETIME()
     WHEN NOT MATCHED THEN
         INSERT
@@ -66,8 +62,7 @@ BEGIN
             [TimeZone],
             [PasswordExpirationPeriodInDays],
             [DataStorageTimeHrs],
-            [NumberOfCodeManagementApps],
-            [NumberOfEMsApps]
+            [NumberOfCodeManagementApps]
         )
         VALUES
         (
@@ -78,8 +73,7 @@ BEGIN
             [source].[TimeZone],
             [source].[PasswordExpirationPeriodInDays],
             [source].[DataStorageTimeHrs],
-            [source].[NumberOfCodeManagementApps],
-            [source].[NumberOfEMsApps]
+            [source].[NumberOfCodeManagementApps]
         );
 
     SET @AccountId = ISNULL(@AccountId, SCOPE_IDENTITY())
