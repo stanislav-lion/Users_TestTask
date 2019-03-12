@@ -20,7 +20,6 @@
     using Users.DataAccess.Database.AppSettings;
     using Users.Authentication.AppSettings;
     using Users.Cache.AppSettings;
-    using Users.DataAccess.Database.Contexts;
 
     public class Startup
     {
@@ -56,8 +55,6 @@
                         Format.XmlFormat.Xml, 
                         new MediaTypeHeaderValue(Format.XmlFormat.ApplicationXml));
                 });
-
-            services.AddDbContext<UserContext>();
 
             services.AddMemoryCache();
 
@@ -108,7 +105,7 @@
                             Encoding.ASCII.GetBytes(_jwtSetting.Key))
                     };
                 });
-
+            
             // Register the Swagger generator, defining 1 or more Swagger documents.
             services.AddSwaggerGen(swagger =>
             {
@@ -154,8 +151,6 @@
                         Format.XmlFormat.Xml, 
                         new MediaTypeHeaderValue(Format.XmlFormat.ApplicationXml));
                 });
-
-            services.AddDbContext<UserContext>();
 
             services.AddMemoryCache();
 
@@ -245,8 +240,7 @@
         // Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder applicationBuilder,
-            IHostingEnvironment hostingEnvironment,
-            UserContext userContext)
+            IHostingEnvironment hostingEnvironment)
         {
             if (hostingEnvironment.IsDevelopment())
             {
@@ -262,8 +256,6 @@
             applicationBuilder.UseHttpsRedirection();
 
             applicationBuilder.UseMvc();
-
-            userContext.Database.EnsureCreated();
 
             applicationBuilder.UseSwagger();
             applicationBuilder.UseSwaggerUI(c =>

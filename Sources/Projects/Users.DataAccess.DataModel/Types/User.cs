@@ -17,7 +17,7 @@
         /// <summary>
         ///     Gets or sets user unique identifier.
         /// </summary>
-        public Guid UserGuid { get; set; }
+        public Guid? UserGuid { get; set; }
 
         /// <summary>
         ///     Gets or sets logon name.
@@ -29,7 +29,7 @@
         /// <summary>
         ///     Gets or sets account identifier.
         /// </summary>
-        public int AccountId { get; set; }
+        public int? AccountId { get; set; }
 
         /// <summary>
         ///     Gets or sets first name.
@@ -70,7 +70,7 @@
         ///     Gets or sets password change UTC.
         /// </summary>
         [DateTimeUtcKind]
-        public DateTime PasswordChangeUtc { get; set; }
+        public DateTime? PasswordChangeUtc { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether password must be changed flag.
@@ -85,12 +85,12 @@
         /// <summary>
         ///     Gets or sets time zone.
         /// </summary>
-        public int TimeZone { get; set; }
+        public int? TimeZone { get; set; }
 
         /// <summary>
         ///     Gets or sets culture code.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
+        [Required(AllowEmptyStrings = true)]
         [StringLength(10)]
         public string CultureCode { get; set; }
     }

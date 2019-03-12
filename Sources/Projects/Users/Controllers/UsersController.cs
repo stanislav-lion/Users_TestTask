@@ -11,6 +11,8 @@
     using Users.DataAccess.Repository;
     using Microsoft.AspNetCore.Authorization;
     using Users.Cache.AppSettings;
+    using Users.DataAccess.DataModel.Enums;
+    using Users.Extensions;
 
     [ApiController]
     [Authorize]
@@ -19,19 +21,19 @@
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMemoryCache _memoryCache;
         private readonly CacheSetting _сacheSetting;
+        private readonly IMemoryCache _memoryCache;
 
         private readonly CacheList<User> _userCacheList;
 
         public UsersController(
             IUserRepository userRepository,
-            IMemoryCache memoryCache,
-            IOptions<CacheSetting> сacheSetting)
+            IOptions<CacheSetting> сacheSetting,
+            IMemoryCache memoryCache)
         {
             _userRepository = userRepository;
-            _memoryCache = memoryCache;
             _сacheSetting = сacheSetting.Value;
+            _memoryCache = memoryCache;
 
             _userCacheList = new CacheList<User>(
                 _memoryCache,
@@ -39,8 +41,9 @@
                 CacheKeys.Users.UsersItems,
                 _сacheSetting.ExpireMinutes);
         }
-        
+
         // GET api/users
+        [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {

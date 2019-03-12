@@ -42,7 +42,8 @@
         /// <inheritdoc />
         public User Get(string logonName)
         {
-            throw new NotImplementedException();
+            return UserContext.User
+                .FirstOrDefault(user => user.LogonName.Equals(logonName));
         }
 
         /// <inheritdoc />

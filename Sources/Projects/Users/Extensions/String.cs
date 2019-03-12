@@ -2,20 +2,20 @@
 {
     using System.Linq;
 
-    public static class StringExtensions
+    public static class String
     {
         public static string FirstCharToUpper(this string input)
         {
             return (string.IsNullOrEmpty(input))
                 ? string.Empty
-                : input.First().ToString().ToUpper() + input.Substring(1);
+                : $"{input.First().ToString().ToUpper()}{input.Substring(1)}";
         }
 
         public static string FirstCharToLower(this string input)
         {
             return (string.IsNullOrEmpty(input))
                 ? string.Empty
-                : input.First().ToString().ToLower() + input.Substring(1);
+                : $"{input.First().ToString().ToLower()}{input.Substring(1)}";
         }
     }
 }

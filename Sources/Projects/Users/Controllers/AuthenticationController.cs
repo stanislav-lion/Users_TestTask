@@ -12,10 +12,8 @@
     {
         private readonly IUserService _userService;
 
-        public AuthenticationController(IUserService userService)
-        {
+        public AuthenticationController(IUserService userService) =>
             _userService = userService;
-        }
 
         [AllowAnonymous]
         [HttpPost]

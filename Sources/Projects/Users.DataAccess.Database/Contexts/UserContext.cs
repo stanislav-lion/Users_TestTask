@@ -1,6 +1,7 @@
 ﻿namespace Users.DataAccess.Database.Contexts
 {
     using Microsoft.EntityFrameworkCore;
+    using Users.DataAccess.DataModel.Enums;
     using Users.DataAccess.DataModel.Types;
 
     public class UserContext : DbContext
@@ -23,7 +24,19 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder
+                .Entity<AccountRole>()
+                .Property(p => p.RoleType)
+                .HasConversion(
+                    x => (int) x, 
+                    x => (RoleType) x);
+
+            modelBuilder
+                .Entity<AccountRole>()
+                .Property(p => p.PrivilegeType)
+                .HasConversion(
+                    x => (byte)x, 
+                    x => (PrivilegeType)x);
         }
     }
 }

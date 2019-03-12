@@ -33,9 +33,9 @@
         ///     Gets account roles by account identifier.
         /// </summary>
         /// <param name="accountId">The identifier of account.</param>
-        /// <returns>The list of account role.</returns>
-        List<AccountRole> GetByAccount(int accountId);
-
+        /// <returns>The account role.</returns>
+        AccountRole GetByAccount(int accountId);
+        
         /// <summary>
         ///     Gets account role identifier by account role unique identifier.
         /// </summary>

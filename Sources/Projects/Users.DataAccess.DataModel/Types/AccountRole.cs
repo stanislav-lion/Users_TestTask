@@ -17,7 +17,7 @@
         /// <summary>
         ///     Gets or sets account role unique identifier.
         /// </summary>
-        public Guid AccountRoleGuid { get; set; }
+        public Guid? AccountRoleGuid { get; set; }
 
         /// <summary>
         ///     Gets or sets account identifier.
@@ -34,16 +34,11 @@
         /// <summary>
         ///     Gets or sets account role type.
         /// </summary>
-        public RoleType RoleType { get; set; }
+        public RoleType? RoleType { get; set; }
 
         /// <summary>
-        ///     Gets or sets privilege for Code Management applications.
+        ///     Gets or sets privilege type.
         /// </summary>
-        public PrivilegeType PrivCodeManagementApp { get; set; }
-
-        /// <summary>
-        ///     Gets or sets privilege for EMS applications.
-        /// </summary>
-        public PrivilegeType PrivEMsApp { get; set; }
+        public PrivilegeType? PrivilegeType { get; set; }
     }
 }

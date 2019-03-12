@@ -37,9 +37,10 @@
         }
 
         /// <inheritdoc />
-        public List<AccountRole> GetByAccount(int accountId)
+        public AccountRole GetByAccount(int accountId)
         {
-            throw new NotImplementedException();
+            return UserContext.AccountRole
+                .FirstOrDefault(accountRole => accountRole.AccountId == accountId);
         }
 
         /// <inheritdoc />

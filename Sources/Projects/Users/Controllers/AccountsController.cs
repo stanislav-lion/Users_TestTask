@@ -19,19 +19,19 @@
     public class AccountsController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly IMemoryCache _memoryCache;
         private readonly CacheSetting _cacheSetting;
+        private readonly IMemoryCache _memoryCache;
 
         private readonly CacheList<Account> _accountCacheList;
 
         public AccountsController(
             IAccountRepository accountRepository,
-            IMemoryCache memoryCache,
-            IOptions<CacheSetting> cacheSetting)
+            IOptions<CacheSetting> cacheSetting,
+            IMemoryCache memoryCache)
         {
             _accountRepository = accountRepository;
-            _memoryCache = memoryCache;
             _cacheSetting = cacheSetting.Value;
+            _memoryCache = memoryCache;
 
             _accountCacheList = new CacheList<Account>(
                 _memoryCache,
@@ -41,6 +41,7 @@
         }
 
         // GET: api/accounts
+        [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
         [HttpGet]
         public IEnumerable<Account> GetAccounts()
         {
