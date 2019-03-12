@@ -21,5 +21,10 @@
         ///     Gets database context.
         /// </summary>
         protected DbContext DbContext => _dbContext;
+
+        /// <summary>
+        ///     Gets type of database context.
+        /// </summary>
+        protected Type TypeDbContext => _dbContext.GetType();
     }
 }

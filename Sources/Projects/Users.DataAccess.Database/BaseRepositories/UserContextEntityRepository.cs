@@ -22,5 +22,10 @@
         ///     Gets database user context.
         /// </summary>
         protected UserContext UserContext => _userContext;
+
+        /// <summary>
+        ///     Gets type of database user context.
+        /// </summary>
+        protected Type TypeUserContext => _userContext.GetType();
     }
 }
