@@ -6,8 +6,14 @@
 
     public interface IUserService
     {
-        UserShort Authenticate(string username, string password);
-
         IEnumerable<User> Users { get; }
+
+        User CurrentUser { get; }
+
+        UserShort LogIn(string username, string password);
+
+        void LogOut();
+
+        string GetUserRole();
     }
 }

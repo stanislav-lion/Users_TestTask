@@ -27,7 +27,9 @@
         private readonly CacheSetting _cacheSetting;
         private readonly IMemoryCache _memoryCache;
 
-        private readonly CacheList<User> _userCacheList;
+        private User _currentUser;
+
+        private CacheList<User> _userCacheList;
 
         public UserService(
             IUserRepository userRepository,
@@ -52,37 +54,50 @@
 
         public IEnumerable<User> Users => _userCacheList.GetValues();
 
-        public UserShort Authenticate(
+        public User CurrentUser => _currentUser;
+
+        public UserShort LogIn(
             string userName,
             string password)
         {
-            User user = GetUser(userName, password);
+            _currentUser = GetUser(userName, password);
 
-            if (user == null)
+            if (_currentUser == null)
             {
                 return null;
             }
 
-            List<Claim> claims = GetClaimsDefault(user.UserId);
+            List<Claim> claims = GetClaimsDefault(_currentUser.UserId);
 
-            if (user.AccountId.HasValue)
+            string userRole = GetUserRole();
+
+            if (!string.IsNullOrEmpty(userRole))
             {
-                AccountRole accountRole = _accountRoleRepository.GetByAccount(user.AccountId.Value);
+                claims.Add(GetClaimRoleType(userRole));
+            }
+
+            return GetUserShort(_currentUser, GetJWTToken(claims));
+        }
+
+        public void LogOut()
+        {
+            _currentUser = null;
+        }
+
+        public string GetUserRole()
+        {
+            if (_currentUser.AccountId.HasValue)
+            {
+                AccountRole accountRole = _accountRoleRepository.GetByAccount(
+                    _currentUser.AccountId.Value);
 
                 if ((accountRole != null) && (accountRole.RoleType.HasValue))
                 {
-                    claims.Add(GetClaimRoleType(accountRole.RoleType.GetDescription()));
+                    return accountRole.RoleType.GetDescription();
                 }
             }
 
-            return new UserShort()
-            {
-                UserId = user.UserId,
-                UserName = user.LogonName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Token = GetJWTToken(claims)
-            };
+            return string.Empty;
         }
 
         private string GetJWTToken(List<Claim> claims)
@@ -101,7 +116,9 @@
             }));
         }
 
-        private User GetUser(string userName, string password)
+        private User GetUser(
+            string userName, 
+            string password)
         {
             User user = _userRepository.Get(userName);
 
@@ -117,6 +134,18 @@
 
             return null;
         }
+
+        private UserShort GetUserShort(
+            User user,
+            string token) =>
+            new UserShort()
+            {
+                UserId = user.UserId,
+                UserName = user.LogonName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Token = token
+            };
 
         private List<Claim> GetClaimsDefault(int userId)
         {

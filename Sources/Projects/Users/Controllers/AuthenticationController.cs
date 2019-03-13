@@ -17,9 +17,9 @@
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody]Login login)
+        public IActionResult LogIn([FromBody]Login login)
         {
-            UserShort user = _userService.Authenticate(login.UserName, login.Password);
+            UserShort user = _userService.LogIn(login.UserName, login.Password);
 
             if (user == null)
             {
@@ -30,6 +30,15 @@
             }
 
             return Ok(user);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult LogOut()
+        {
+            _userService.LogOut();
+
+            return Ok();
         }
 
         [AllowAnonymous]
