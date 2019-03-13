@@ -24,6 +24,12 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UserRole>()
+                .HasKey(field => field.UserId);
+
+            modelBuilder.Entity<AccountAddress>()
+                .HasKey(field => field.AccountId);
+
             modelBuilder
                 .Entity<AccountAddress>()
                 .Property(property => property.AddressType)
