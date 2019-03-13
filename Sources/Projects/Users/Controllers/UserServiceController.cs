@@ -27,8 +27,7 @@
         }
 
         // GET: api/userservice/getcurrentrole
-        [Authorize(Roles = "COMPANY_ADMINISTRATOR")]
-        [Authorize(Roles = "COMPANY_USER")]
+        [Authorize(Roles = "COMPANY_ADMINISTRATOR, COMPANY_USER")]
         [HttpGet(Name = "GetUserRole")]
         public string GetCurrentUserRole()
         {
