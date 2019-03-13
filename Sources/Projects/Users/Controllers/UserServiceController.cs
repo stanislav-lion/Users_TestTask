@@ -67,7 +67,7 @@
         [HttpGet(Name = "GetUserRole")]
         public string GetCurrentUserRole()
         {
-            return _userService.GetCurrentUserRole();
+            return _userService.CurrentUserRole;
         }
     }
 }

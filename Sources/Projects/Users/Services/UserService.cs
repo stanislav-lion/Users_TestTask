@@ -48,6 +48,8 @@
 
         public User CurrentUser => _currentUser;
 
+        public string CurrentUserRole => GetCurrentUserRole();
+
         public UserShort LogIn(
             string userName,
             string password)
@@ -78,11 +80,6 @@
         public void LogOut()
         {
             _currentUser = null;
-        }
-
-        public new string GetCurrentUserRole()
-        {
-            return base.GetCurrentUserRole();
         }
     }
 }

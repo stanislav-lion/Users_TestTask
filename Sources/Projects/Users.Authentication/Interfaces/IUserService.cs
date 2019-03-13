@@ -10,6 +10,8 @@
 
         User CurrentUser { get; }
 
+        string CurrentUserRole { get; }
+
         UserShort LogIn(string username, string password);
 
         void LogOut();
