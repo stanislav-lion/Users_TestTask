@@ -11,7 +11,6 @@
     using Users.DataAccess.Repository;
     using Microsoft.AspNetCore.Authorization;
     using Users.Cache.AppSettings;
-    using Users.DataAccess.DataModel.Enums;
     using Users.Extensions;
 
     [ApiController]
@@ -24,7 +23,7 @@
         private readonly CacheSetting _сacheSetting;
         private readonly IMemoryCache _memoryCache;
 
-        private readonly CacheList<User> _userCacheList;
+        private CacheList<User> _userCacheList;
 
         public UsersController(
             IUserRepository userRepository,
@@ -56,7 +55,7 @@
         {
             throw new NotImplementedException();
         }
-
+        
         // POST: api/users
         [HttpPost]
         public void AddUser([FromBody] User user)

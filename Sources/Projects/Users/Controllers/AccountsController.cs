@@ -22,7 +22,7 @@
         private readonly CacheSetting _cacheSetting;
         private readonly IMemoryCache _memoryCache;
 
-        private readonly CacheList<Account> _accountCacheList;
+        private CacheList<Account> _accountCacheList;
 
         public AccountsController(
             IAccountRepository accountRepository,
