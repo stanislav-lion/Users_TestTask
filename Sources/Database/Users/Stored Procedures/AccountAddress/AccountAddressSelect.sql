@@ -8,7 +8,7 @@ BEGIN
 
     SELECT
         [AccountId],
-        [AddressTypeId],
+        [AddressType],
         [AddressLine1],
         [AddressLine2],
         [AddressLine3],

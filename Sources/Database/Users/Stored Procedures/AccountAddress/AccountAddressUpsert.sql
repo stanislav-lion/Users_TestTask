@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[AccountAddressUpsert]
 (
     @AccountId INT,
-    @AddressTypeId INT,
+    @AddressType INT,
     @AddressLine1 NVARCHAR(100),
     @AddressLine2 NVARCHAR(100),
     @AddressLine3 NVARCHAR(100),
@@ -21,7 +21,7 @@ BEGIN
         (
             SELECT
                 @AccountId,
-                @AddressTypeId,
+                @AddressType,
                 @AddressLine1,
                 @AddressLine2,
                 @AddressLine3,
@@ -34,7 +34,7 @@ BEGIN
         AS [source]
         (
             [AccountId],
-            [AddressTypeId],
+            [AddressType],
             [AddressLine1],
             [AddressLine2],
             [AddressLine3],
@@ -48,7 +48,7 @@ BEGIN
         [target].[AccountId] = [source].[AccountId]
     WHEN MATCHED THEN
         UPDATE SET
-            [target].[AddressTypeId] = [source].[AddressTypeId],
+            [target].[AddressType] = [source].[AddressType],
             [target].[AddressLine1] = [source].[AddressLine1],
             [target].[AddressLine2] = [source].[AddressLine2],
             [target].[AddressLine3] = [source].[AddressLine3],
@@ -62,7 +62,7 @@ BEGIN
         INSERT
         (
             [AccountId],
-            [AddressTypeId],
+            [AddressType],
             [AddressLine1],
             [AddressLine2],
             [AddressLine3],
@@ -75,7 +75,7 @@ BEGIN
         VALUES
         (
             [source].[AccountId],
-            [source].[AddressTypeId],
+            [source].[AddressType],
             [source].[AddressLine1],
             [source].[AddressLine2],
             [source].[AddressLine3],
