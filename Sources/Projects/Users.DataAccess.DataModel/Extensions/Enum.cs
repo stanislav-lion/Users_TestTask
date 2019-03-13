@@ -1,4 +1,4 @@
-﻿namespace Users.Extensions
+﻿namespace Users.DataAccess.DataModel.Extensions
 {
     using System;
     using System.ComponentModel;

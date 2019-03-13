@@ -1,11 +1,7 @@
 ﻿namespace Users.Services
 {
     using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.IdentityModel.Tokens;
-    using System;
-    using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
-    using System.Text;
     using Users.Authentication.Interfaces;
     using Users.Authentication.Models;
     using Users.Cache;
@@ -16,18 +12,14 @@
     using Microsoft.Extensions.Options;
     using Users.Authentication.AppSettings;
     using Users.Cache.AppSettings;
-    using Users.Extensions;
+    using Users.Authentication.Base;
+    using Users.Authentication.Tokens;
 
-    public class UserService : IUserService
+    public class UserService : BaseUserService, IUserService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IAccountRoleRepository _accountRoleRepository;
-
         private readonly JwtSetting _jwtSetting;
         private readonly CacheSetting _cacheSetting;
         private readonly IMemoryCache _memoryCache;
-
-        private User _currentUser;
 
         private CacheList<User> _userCacheList;
 
@@ -37,10 +29,10 @@
             IOptions<JwtSetting> jwtSetting,
             IOptions<CacheSetting> cacheSetting,
             IMemoryCache memoryCache)
+            : base(
+                userRepository,
+                accountRoleRepository)
         {
-            _userRepository = userRepository;
-            _accountRoleRepository = accountRoleRepository;
-
             _jwtSetting = jwtSetting.Value;
             _cacheSetting = cacheSetting.Value;
             _memoryCache = memoryCache;
@@ -76,7 +68,11 @@
                 claims.Add(GetClaimRoleType(userRole));
             }
 
-            return GetUserShort(_currentUser, GetJWTToken(claims));
+            return GetUserShort(_currentUser,
+                Token.GetJWTToken(
+                    claims,
+                    _jwtSetting.Key,
+                    _jwtSetting.ExpireDays));
         }
 
         public void LogOut()
@@ -84,80 +80,9 @@
             _currentUser = null;
         }
 
-        public string GetUserRole()
+        public new string GetUserRole()
         {
-            if (_currentUser.AccountId.HasValue)
-            {
-                AccountRole accountRole = _accountRoleRepository.GetByAccount(
-                    _currentUser.AccountId.Value);
-
-                if ((accountRole != null) && (accountRole.RoleType.HasValue))
-                {
-                    return accountRole.RoleType.GetDescription();
-                }
-            }
-
-            return string.Empty;
-        }
-
-        private string GetJWTToken(List<Claim> claims)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            return tokenHandler.WriteToken(
-                tokenHandler.CreateToken(
-                    new SecurityTokenDescriptor
-                    {
-                        Subject = new ClaimsIdentity(claims),
-                        Expires = DateTime.UtcNow.AddDays(_jwtSetting.ExpireDays),
-                        SigningCredentials = new SigningCredentials(
-                            new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtSetting.Key)),
-                            SecurityAlgorithms.HmacSha256Signature)
-            }));
-        }
-
-        private User GetUser(
-            string userName, 
-            string password)
-        {
-            User user = _userRepository.Get(userName);
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            if (user.PasswordSalt.Equals(password))
-            {
-                return user;
-            }
-
-            return null;
-        }
-
-        private UserShort GetUserShort(
-            User user,
-            string token) =>
-            new UserShort()
-            {
-                UserId = user.UserId,
-                UserName = user.LogonName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Token = token
-            };
-
-        private List<Claim> GetClaimsDefault(int userId)
-        {
-            return new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userId.ToString())
-            };
-        }
-
-        private Claim GetClaimRoleType(string roleType)
-        {
-            return new Claim(ClaimsIdentity.DefaultRoleClaimType, roleType);
+            return base.GetUserRole();
         }
     }
 }
