@@ -5,16 +5,20 @@
     using System;
     using Users.Authentication.Interfaces;
     using Users.Authentication.Models;
+    using Users.DataAccess.DataModel.Types;
 
     [ApiController]
+    [Authorize]
     [Route("api/[controller]/[action]")]
-    public class AuthenticationController : ControllerBase
+    [FormatFilter] // api/[controller]/[action]?format=xml
+    public class UserServiceController : ControllerBase
     {
         private readonly IUserService _userService;
 
-        public AuthenticationController(IUserService userService) =>
+        public UserServiceController(IUserService userService) =>
             _userService = userService;
 
+        // POST: api/userservice/login
         [AllowAnonymous]
         [HttpPost]
         public IActionResult LogIn([FromBody]Login login)
@@ -32,7 +36,7 @@
             return Ok(user);
         }
 
-        [AllowAnonymous]
+        // POST: api/userservice/logout
         [HttpPost]
         public IActionResult LogOut()
         {
@@ -41,11 +45,29 @@
             return Ok();
         }
 
+        // POST: api/userservice/register
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Register([FromBody] Register register)
         {
             throw new NotImplementedException();
+        }
+
+        // GET: api/userservice/getcurrentuser
+        [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
+        [HttpGet(Name = "GetCurrentUser")]
+        public User GetCurrentUser()
+        {
+            return _userService.CurrentUser;
+        }
+
+        // GET: api/userservice/getcurrentrole
+        [Authorize(Roles = "COMPANY_ADMINISTRATOR")]
+        [Authorize(Roles = "COMPANY_USER")]
+        [HttpGet(Name = "GetUserRole")]
+        public string GetCurrentUserRole()
+        {
+            return _userService.GetCurrentUserRole();
         }
     }
 }

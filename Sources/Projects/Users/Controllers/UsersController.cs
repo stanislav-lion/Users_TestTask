@@ -11,7 +11,6 @@
     using Users.DataAccess.Repository;
     using Microsoft.AspNetCore.Authorization;
     using Users.Cache.AppSettings;
-    using Users.Extensions;
 
     [ApiController]
     [Authorize]
@@ -43,7 +42,7 @@
 
         // GET api/users
         [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
-        [HttpGet]
+        [HttpGet(Name = "GetUsers")]
         public IEnumerable<User> GetUsers()
         {
             return _userCacheList.GetValues();

@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/authentication/login",
+      "launchUrl": "api/userservice/login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "Users": {
       "commandName": "Users",
       "launchBrowser": true,
-      "launchUrl": "api/authentication/login",
+      "launchUrl": "api/userservice/login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

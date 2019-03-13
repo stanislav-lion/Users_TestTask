@@ -12,7 +12,7 @@
         protected readonly IUserRepository _userRepository;
         protected readonly IAccountRoleRepository _accountRoleRepository;
 
-        protected User _currentUser;
+        protected static User _currentUser;
 
         protected BaseUserService(
             IUserRepository userRepository,
@@ -41,9 +41,10 @@
             return null;
         }
 
-        protected string GetUserRole()
+        protected string GetCurrentUserRole()
         {
-            if (_currentUser.AccountId.HasValue)
+            if ((_currentUser != null) &&
+                (_currentUser.AccountId.HasValue))
             {
                 AccountRole accountRole = _accountRoleRepository.GetByAccount(
                     _currentUser.AccountId.Value);

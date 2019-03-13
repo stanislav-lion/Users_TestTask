@@ -61,11 +61,20 @@ namespace Users {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UserName or password is incorrect..
+        ///   Looks up a localized string similar to UserName or Password is incorrect..
         /// </summary>
         internal static string ErrorMessageByAuthenticate {
             get {
                 return ResourceManager.GetString("ErrorMessageByAuthenticate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Сurrent User does not exist..
+        /// </summary>
+        internal static string ErrorMessageByGetCurrentUser {
+            get {
+                return ResourceManager.GetString("ErrorMessageByGetCurrentUser", resourceCulture);
             }
         }
         

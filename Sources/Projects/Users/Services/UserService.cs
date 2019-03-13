@@ -61,7 +61,7 @@
 
             List<Claim> claims = GetClaimsDefault(_currentUser.UserId);
 
-            string userRole = GetUserRole();
+            string userRole = GetCurrentUserRole();
 
             if (!string.IsNullOrEmpty(userRole))
             {
@@ -80,9 +80,9 @@
             _currentUser = null;
         }
 
-        public new string GetUserRole()
+        public new string GetCurrentUserRole()
         {
-            return base.GetUserRole();
+            return base.GetCurrentUserRole();
         }
     }
 }

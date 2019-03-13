@@ -42,7 +42,7 @@
 
         // GET: api/accounts
         [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
-        [HttpGet]
+        [HttpGet(Name = "GetAccounts")]
         public IEnumerable<Account> GetAccounts()
         {
             return _accountCacheList.GetValues();

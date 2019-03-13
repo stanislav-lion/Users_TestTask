@@ -13,7 +13,5 @@
         UserShort LogIn(string username, string password);
 
         void LogOut();
-
-        string GetUserRole();
     }
 }

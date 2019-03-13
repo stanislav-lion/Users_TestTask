@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorMessageByAuthenticate" xml:space="preserve">
-    <value>UserName or password is incorrect.</value>
+    <value>UserName or Password is incorrect.</value>
+  </data>
+  <data name="ErrorMessageByGetCurrentUser" xml:space="preserve">
+    <value>Сurrent User does not exist.</value>
   </data>
   <data name="SwaggerEndpointName" xml:space="preserve">
     <value>Users Service API</value>
