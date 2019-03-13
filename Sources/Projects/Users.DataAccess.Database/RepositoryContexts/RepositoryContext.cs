@@ -16,11 +16,11 @@
 
         private readonly string[] _connectionStrings;
 
-        private readonly Lazy<UserRepository> _userRepository;
-        private readonly Lazy<UserRoleRepository> _userRoleRepository;
         private readonly Lazy<AccountRepository> _accountRepository;
         private readonly Lazy<AccountRoleRepository> _accountRoleRepository;
         private readonly Lazy<AccountAddressRepository> _accountAddressRepository;
+        private readonly Lazy<UserRepository> _userRepository;
+        private readonly Lazy<UserRoleRepository> _userRoleRepository;
 
         //private readonly Lazy<ServiceBrokerRepository> _serviceBrokerRepository;
 
@@ -55,12 +55,6 @@
 
             _userContexts = new UserContext[_connectionStrings.Length];
 
-            _userRepository =
-                new Lazy<UserRepository>(() => new UserRepository(GetUserContext(DatabaseType.DbPrimary)));
-
-            _userRoleRepository =
-                new Lazy<UserRoleRepository>(() => new UserRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
-
             _accountRepository =
                 new Lazy<AccountRepository>(() => new AccountRepository(GetUserContext(DatabaseType.DbPrimary)));
 
@@ -71,6 +65,12 @@
             _accountAddressRepository =
                 new Lazy<AccountAddressRepository>(
                     () => new AccountAddressRepository(GetUserContext(DatabaseType.DbPrimary)));
+
+            _userRepository =
+                new Lazy<UserRepository>(() => new UserRepository(GetUserContext(DatabaseType.DbPrimary)));
+
+            _userRoleRepository =
+                new Lazy<UserRoleRepository>(() => new UserRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
 
             //_serviceBrokerRepository =
             //    new Lazy<ServiceBrokerRepository>(
@@ -90,12 +90,6 @@
         }
 
         /// <inheritdoc />
-        public IUserRepository UserRepository => _userRepository.Value;
-
-        /// <inheritdoc />
-        public IUserRoleRepository UserRoleRepository => _userRoleRepository.Value;
-
-        /// <inheritdoc />
         public IAccountRepository AccountRepository => _accountRepository.Value;
 
         /// <inheritdoc />
@@ -103,6 +97,12 @@
 
         /// <inheritdoc />
         public IAccountAddressRepository AccountAddressRepository => _accountAddressRepository.Value;
+        
+        /// <inheritdoc />
+        public IUserRepository UserRepository => _userRepository.Value;
+
+        /// <inheritdoc />
+        public IUserRoleRepository UserRoleRepository => _userRoleRepository.Value;
 
         /// <inheritdoc />
         //public IServiceBrokerRepository ServiceBrokerRepository => _serviceBrokerRepository.Value;
