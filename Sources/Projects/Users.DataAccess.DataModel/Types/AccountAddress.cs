@@ -16,7 +16,7 @@
         /// <summary>
         ///     Gets or sets address type.
         /// </summary>
-        public AddressType AddressType { get; set; }
+        public AddressType? AddressType { get; set; }
 
         /// <summary>
         ///     Gets or sets address line 1.
@@ -42,15 +42,15 @@
         /// <summary>
         ///     Gets or sets city.
         /// </summary>
-        [Required(AllowEmptyStrings = true)]
-        [StringLength(100)]
+        [Required(AllowEmptyStrings = false)]
+        [StringLength(50)]
         public string City { get; set; }
 
         /// <summary>
         ///     Gets or sets county.
         /// </summary>
-        [Required(AllowEmptyStrings = true)]
-        [StringLength(100)]
+        [Required(AllowEmptyStrings = false)]
+        [StringLength(50)]
         public string County { get; set; }
 
         /// <summary>
