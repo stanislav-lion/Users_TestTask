@@ -27,8 +27,6 @@
         /// <summary>
         ///     Gets or sets account role name.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(40)]
         public string RoleName { get; set; }
 
         /// <summary>

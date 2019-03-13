@@ -22,8 +22,6 @@
         /// <summary>
         ///     Gets or sets logon name.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(100)]
         public string LogonName { get; set; }
 
         /// <summary>
@@ -34,36 +32,26 @@
         /// <summary>
         ///     Gets or sets first name.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(50)]
         public string FirstName { get; set; }
 
         /// <summary>
         ///     Gets or sets last name.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(100)]
         public string LastName { get; set; }
 
         /// <summary>
         ///     Gets or sets middle name.
         /// </summary>
-        [Required(AllowEmptyStrings = true)]
-        [StringLength(30)]
         public string MiddleName { get; set; }
 
         /// <summary>
         ///     Gets or sets password salt.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(40)]
         public string PasswordSalt { get; set; }
 
         /// <summary>
         ///     Gets or sets password hash.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(40)]
         public string PasswordHash { get; set; }
 
         /// <summary>
@@ -90,8 +78,6 @@
         /// <summary>
         ///     Gets or sets culture code.
         /// </summary>
-        [Required(AllowEmptyStrings = true)]
-        [StringLength(10)]
         public string CultureCode { get; set; }
     }
 }

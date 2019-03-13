@@ -21,15 +21,11 @@
         /// <summary>
         ///     Gets or sets account number.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(8)]
         public string AccountNumber { get; set; }
 
         /// <summary>
         ///     Gets or sets account name.
         /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(50)]
         public string AccountName { get; set; }
 
         /// <summary>
