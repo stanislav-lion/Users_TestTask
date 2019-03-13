@@ -25,18 +25,25 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<AccountRole>()
-                .Property(p => p.RoleType)
+                .Entity<AccountAddress>()
+                .Property(property => property.AddressType)
                 .HasConversion(
-                    x => (int) x, 
-                    x => (RoleType) x);
+                    value => (int) value,
+                    value => (AddressType) value);
 
             modelBuilder
                 .Entity<AccountRole>()
-                .Property(p => p.PrivilegeType)
+                .Property(property => property.PrivilegeType)
                 .HasConversion(
-                    x => (byte)x, 
-                    x => (PrivilegeType)x);
+                    value => (byte) value,
+                    value => (PrivilegeType) value);
+
+            modelBuilder
+                .Entity<AccountRole>()
+                .Property(property => property.RoleType)
+                .HasConversion(
+                    value => (int) value,
+                    value => (RoleType) value);
         }
     }
 }
