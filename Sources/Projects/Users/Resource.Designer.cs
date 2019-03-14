@@ -79,6 +79,33 @@ namespace Users {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The current user exists in the system. Click LogOut before trying to LogIn ih the system with another user..
+        /// </summary>
+        internal static string ErrorMessageByLogIn {
+            get {
+                return ResourceManager.GetString("ErrorMessageByLogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current user does not exist in the system..
+        /// </summary>
+        internal static string ErrorMessageByLogOut {
+            get {
+                return ResourceManager.GetString("ErrorMessageByLogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogOut from the system is completed successfully..
+        /// </summary>
+        internal static string MessageLogOutSuccess {
+            get {
+                return ResourceManager.GetString("MessageLogOutSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Users Service API.
         /// </summary>
         internal static string SwaggerEndpointName {

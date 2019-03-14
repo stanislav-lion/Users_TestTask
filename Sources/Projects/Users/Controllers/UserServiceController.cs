@@ -39,6 +39,14 @@
         [HttpPost]
         public IActionResult LogIn([FromBody] Login login)
         {
+            if (_userService.CurrentUser != null)
+            {
+                return BadRequest(new
+                {
+                    message = Resource.ErrorMessageByLogIn
+                });
+            }
+
             UserShort user = _userService.LogIn(login.UserName, login.Password);
 
             if (user == null)
@@ -53,12 +61,21 @@
         }
 
         // POST: api/userservice/logout
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult LogOut()
         {
+            if (_userService.CurrentUser == null)
+            {
+                return BadRequest(new
+                {
+                    message = Resource.ErrorMessageByLogOut
+                });
+            }
+
             _userService.LogOut();
 
-            return Ok();
+            return Ok(Resource.MessageLogOutSuccess);
         }
 
         // POST: api/userservice/register

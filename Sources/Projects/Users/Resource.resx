@@ -123,6 +123,15 @@
   <data name="ErrorMessageByGetCurrentUser" xml:space="preserve">
     <value>Сurrent User does not exist.</value>
   </data>
+  <data name="ErrorMessageByLogIn" xml:space="preserve">
+    <value>The current user exists in the system. Click LogOut before trying to LogIn ih the system with another user.</value>
+  </data>
+  <data name="ErrorMessageByLogOut" xml:space="preserve">
+    <value>The current user does not exist in the system.</value>
+  </data>
+  <data name="MessageLogOutSuccess" xml:space="preserve">
+    <value>LogOut from the system is completed successfully.</value>
+  </data>
   <data name="SwaggerEndpointName" xml:space="preserve">
     <value>Users Service API</value>
   </data>
