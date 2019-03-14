@@ -18,3 +18,4 @@ BEGIN
     WHERE
         [AccountRoleId] = @AccountRoleId
 END
+GO

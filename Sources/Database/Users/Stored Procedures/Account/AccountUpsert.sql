@@ -78,3 +78,4 @@ BEGIN
 
     SET @AccountId = ISNULL(@AccountId, SCOPE_IDENTITY())
 END
+GO

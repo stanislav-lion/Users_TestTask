@@ -60,3 +60,4 @@ BEGIN
 
     SET @AccountRoleId = ISNULL(@AccountRoleId, SCOPE_IDENTITY())
 END
+GO

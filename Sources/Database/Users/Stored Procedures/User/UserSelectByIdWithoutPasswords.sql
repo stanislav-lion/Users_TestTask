@@ -22,3 +22,4 @@ BEGIN
     WHERE
         [UserId] = @UserId
 END
+GO

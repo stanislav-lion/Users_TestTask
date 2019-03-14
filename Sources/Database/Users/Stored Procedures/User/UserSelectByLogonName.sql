@@ -26,3 +26,4 @@ BEGIN
     WHERE
         [LogonName] = @LogonName
 END
+GO

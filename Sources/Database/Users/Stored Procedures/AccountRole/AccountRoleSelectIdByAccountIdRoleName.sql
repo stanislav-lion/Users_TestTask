@@ -16,3 +16,4 @@ BEGIN
         [AccountId] = @AccountId AND
         [RoleName] = @RoleName
 END
+GO

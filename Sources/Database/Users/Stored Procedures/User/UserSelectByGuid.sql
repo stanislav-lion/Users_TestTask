@@ -26,3 +26,4 @@ BEGIN
     WHERE
         [UserGuid] = @UserGuid
 END
+GO

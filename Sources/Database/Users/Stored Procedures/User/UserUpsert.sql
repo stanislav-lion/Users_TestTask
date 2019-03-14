@@ -108,3 +108,4 @@ BEGIN
 
     SET @UserId = ISNULL(@UserId, SCOPE_IDENTITY())
 END
+GO

@@ -9,3 +9,4 @@ BEGIN
     DELETE FROM [dbo].[UserRole]
     WHERE [UserId] = @UserId
 END
+GO

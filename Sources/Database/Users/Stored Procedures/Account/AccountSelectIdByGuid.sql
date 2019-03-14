@@ -14,3 +14,4 @@ BEGIN
     WHERE
         [AccountGuid] = @AccountGuid
 END
+GO

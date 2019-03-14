@@ -22,3 +22,4 @@ BEGIN
     WHERE
         [AccountId] = @AccountId
 END
+GO
