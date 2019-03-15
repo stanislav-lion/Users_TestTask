@@ -13,8 +13,8 @@
     using Users.Cache.AppSettings;
 
     [ApiController]
-    [Authorize]
     [Route("api/[controller]")]
+    [Authorize]
     [FormatFilter] // api/[controller]?format=xml
     public class AccountsController : ControllerBase
     {
@@ -41,12 +41,10 @@
         }
 
         // GET: api/accounts
-        [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
         [HttpGet(Name = "GetAccounts")]
-        public IEnumerable<Account> GetAccounts()
-        {
-            return _accountCacheList.GetValues();
-        }
+        [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
+        public IEnumerable<Account> GetAccounts() =>
+            _accountCacheList.GetValues();
 
         // GET: api/accounts/[accountId]
         [HttpGet("{accountId}", Name = "GetAccount")]

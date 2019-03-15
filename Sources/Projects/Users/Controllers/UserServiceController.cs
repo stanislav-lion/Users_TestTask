@@ -8,8 +8,8 @@
     using Users.DataAccess.DataModel.Types;
 
     [ApiController]
-    [Authorize]
     [Route("api/[controller]/[action]")]
+    [Authorize]
     [FormatFilter] // api/[controller]/[action]?format=xml
     public class UserServiceController : ControllerBase
     {
@@ -19,24 +19,20 @@
             _userService = userService;
 
         // GET: api/userservice/getcurrentuser
-        [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
         [HttpGet(Name = "GetCurrentUser")]
-        public User GetCurrentUser()
-        {
-            return _userService.CurrentUser;
-        }
+        [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
+        public User GetCurrentUser() =>
+            _userService.CurrentUser;
 
         // GET: api/userservice/getcurrentrole
-        [Authorize(Roles = "COMPANY_ADMINISTRATOR, COMPANY_USER")]
         [HttpGet(Name = "GetUserRole")]
-        public string GetCurrentUserRole()
-        {
-            return _userService.CurrentUserRole;
-        }
+        [Authorize(Roles = "COMPANY_ADMINISTRATOR, COMPANY_USER")]
+        public string GetCurrentUserRole() =>
+            _userService.CurrentUserRole;
 
         // POST: api/userservice/login
-        [AllowAnonymous]
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult LogIn([FromBody] Login login)
         {
             if (_userService.CurrentUser != null)
@@ -61,8 +57,8 @@
         }
 
         // POST: api/userservice/logout
-        [AllowAnonymous]
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult LogOut()
         {
             if (_userService.CurrentUser == null)
@@ -79,8 +75,8 @@
         }
 
         // POST: api/userservice/register
-        [AllowAnonymous]
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Register([FromBody] Register register)
         {
             throw new NotImplementedException();
