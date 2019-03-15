@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Users.Authentication\Users.Authentication.csproj" />
     <ProjectReference Include="..\Users.Cache\Users.Cache.csproj" />
+    <ProjectReference Include="..\Users.CustomAttributes\Users.CustomAttributes.csproj" />
     <ProjectReference Include="..\Users.DataAccess.Database\Users.DataAccess.Database.csproj" />
     <ProjectReference Include="..\Users.DataAccess.Repository\Users.DataAccess.Repository.csproj" />
   </ItemGroup>
