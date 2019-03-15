@@ -30,7 +30,7 @@
 
             // If you want to set up a controller for, say, property injection
             // you can override the controller registration after populating services.
-            builder.RegisterType<UserService>()
+            builder.RegisterType<AdvancedUserService>()
                 .As<IUserService>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),

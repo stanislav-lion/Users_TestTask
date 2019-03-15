@@ -2,7 +2,7 @@
 {
     using System;
 
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, Inherited = true)]
     public class ReplaceStringsAttribute : Attribute
     {
         private string _oldValue;

@@ -13,7 +13,7 @@
             IServiceCollection services,
             string connectionString)
         {
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, AdvancedUserService>();
 
             services.AddScoped<IUserRepository>(
                 userRepository => new UserRepository(
@@ -45,7 +45,7 @@
             IServiceCollection services,
             string connectionString)
         {
-            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IUserService, AdvancedUserService>();
 
             services.AddSingleton<IUserRepository>(
                 userRepository => new UserRepository(
@@ -77,7 +77,7 @@
             IServiceCollection services,
             string connectionString)
         {
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserService, AdvancedUserService>();
 
             services.AddTransient<IUserRepository>(
                 userRepository => new UserRepository(
