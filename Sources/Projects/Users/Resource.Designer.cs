@@ -97,6 +97,15 @@ namespace Users {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Registration is failed..
+        /// </summary>
+        internal static string ErrorMessageByRegister {
+            get {
+                return ResourceManager.GetString("ErrorMessageByRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LogOut from the system is completed successfully..
         /// </summary>
         internal static string MessageLogOutSuccess {

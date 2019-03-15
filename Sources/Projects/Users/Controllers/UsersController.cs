@@ -11,6 +11,7 @@
     using Users.DataAccess.Repository;
     using Microsoft.AspNetCore.Authorization;
     using Users.Cache.AppSettings;
+    using System.Threading.Tasks;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -43,14 +44,18 @@
         // GET api/users
         [HttpGet(Name = "GetUsers")]
         [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
-        public IEnumerable<User> GetUsers() => 
-            _userCacheList.GetValues();
-
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return await Task.Run(
+                () => _userCacheList.GetValues());
+        }
+        
         // GET: api/users/[userId]
         [HttpGet("{userId}", Name = "GetUser")]
-        public User GetUser(int userId)
+        public async Task<User> GetUser(int userId)
         {
-            throw new NotImplementedException();
+            return await Task.Run(
+                () => _userRepository.Get(userId));
         }
         
         // POST: api/users

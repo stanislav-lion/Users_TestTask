@@ -12,7 +12,9 @@
 
         string CurrentUserRole { get; }
 
-        UserShort LogIn(string username, string password);
+        UserShort Register(string userName, string password);
+
+        UserShort LogIn(string userName, string password);
 
         void LogOut();
     }

@@ -129,6 +129,9 @@
   <data name="ErrorMessageByLogOut" xml:space="preserve">
     <value>The current user does not exist in the system.</value>
   </data>
+  <data name="ErrorMessageByRegister" xml:space="preserve">
+    <value>User Registration is failed.</value>
+  </data>
   <data name="MessageLogOutSuccess" xml:space="preserve">
     <value>LogOut from the system is completed successfully.</value>
   </data>

@@ -11,6 +11,7 @@
     using Microsoft.Extensions.Options;
     using Microsoft.AspNetCore.Authorization;
     using Users.Cache.AppSettings;
+    using System.Threading.Tasks;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -43,14 +44,18 @@
         // GET: api/accounts
         [HttpGet(Name = "GetAccounts")]
         [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
-        public IEnumerable<Account> GetAccounts() =>
-            _accountCacheList.GetValues();
+        public async Task<IEnumerable<Account>> GetAccounts()
+        {
+            return await Task.Run(
+                () => _accountCacheList.GetValues());
+        }
 
         // GET: api/accounts/[accountId]
         [HttpGet("{accountId}", Name = "GetAccount")]
-        public Account GetAccount(int accountId)
+        public async Task<Account> GetAccount(int accountId)
         {
-            throw new NotImplementedException();
+            return await Task.Run(
+                () => _accountRepository.Get(accountId));
         }
 
         // POST: api/accounts

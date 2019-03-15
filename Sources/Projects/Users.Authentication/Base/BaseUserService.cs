@@ -22,6 +22,25 @@
             _accountRoleRepository = accountRoleRepository;
         }
 
+        protected User CreateUser(
+            string userName,
+            string password)
+        {
+            var user = new User()
+            {
+                LogonName = userName,
+                PasswordSalt = password
+            };
+
+            _userRepository.Upsert(new User()
+            {
+                LogonName = userName,
+                PasswordSalt = password
+            });
+
+            return user;
+        }
+
         protected User GetUser(
             string userName,
             string password)

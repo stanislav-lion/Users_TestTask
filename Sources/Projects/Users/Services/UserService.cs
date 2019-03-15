@@ -52,6 +52,25 @@
         [ReplaceChars(OldValue = '_', NewValue = ' ')]
         public virtual string CurrentUserRole => GetCurrentUserRole();
 
+        public UserShort Register(
+            string userName, 
+            string password)
+        {
+            _currentUser = CreateUser(userName, password);
+
+            if (_currentUser == null)
+            {
+                return null;
+            }
+
+            return GetUserShort(_currentUser,
+                Token.GetJWTToken(
+                    GetClaimsDefault(_currentUser.UserId),
+                    _jwtSetting.Key,
+                    _jwtSetting.ExpireDays));
+
+        }
+
         public UserShort LogIn(
             string userName,
             string password)
