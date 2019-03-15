@@ -14,6 +14,7 @@
     using Users.Cache.AppSettings;
     using Users.Authentication.Base;
     using Users.Authentication.Tokens;
+    using Users.CustomAttributes;
 
     public class UserService : BaseUserService, IUserService
     {
@@ -44,11 +45,12 @@
                 _cacheSetting.ExpireMinutes);
         }
 
-        public IEnumerable<User> Users => _userCacheList.GetValues();
+        public virtual IEnumerable<User> Users => _userCacheList.GetValues();
 
-        public User CurrentUser => _currentUser;
+        public virtual User CurrentUser => _currentUser;
 
-        public string CurrentUserRole => GetCurrentUserRole();
+        [ReplaceChars(OldValue = '_', NewValue = ' ')]
+        public virtual string CurrentUserRole => GetCurrentUserRole();
 
         public UserShort LogIn(
             string userName,

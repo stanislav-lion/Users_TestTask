@@ -8,6 +8,15 @@
         private string _oldValue;
         private string _newValue;
 
+        private const string DefaultOldValue = "_";
+        private const string DefaultNewValue = " ";
+
+        public ReplaceStringsAttribute()
+        {
+            _oldValue = DefaultOldValue;
+            _newValue = DefaultNewValue;
+        }
+
         public ReplaceStringsAttribute(
             string oldValue,
             string newValue)

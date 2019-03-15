@@ -8,6 +8,15 @@
         private char _oldValue;
         private char _newValue;
 
+        private const char DefaultOldValue = '_';
+        private const char DefaultNewValue = ' ';
+
+        public ReplaceCharsAttribute()
+        {
+            _oldValue = DefaultOldValue;
+            _newValue = DefaultNewValue;
+        }
+
         public ReplaceCharsAttribute(
             char oldValue,
             char newValue)
