@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\CodeAnalysis\Suppressions.cs" Link="CodeAnalysis\Suppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\CodeAnalysis\stylecop.json" Link="CodeAnalysis\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CodeAnalysis\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

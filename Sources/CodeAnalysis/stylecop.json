@@ -1,0 +1,19 @@
+{
+    // ACTION REQUIRED: This file was automatically added to your project, but it
+    // will not take effect until additional steps are taken to enable it. See the
+    // following page for additional information:
+    //
+    // Template Version: 1.0.0 (2017-07-24)
+    //
+    // https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/EnableConfiguration.md
+    "$schema":
+        "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+    "settings": {
+        "documentationRules": {
+            "companyName": "Stanislav",
+            "copyrightText":
+                "This software is proprietary and confidential information belonging to\r\n{companyName}, and may not be decompiled, disassembled, disclosed,\r\nreproduced or copied without the prior written consent of {companyName}.",
+            "xmlHeader": false
+        }
+    }
+}
