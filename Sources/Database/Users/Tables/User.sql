@@ -3,7 +3,7 @@ CREATE TABLE [dbo].[User]
 	[UserId] INT NOT NULL IDENTITY, 
 	[UserGuid] UNIQUEIDENTIFIER NULL, 
 	[LogonName] NVARCHAR(100) NOT NULL,
-	[AccountId] INT NULL, 
+	[AccountId] INT NOT NULL, 
 	[FirstName] NVARCHAR(50) NOT NULL, 
 	[LastName] NVARCHAR(100) NOT NULL, 
 	[MiddleName] NVARCHAR(30) NULL, 
