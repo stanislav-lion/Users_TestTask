@@ -19,5 +19,6 @@ CREATE TABLE [dbo].[User]
 	CONSTRAINT [User_PK] PRIMARY KEY ([UserId]), 
 	CONSTRAINT [User_U_UserGuid] UNIQUE ([UserGuid]), 
 	CONSTRAINT [User_U_LogonName] UNIQUE ([LogonName]), 
-	CONSTRAINT [User_Account_FK] FOREIGN KEY ([AccountId]) REFERENCES [dbo].[Account]([AccountId]) 
+	CONSTRAINT [User_U_AccountId] UNIQUE ([AccountId]), 
+	CONSTRAINT [User_Account_FK] FOREIGN KEY ([AccountId]) REFERENCES [dbo].[Account]([AccountId])
 )
