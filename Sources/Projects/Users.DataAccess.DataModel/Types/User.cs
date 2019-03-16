@@ -1,7 +1,6 @@
 ﻿namespace Users.DataAccess.DataModel.Types
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
     using Users.DataAccess.DataModel.Attributes;
 
     /// <summary>
@@ -27,7 +26,7 @@
         /// <summary>
         ///     Gets or sets account identifier.
         /// </summary>
-        public int? AccountId { get; set; }
+        public int AccountId { get; set; }
 
         /// <summary>
         ///     Gets or sets first name.

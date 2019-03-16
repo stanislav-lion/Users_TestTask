@@ -62,11 +62,10 @@
 
         protected string GetCurrentUserRole()
         {
-            if ((_currentUser != null) &&
-                (_currentUser.AccountId.HasValue))
+            if (_currentUser != null)
             {
                 AccountRole accountRole = _accountRoleRepository.GetByAccount(
-                    _currentUser.AccountId.Value);
+                    _currentUser.AccountId);
 
                 if ((accountRole != null) && (accountRole.RoleType.HasValue))
                 {
