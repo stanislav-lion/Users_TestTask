@@ -25,7 +25,7 @@
     {
         private JwtSetting _jwtSetting;
         private ConnectionString _connectionString;
-        private SQLServerConnectionString _sqlServerConnectionString;
+        private MSSQLConnectionString _msSQLConnectionString;
         private PostgreSQLConnectionString _postgreSQLConnectionString;
         private CacheSetting _cacheSetting;
         private AppSetting _appSetting;
@@ -62,8 +62,8 @@
                 .Get<JwtSetting>();
             _connectionString = Configuration.GetSection(nameof(ConnectionString))
                 .Get<ConnectionString>();
-            _sqlServerConnectionString = Configuration.GetSection(nameof(SQLServerConnectionString))
-                .Get<SQLServerConnectionString>();
+            _msSQLConnectionString = Configuration.GetSection(nameof(MSSQLConnectionString))
+                .Get<MSSQLConnectionString>();
             _postgreSQLConnectionString = Configuration.GetSection(nameof(PostgreSQLConnectionString))
                 .Get<PostgreSQLConnectionString>();
             _cacheSetting = Configuration.GetSection(nameof(CacheSetting))
@@ -76,8 +76,8 @@
                     Configuration.GetSection(nameof(JwtSetting)))
                 .Configure<ConnectionString>(
                     Configuration.GetSection(nameof(ConnectionString)))
-                .Configure<SQLServerConnectionString>(
-                    Configuration.GetSection(nameof(SQLServerConnectionString)))
+                .Configure<MSSQLConnectionString>(
+                    Configuration.GetSection(nameof(MSSQLConnectionString)))
                 .Configure<PostgreSQLConnectionString>(
                     Configuration.GetSection(nameof(PostgreSQLConnectionString)))
                 .Configure<CacheSetting>(
@@ -131,7 +131,7 @@
             return AutofacConfigurator.GetAutofacServiceProvider(
                 services,
                 ApplicationContainer,
-                _sqlServerConnectionString.UsersConnectionString
+                _msSQLConnectionString.UsersConnectionString
             );
         }
 
@@ -158,8 +158,8 @@
                 .Get<JwtSetting>();
             _connectionString = Configuration.GetSection(nameof(ConnectionString))
                 .Get<ConnectionString>();
-            _sqlServerConnectionString = Configuration.GetSection(nameof(SQLServerConnectionString))
-                .Get<SQLServerConnectionString>();
+            _msSQLConnectionString = Configuration.GetSection(nameof(MSSQLConnectionString))
+                .Get<MSSQLConnectionString>();
             _postgreSQLConnectionString = Configuration.GetSection(nameof(PostgreSQLConnectionString))
                 .Get<PostgreSQLConnectionString>();
             _cacheSetting = Configuration.GetSection(nameof(CacheSetting))
@@ -172,8 +172,8 @@
                     Configuration.GetSection(nameof(JwtSetting)))
                 .Configure<ConnectionString>(
                     Configuration.GetSection(nameof(ConnectionString)))
-                .Configure<SQLServerConnectionString>(
-                    Configuration.GetSection(nameof(SQLServerConnectionString)))
+                .Configure<MSSQLConnectionString>(
+                    Configuration.GetSection(nameof(MSSQLConnectionString)))
                 .Configure<PostgreSQLConnectionString>(
                     Configuration.GetSection(nameof(PostgreSQLConnectionString)))
                 .Configure<CacheSetting>(
@@ -204,15 +204,15 @@
             
             EmbeddedServicesConfigurator.AddScoped(
                 services,
-                _sqlServerConnectionString.UsersConnectionString);
+                _msSQLConnectionString.UsersConnectionString);
             
             //EmbeddedServicesConfigurator.AddSingleton(
             //    services,
-            //    _sqlServerConnectionString.UsersConnectionString);
+            //    _msSQLConnectionString.UsersConnectionString);
             
             //EmbeddedServicesConfigurator.AddTransient(
             //    services,
-            //    _sqlServerConnectionString.UsersConnectionString);
+            //    _msSQLConnectionString.UsersConnectionString);
 
             // Register the Swagger generator, defining 1 or more Swagger documents.
             services.AddSwaggerGen(swagger =>
