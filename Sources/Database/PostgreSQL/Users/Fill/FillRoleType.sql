@@ -1,12 +1,13 @@
-COPY public."RoleType" ("RoleTypeId", "RoleTypeName", "CreatedUtc", "ModifiedUtc") FROM stdin;
-1	APPLICATION_ADMINISTRATOR                                                                           	2019-03-18 15:03:21.693022	2019-03-18 15:03:21.693022
-2	COMPANY_ADMINISTRATOR                                                                               	2019-03-18 15:04:23.572998	2019-03-18 15:04:23.572998
-4	COMPANY_USER                                                                                        	2019-03-18 15:05:26.04202	2019-03-18 15:05:26.04202
-16	SYSTEM_ADMINISTRATOR                                                                                	2019-03-18 15:05:49.719468	2019-03-18 15:05:49.719468
-32	ACCOUNT_ADMINISTRATOR                                                                               	2019-03-18 15:06:16.009999	2019-03-18 15:06:16.009999
-64	ACCOUNT_SUPPORT                                                                                     	2019-03-18 15:06:36.260126	2019-03-18 15:06:36.260126
-128	NETWORK_MANAGER                                                                                     	2019-03-18 15:06:56.294293	2019-03-18 15:06:56.294293
-256	SITE_COORDINATOR                                                                                    	2019-03-18 15:07:19.957836	2019-03-18 15:07:19.957836
-512	SERVICE_SPECIALIST                                                                                  	2019-03-18 15:07:42.978707	2019-03-18 15:07:42.978707
-8192	GUEST                                                                                               	2019-03-18 15:08:02.689946	2019-03-18 15:08:02.689946
-\.
+INSERT INTO public."RoleType"
+	("RoleTypeId", "RoleTypeName", "CreatedUtc", "ModifiedUtc")
+VALUES
+	(1, 'APPLICATION_ADMINISTRATOR', NOW(), NOW()),
+	(2, 'COMPANY_ADMINISTRATOR', NOW(), NOW()),
+	(4, 'COMPANY_USER', NOW(), NOW()),
+	(16, 'SYSTEM_ADMINISTRATOR', NOW(), NOW()),
+	(32, 'ACCOUNT_ADMINISTRATOR', NOW(), NOW()),
+	(64, 'ACCOUNT_SUPPORT', NOW(), NOW()),
+	(128, 'NETWORK_MANAGER', NOW(), NOW()),
+	(256, 'SITE_COORDINATOR', NOW(), NOW()),
+	(512, 'SERVICE_SPECIALIST', NOW(), NOW()),
+	(8192, 'GUEST', NOW(), NOW());
