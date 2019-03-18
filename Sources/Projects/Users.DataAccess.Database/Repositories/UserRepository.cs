@@ -43,7 +43,7 @@
         public User Get(string logonName)
         {
             return UserContext.User
-                .FirstOrDefault(user => user.LogonName.Equals(logonName));
+                .FirstOrDefault(user => user.LogonName.Trim().Equals(logonName));
         }
 
         /// <inheritdoc />
