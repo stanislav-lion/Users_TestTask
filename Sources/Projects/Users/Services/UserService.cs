@@ -75,7 +75,7 @@
             string userName,
             string password)
         {
-            _currentUser = GetUser(userName, password);
+            _currentUser = GetUser(userName.Trim(), password.Trim());
 
             if (_currentUser == null)
             {

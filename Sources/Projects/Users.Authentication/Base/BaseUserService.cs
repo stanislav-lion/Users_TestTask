@@ -52,7 +52,7 @@
                 return null;
             }
 
-            if (user.PasswordSalt.Equals(password))
+            if (user.PasswordSalt.Trim().Equals(password))
             {
                 return user;
             }
