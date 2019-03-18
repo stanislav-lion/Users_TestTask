@@ -1,9 +1,3 @@
---
--- TOC entry 2877 (class 0 OID 16435)
--- Dependencies: 198
--- Data for Name: AccountAddress; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
 COPY public."AccountAddress" ("AccountId", "AddressType", "AddressLine1", "AddressLine2", "AddressLine3", "City", "County", "StateProvince", "PostalCode", "CountryTwoLetterCode", "CreatedUtc", "ModifiedUtc") FROM stdin;
 1	1	\N	\N	\N	Kyiv                                              	Ukraine                                           	Kiev region                                       	\N	UA	2019-03-18 14:06:47.051571	2019-03-18 14:06:47.051571
 2	2	\N	\N	\N	Kyiv                                              	Ukraine                                           	Kiev region                                       	\N	UA	2019-03-18 18:12:06.547127	2019-03-18 18:12:06.547127

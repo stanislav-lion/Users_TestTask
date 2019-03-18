@@ -1,9 +1,3 @@
---
--- TOC entry 2876 (class 0 OID 16430)
--- Dependencies: 197
--- Data for Name: Account; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
 COPY public."Account" ("AccountId", "AccountGuid", "AccountNumber", "AccountName", "IsEnabled", "TimeZone", "PasswordExpirationPeriodInDays", "DataStorageTimeHrs", "NumberOfCodeManagementApps", "CreatedUtc", "ModifiedUtc") FROM stdin;
 1	4eda8f0f-ef3c-427a-85d9-2847eb04e319	Number1 	Stanislav Account                                 	t	2	3	60	1	2019-03-18 13:54:58.440163	2019-03-18 13:54:58.440163
 2	417d370a-c0d9-42bd-9c52-cf79dcadaa95	Number2 	Andrew Account                                    	t	2	3	60	1	2019-03-18 17:50:27.971032	2019-03-18 17:50:27.971032

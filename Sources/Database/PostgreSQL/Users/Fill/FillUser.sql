@@ -1,9 +1,3 @@
---
--- TOC entry 2881 (class 0 OID 16708)
--- Dependencies: 202
--- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
 COPY public."User" ("UserId", "UserGuid", "LogonName", "AccountId", "FirstName", "LastName", "MiddleName", "PasswordSalt", "PasswordHash", "PasswordChangeUtc", "PasswordMustBeChanged", "IsLogonEnabled", "TimeZone", "CultureCode", "CreatedUtc", "ModifiedUtc") FROM stdin;
 10	4a4830a2-547f-4c50-84d9-757718a879e7	irina                                                                                               	10	Irina                                             	Alekseevna                                                                                          	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:33:33.049889	2019-03-18 21:33:33.049889
 1	e6385ac9-21bf-4349-babe-80b91a717f53	stanislav_lion                                                                                      	1	Stanislav                                         	Zrozhevskyi                                                                                         	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:31:35.02677	2019-03-18 21:31:35.02677

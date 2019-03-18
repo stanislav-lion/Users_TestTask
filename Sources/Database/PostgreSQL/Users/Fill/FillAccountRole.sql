@@ -1,9 +1,3 @@
---
--- TOC entry 2878 (class 0 OID 16443)
--- Dependencies: 199
--- Data for Name: AccountRole; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
 COPY public."AccountRole" ("AccountRoleId", "AccountRoleGuid", "AccountId", "RoleName", "RoleType", "PrivilegeType", "CreatedUtc", "ModifiedUtc") FROM stdin;
 1	61599863-4a42-4bd5-90a7-6cb79420a634	1	Administrator                           	1	3	2019-03-18 14:53:25.6479	2019-03-18 14:53:25.6479
 2	c090d72d-62ec-463a-bef6-c7fabc087302	2	Administrator                           	2	3	2019-03-18 18:24:38.744942	2019-03-18 18:24:38.744942

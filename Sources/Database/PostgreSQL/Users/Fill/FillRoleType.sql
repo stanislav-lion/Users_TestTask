@@ -1,9 +1,3 @@
---
--- TOC entry 2875 (class 0 OID 16425)
--- Dependencies: 196
--- Data for Name: RoleType; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
 COPY public."RoleType" ("RoleTypeId", "RoleTypeName", "CreatedUtc", "ModifiedUtc") FROM stdin;
 1	APPLICATION_ADMINISTRATOR                                                                           	2019-03-18 15:03:21.693022	2019-03-18 15:03:21.693022
 2	COMPANY_ADMINISTRATOR                                                                               	2019-03-18 15:04:23.572998	2019-03-18 15:04:23.572998
