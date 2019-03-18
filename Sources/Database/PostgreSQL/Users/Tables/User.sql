@@ -17,6 +17,7 @@ CREATE TABLE public."User"
     "PasswordMustBeChanged" boolean NOT NULL,
     "IsLogonEnabled" boolean NOT NULL,
     "TimeZone" integer,
+    "CultureCode" character(10) COLLATE pg_catalog."default",
     "CreatedUtc" timestamp without time zone NOT NULL,
     "ModifiedUtc" timestamp without time zone NOT NULL,
     CONSTRAINT "User_pkey" PRIMARY KEY ("UserId"),
