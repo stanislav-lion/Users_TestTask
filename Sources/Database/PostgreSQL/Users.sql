@@ -5,7 +5,7 @@
 -- Dumped from database version 10.6
 -- Dumped by pg_dump version 10.6
 
--- Started on 2019-03-18 22:46:07
+-- Started on 2019-03-19 00:40:22
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -39,7 +39,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 197 (class 1259 OID 16430)
+-- TOC entry 196 (class 1259 OID 16690)
 -- Name: Account; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -61,7 +61,7 @@ CREATE TABLE public."Account" (
 ALTER TABLE public."Account" OWNER TO postgres;
 
 --
--- TOC entry 198 (class 1259 OID 16435)
+-- TOC entry 197 (class 1259 OID 16693)
 -- Name: AccountAddress; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -84,7 +84,7 @@ CREATE TABLE public."AccountAddress" (
 ALTER TABLE public."AccountAddress" OWNER TO postgres;
 
 --
--- TOC entry 199 (class 1259 OID 16443)
+-- TOC entry 198 (class 1259 OID 16696)
 -- Name: AccountRole; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -103,7 +103,7 @@ CREATE TABLE public."AccountRole" (
 ALTER TABLE public."AccountRole" OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 16448)
+-- TOC entry 199 (class 1259 OID 16699)
 -- Name: AddressType; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -118,7 +118,7 @@ CREATE TABLE public."AddressType" (
 ALTER TABLE public."AddressType" OWNER TO postgres;
 
 --
--- TOC entry 201 (class 1259 OID 16453)
+-- TOC entry 200 (class 1259 OID 16702)
 -- Name: PrivilegeType; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -133,7 +133,7 @@ CREATE TABLE public."PrivilegeType" (
 ALTER TABLE public."PrivilegeType" OWNER TO postgres;
 
 --
--- TOC entry 196 (class 1259 OID 16425)
+-- TOC entry 201 (class 1259 OID 16705)
 -- Name: RoleType; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -148,7 +148,7 @@ CREATE TABLE public."RoleType" (
 ALTER TABLE public."RoleType" OWNER TO postgres;
 
 --
--- TOC entry 202 (class 1259 OID 16458)
+-- TOC entry 202 (class 1259 OID 16708)
 -- Name: User; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -166,6 +166,7 @@ CREATE TABLE public."User" (
     "PasswordMustBeChanged" boolean NOT NULL,
     "IsLogonEnabled" boolean NOT NULL,
     "TimeZone" integer,
+    "CultureCode" character(10),
     "CreatedUtc" timestamp without time zone NOT NULL,
     "ModifiedUtc" timestamp without time zone NOT NULL
 );
@@ -174,7 +175,7 @@ CREATE TABLE public."User" (
 ALTER TABLE public."User" OWNER TO postgres;
 
 --
--- TOC entry 203 (class 1259 OID 16463)
+-- TOC entry 203 (class 1259 OID 16711)
 -- Name: UserRole; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -189,8 +190,8 @@ CREATE TABLE public."UserRole" (
 ALTER TABLE public."UserRole" OWNER TO postgres;
 
 --
--- TOC entry 2876 (class 0 OID 16430)
--- Dependencies: 197
+-- TOC entry 2875 (class 0 OID 16690)
+-- Dependencies: 196
 -- Data for Name: Account; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -209,8 +210,8 @@ COPY public."Account" ("AccountId", "AccountGuid", "AccountNumber", "AccountName
 
 
 --
--- TOC entry 2877 (class 0 OID 16435)
--- Dependencies: 198
+-- TOC entry 2876 (class 0 OID 16693)
+-- Dependencies: 197
 -- Data for Name: AccountAddress; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -229,8 +230,8 @@ COPY public."AccountAddress" ("AccountId", "AddressType", "AddressLine1", "Addre
 
 
 --
--- TOC entry 2878 (class 0 OID 16443)
--- Dependencies: 199
+-- TOC entry 2877 (class 0 OID 16696)
+-- Dependencies: 198
 -- Data for Name: AccountRole; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -249,8 +250,8 @@ COPY public."AccountRole" ("AccountRoleId", "AccountRoleGuid", "AccountId", "Rol
 
 
 --
--- TOC entry 2879 (class 0 OID 16448)
--- Dependencies: 200
+-- TOC entry 2878 (class 0 OID 16699)
+-- Dependencies: 199
 -- Data for Name: AddressType; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -261,8 +262,8 @@ COPY public."AddressType" ("AddressTypeId", "AddressTypeName", "CreatedUtc", "Mo
 
 
 --
--- TOC entry 2880 (class 0 OID 16453)
--- Dependencies: 201
+-- TOC entry 2879 (class 0 OID 16702)
+-- Dependencies: 200
 -- Data for Name: PrivilegeType; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -274,8 +275,8 @@ COPY public."PrivilegeType" ("PrivilegeTypeId", "PrivilegeTypeName", "CreatedUtc
 
 
 --
--- TOC entry 2875 (class 0 OID 16425)
--- Dependencies: 196
+-- TOC entry 2880 (class 0 OID 16705)
+-- Dependencies: 201
 -- Data for Name: RoleType; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -294,27 +295,27 @@ COPY public."RoleType" ("RoleTypeId", "RoleTypeName", "CreatedUtc", "ModifiedUtc
 
 
 --
--- TOC entry 2881 (class 0 OID 16458)
+-- TOC entry 2881 (class 0 OID 16708)
 -- Dependencies: 202
 -- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."User" ("UserId", "UserGuid", "LogonName", "AccountId", "FirstName", "LastName", "MiddleName", "PasswordSalt", "PasswordHash", "PasswordChangeUtc", "PasswordMustBeChanged", "IsLogonEnabled", "TimeZone", "CreatedUtc", "ModifiedUtc") FROM stdin;
-1	e6385ac9-21bf-4349-babe-80b91a717f53	stanislav_lion                                                                                      	1	Stanislav                                         	Zrozhevskyi                                                                                         	\N	test                          	test                          	\N	f	t	2	2019-03-18 15:21:25.018645	2019-03-18 15:21:25.018645
-2	153e5897-590c-4d78-a5bf-5d61d1634655	andrew                                                                                              	2	Andrew                                            	Dvornichenko                                                                                        	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:00:00.444659	2019-03-18 18:00:00.444659
-3	6896680f-4600-4a31-8292-a526237ff23e	sergei                                                                                              	3	Sergei                                            	Podolyanchuk                                                                                        	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:01:13.667653	2019-03-18 18:01:13.667653
-4	cd35e703-f910-4538-b34f-a16d81fb5052	alexander                                                                                           	4	Alexander                                         	Ostrovskyi                                                                                          	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:04:01.169287	2019-03-18 18:04:01.169287
-5	6b3791dd-9c29-4076-98d4-958c36d54b80	ivan                                                                                                	5	Ivan                                              	Ponomarev                                                                                           	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:05:04.854593	2019-03-18 18:05:04.854593
-6	72fd1b25-6d70-4770-a357-fddb441c5301	luda                                                                                                	6	Luda                                              	Osovskaya                                                                                           	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:06:02.387158	2019-03-18 18:06:02.387158
-7	7b0eeb1b-5723-4d7f-989e-960389080538	karina                                                                                              	7	Karina                                            	Nosova                                                                                              	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:07:09.302177	2019-03-18 18:07:09.302177
-8	13467c7c-a6ca-4e72-8c03-adf64f5e492b	lena                                                                                                	8	Lena                                              	Glushankova                                                                                         	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:08:10.731598	2019-03-18 18:08:10.731598
-9	c8bd1b9b-71d7-4802-a98b-2af1dedc3ebd	nastya                                                                                              	9	Nastya                                            	Kaluzhnaya                                                                                          	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:09:09.585026	2019-03-18 18:09:09.585026
-10	4a4830a2-547f-4c50-84d9-757718a879e7	irina                                                                                               	10	Irina                                             	Alekseevna                                                                                          	\N	test                          	test                          	\N	f	t	2	2019-03-18 18:10:05.113817	2019-03-18 18:10:05.113817
+COPY public."User" ("UserId", "UserGuid", "LogonName", "AccountId", "FirstName", "LastName", "MiddleName", "PasswordSalt", "PasswordHash", "PasswordChangeUtc", "PasswordMustBeChanged", "IsLogonEnabled", "TimeZone", "CultureCode", "CreatedUtc", "ModifiedUtc") FROM stdin;
+10	5024abbf-804b-4007-b534-0edfd4f1b207	irina                                                                                               	10	Irina                                             	Alekseevna                                                                                          	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 22:37:13.207041	2019-03-18 22:37:13.207041
+1	e6385ac9-21bf-4349-babe-80b91a717f53	stanislav_lion                                                                                      	1	Stanislav                                         	Zrozhevskyi                                                                                         	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:31:35.02677	2019-03-18 21:31:35.02677
+2	153e5897-590c-4d78-a5bf-5d61d1634655	andrew                                                                                              	2	Andrew                                            	Dvornichenko                                                                                        	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:31:50.24691	2019-03-18 21:31:50.24691
+3	6896680f-4600-4a31-8292-a526237ff23e	sergei                                                                                              	3	Sergei                                            	Podolyanchuk                                                                                        	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:32:01.230148	2019-03-18 21:32:01.230148
+4	cd35e703-f910-4538-b34f-a16d81fb5052	alexander                                                                                           	4	Alexander                                         	Ostrovskyi                                                                                          	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:32:56.066358	2019-03-18 21:32:56.066358
+5	6b3791dd-9c29-4076-98d4-958c36d54b80	ivan                                                                                                	5	Ivan                                              	Ponomarev                                                                                           	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:32:56.066358	2019-03-18 21:32:56.066358
+6	72fd1b25-6d70-4770-a357-fddb441c5301	luda                                                                                                	6	Luda                                              	Osovskaya                                                                                           	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:32:56.066358	2019-03-18 21:32:56.066358
+7	7b0eeb1b-5723-4d7f-989e-960389080538	karina                                                                                              	7	Karina                                            	Nosova                                                                                              	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:32:56.066358	2019-03-18 21:32:56.066358
+8	13467c7c-a6ca-4e72-8c03-adf64f5e492b	lena                                                                                                	8	Lena                                              	Glushankova                                                                                         	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:32:56.066358	2019-03-18 21:32:56.066358
+9	c8bd1b9b-71d7-4802-a98b-2af1dedc3ebd	nastya                                                                                              	9	Nastya                                            	Kaluzhnaya                                                                                          	\N	test                          	test                          	\N	f	t	2	uk-UA     	2019-03-18 21:32:56.066358	2019-03-18 21:32:56.066358
 \.
 
 
 --
--- TOC entry 2882 (class 0 OID 16463)
+-- TOC entry 2882 (class 0 OID 16711)
 -- Dependencies: 203
 -- Data for Name: UserRole; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -329,12 +330,12 @@ COPY public."UserRole" ("UserId", "AccountRoleId", "CreatedUtc", "ModifiedUtc") 
 7	7	2019-03-18 18:58:29.024663	2019-03-18 18:58:29.024663
 8	8	2019-03-18 18:58:43.349447	2019-03-18 18:58:43.349447
 9	9	2019-03-18 18:58:56.624795	2019-03-18 18:58:56.624795
-10	10	2019-03-18 18:59:10.907614	2019-03-18 18:59:10.907614
+10	10	2019-03-18 22:38:24.400758	2019-03-18 22:38:24.400758
 \.
 
 
 --
--- TOC entry 2709 (class 2606 OID 16475)
+-- TOC entry 2705 (class 2606 OID 16715)
 -- Name: AccountAddress AccountAddress_PK; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -343,7 +344,7 @@ ALTER TABLE ONLY public."AccountAddress"
 
 
 --
--- TOC entry 2711 (class 2606 OID 16439)
+-- TOC entry 2707 (class 2606 OID 16717)
 -- Name: AccountAddress AccountAddress_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -352,7 +353,7 @@ ALTER TABLE ONLY public."AccountAddress"
 
 
 --
--- TOC entry 2713 (class 2606 OID 16483)
+-- TOC entry 2709 (class 2606 OID 16719)
 -- Name: AccountRole AccountRole_PK; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -361,7 +362,7 @@ ALTER TABLE ONLY public."AccountRole"
 
 
 --
--- TOC entry 2715 (class 2606 OID 16485)
+-- TOC entry 2711 (class 2606 OID 16721)
 -- Name: AccountRole AccountRole_U_AccountId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -370,7 +371,7 @@ ALTER TABLE ONLY public."AccountRole"
 
 
 --
--- TOC entry 2717 (class 2606 OID 16487)
+-- TOC entry 2713 (class 2606 OID 16723)
 -- Name: AccountRole AccountRole_U_AccountRoleGuid; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -379,7 +380,7 @@ ALTER TABLE ONLY public."AccountRole"
 
 
 --
--- TOC entry 2719 (class 2606 OID 16447)
+-- TOC entry 2715 (class 2606 OID 16725)
 -- Name: AccountRole AccountRole_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -388,7 +389,7 @@ ALTER TABLE ONLY public."AccountRole"
 
 
 --
--- TOC entry 2701 (class 2606 OID 16477)
+-- TOC entry 2697 (class 2606 OID 16727)
 -- Name: Account Account_PK; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -397,7 +398,7 @@ ALTER TABLE ONLY public."Account"
 
 
 --
--- TOC entry 2703 (class 2606 OID 16479)
+-- TOC entry 2699 (class 2606 OID 16729)
 -- Name: Account Account_U_AccountGuid; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -406,7 +407,7 @@ ALTER TABLE ONLY public."Account"
 
 
 --
--- TOC entry 2705 (class 2606 OID 16481)
+-- TOC entry 2701 (class 2606 OID 16731)
 -- Name: Account Account_U_AccountNumber; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -415,7 +416,7 @@ ALTER TABLE ONLY public."Account"
 
 
 --
--- TOC entry 2707 (class 2606 OID 16434)
+-- TOC entry 2703 (class 2606 OID 16733)
 -- Name: Account Account_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -424,7 +425,7 @@ ALTER TABLE ONLY public."Account"
 
 
 --
--- TOC entry 2721 (class 2606 OID 16550)
+-- TOC entry 2717 (class 2606 OID 16735)
 -- Name: AddressType AddressType_PK; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -433,7 +434,7 @@ ALTER TABLE ONLY public."AddressType"
 
 
 --
--- TOC entry 2723 (class 2606 OID 16552)
+-- TOC entry 2719 (class 2606 OID 16737)
 -- Name: AddressType AddressType_U_AddressTypeName; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -442,7 +443,7 @@ ALTER TABLE ONLY public."AddressType"
 
 
 --
--- TOC entry 2725 (class 2606 OID 16452)
+-- TOC entry 2721 (class 2606 OID 16739)
 -- Name: AddressType AddressType_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -451,7 +452,7 @@ ALTER TABLE ONLY public."AddressType"
 
 
 --
--- TOC entry 2727 (class 2606 OID 16493)
+-- TOC entry 2723 (class 2606 OID 16741)
 -- Name: PrivilegeType PrivilegeType_PK; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -460,7 +461,7 @@ ALTER TABLE ONLY public."PrivilegeType"
 
 
 --
--- TOC entry 2729 (class 2606 OID 16457)
+-- TOC entry 2725 (class 2606 OID 16743)
 -- Name: PrivilegeType PrivilegeType_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -469,7 +470,7 @@ ALTER TABLE ONLY public."PrivilegeType"
 
 
 --
--- TOC entry 2697 (class 2606 OID 16648)
+-- TOC entry 2727 (class 2606 OID 16745)
 -- Name: RoleType RoleType_PK; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -478,7 +479,7 @@ ALTER TABLE ONLY public."RoleType"
 
 
 --
--- TOC entry 2699 (class 2606 OID 16429)
+-- TOC entry 2729 (class 2606 OID 16747)
 -- Name: RoleType RoleType_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -487,7 +488,7 @@ ALTER TABLE ONLY public."RoleType"
 
 
 --
--- TOC entry 2741 (class 2606 OID 16631)
+-- TOC entry 2741 (class 2606 OID 16749)
 -- Name: UserRole UserRole_U_AccountRoleId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -496,7 +497,7 @@ ALTER TABLE ONLY public."UserRole"
 
 
 --
--- TOC entry 2743 (class 2606 OID 16505)
+-- TOC entry 2743 (class 2606 OID 16751)
 -- Name: UserRole UserRole_U_UserId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -505,7 +506,7 @@ ALTER TABLE ONLY public."UserRole"
 
 
 --
--- TOC entry 2745 (class 2606 OID 16467)
+-- TOC entry 2745 (class 2606 OID 16753)
 -- Name: UserRole UserRole_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -514,7 +515,7 @@ ALTER TABLE ONLY public."UserRole"
 
 
 --
--- TOC entry 2731 (class 2606 OID 16497)
+-- TOC entry 2731 (class 2606 OID 16755)
 -- Name: User User_PK; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -523,7 +524,7 @@ ALTER TABLE ONLY public."User"
 
 
 --
--- TOC entry 2733 (class 2606 OID 16499)
+-- TOC entry 2733 (class 2606 OID 16757)
 -- Name: User User_U_AccountId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -532,7 +533,7 @@ ALTER TABLE ONLY public."User"
 
 
 --
--- TOC entry 2735 (class 2606 OID 16501)
+-- TOC entry 2735 (class 2606 OID 16759)
 -- Name: User User_U_LogonName; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -541,7 +542,7 @@ ALTER TABLE ONLY public."User"
 
 
 --
--- TOC entry 2737 (class 2606 OID 16503)
+-- TOC entry 2737 (class 2606 OID 16761)
 -- Name: User User_U_UserGuid; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -550,7 +551,7 @@ ALTER TABLE ONLY public."User"
 
 
 --
--- TOC entry 2739 (class 2606 OID 16462)
+-- TOC entry 2739 (class 2606 OID 16763)
 -- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -559,7 +560,7 @@ ALTER TABLE ONLY public."User"
 
 
 --
--- TOC entry 2747 (class 2606 OID 16679)
+-- TOC entry 2746 (class 2606 OID 16764)
 -- Name: AccountAddress AccountAddress_Account_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -568,7 +569,7 @@ ALTER TABLE ONLY public."AccountAddress"
 
 
 --
--- TOC entry 2746 (class 2606 OID 16649)
+-- TOC entry 2747 (class 2606 OID 16769)
 -- Name: AccountAddress AccountAddress_AddressType_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -577,7 +578,7 @@ ALTER TABLE ONLY public."AccountAddress"
 
 
 --
--- TOC entry 2750 (class 2606 OID 16684)
+-- TOC entry 2748 (class 2606 OID 16774)
 -- Name: AccountRole AccountRole_Account_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -586,7 +587,7 @@ ALTER TABLE ONLY public."AccountRole"
 
 
 --
--- TOC entry 2749 (class 2606 OID 16659)
+-- TOC entry 2749 (class 2606 OID 16779)
 -- Name: AccountRole AccountRole_PrivilegeType_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -595,7 +596,7 @@ ALTER TABLE ONLY public."AccountRole"
 
 
 --
--- TOC entry 2748 (class 2606 OID 16654)
+-- TOC entry 2750 (class 2606 OID 16784)
 -- Name: AccountRole AccountRole_RoleType_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -604,7 +605,7 @@ ALTER TABLE ONLY public."AccountRole"
 
 
 --
--- TOC entry 2752 (class 2606 OID 16664)
+-- TOC entry 2752 (class 2606 OID 16789)
 -- Name: UserRole UserRole_AccountRole_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -613,7 +614,7 @@ ALTER TABLE ONLY public."UserRole"
 
 
 --
--- TOC entry 2753 (class 2606 OID 16669)
+-- TOC entry 2753 (class 2606 OID 16794)
 -- Name: UserRole UserRole_User_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -622,7 +623,7 @@ ALTER TABLE ONLY public."UserRole"
 
 
 --
--- TOC entry 2751 (class 2606 OID 16674)
+-- TOC entry 2751 (class 2606 OID 16799)
 -- Name: User User_Account_FK; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -630,7 +631,7 @@ ALTER TABLE ONLY public."User"
     ADD CONSTRAINT "User_Account_FK" FOREIGN KEY ("AccountId") REFERENCES public."Account"("AccountId");
 
 
--- Completed on 2019-03-18 22:46:07
+-- Completed on 2019-03-19 00:40:23
 
 --
 -- PostgreSQL database dump complete
