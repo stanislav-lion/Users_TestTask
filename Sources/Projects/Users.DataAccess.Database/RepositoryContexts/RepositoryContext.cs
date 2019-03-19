@@ -56,21 +56,21 @@
             _userContexts = new UserContext[_connectionStrings.Length];
 
             _accountRepository =
-                new Lazy<AccountRepository>(() => new AccountRepository(GetUserContext(DatabaseType.DbPrimary)));
+                new Lazy<AccountRepository>(() => new AccountRepository(GetUserContext(DBType.DbPrimary)));
 
             _accountRoleRepository =
                 new Lazy<AccountRoleRepository>(
-                    () => new AccountRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
+                    () => new AccountRoleRepository(GetUserContext(DBType.DbPrimary)));
 
             _accountAddressRepository =
                 new Lazy<AccountAddressRepository>(
-                    () => new AccountAddressRepository(GetUserContext(DatabaseType.DbPrimary)));
+                    () => new AccountAddressRepository(GetUserContext(DBType.DbPrimary)));
 
             _userRepository =
-                new Lazy<UserRepository>(() => new UserRepository(GetUserContext(DatabaseType.DbPrimary)));
+                new Lazy<UserRepository>(() => new UserRepository(GetUserContext(DBType.DbPrimary)));
 
             _userRoleRepository =
-                new Lazy<UserRoleRepository>(() => new UserRoleRepository(GetUserContext(DatabaseType.DbPrimary)));
+                new Lazy<UserRoleRepository>(() => new UserRoleRepository(GetUserContext(DBType.DbPrimary)));
 
             //_serviceBrokerRepository =
             //    new Lazy<ServiceBrokerRepository>(
@@ -221,9 +221,9 @@
             _disposed = true;
         }
 
-        private UserContext GetUserContext(DatabaseType databaseType)
+        private UserContext GetUserContext(DBType dbType)
         {
-            return _userContexts[(int) databaseType];
+            return _userContexts[(int)dbType];
         }
     }
 }

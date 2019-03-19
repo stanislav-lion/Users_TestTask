@@ -3,7 +3,7 @@
     /// <summary>
     ///     Database type.
     /// </summary>
-    internal enum DatabaseType
+    internal enum DBType
     {
         /// <summary>
         ///     DbPrimary.

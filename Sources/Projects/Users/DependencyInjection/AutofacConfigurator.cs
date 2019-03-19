@@ -10,12 +10,14 @@
     using Users.Settings;
     using Users.Authentication.Interfaces;
     using Users.Services;
+    using Users.DataAccess.Database;
 
     public class AutofacConfigurator
     {
         public static AutofacServiceProvider GetAutofacServiceProvider(
             IServiceCollection services,
             IContainer applicationContainer,
+            DBMS dbms,
             string connectionString)
         {
             // Create the container builder.
@@ -34,42 +36,42 @@
                 .As<IUserService>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    DBSetting.GetUserContext(connectionString)
+                    DBSetting.GetUserContext(dbms, connectionString)
                 );
 
             builder.RegisterType<UserRepository>()
                 .As<IUserRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    DBSetting.GetUserContext(connectionString)
+                    DBSetting.GetUserContext(dbms, connectionString)
                 );
 
             builder.RegisterType<UserRoleRepository>()
                 .As<IUserRoleRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    DBSetting.GetUserContext(connectionString)
+                    DBSetting.GetUserContext(dbms, connectionString)
                 );
 
             builder.RegisterType<AccountRepository>()
                 .As<IAccountRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    DBSetting.GetUserContext(connectionString)
+                    DBSetting.GetUserContext(dbms, connectionString)
                 );
 
             builder.RegisterType<AccountRoleRepository>()
                 .As<IAccountRoleRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    DBSetting.GetUserContext(connectionString)
+                    DBSetting.GetUserContext(dbms, connectionString)
                 );
 
             builder.RegisterType<AccountAddressRepository>()
                 .As<IAccountAddressRepository>()
                 .WithParameter(
                     Parameters.UserContext.FirstCharToLower(),
-                    DBSetting.GetUserContext(connectionString)
+                    DBSetting.GetUserContext(dbms, connectionString)
                 );
 
             applicationContainer = builder.Build();

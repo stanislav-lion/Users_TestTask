@@ -24,6 +24,7 @@
     public class Startup
     {
         private JwtSetting _jwtSetting;
+        private DBMSSetting _dbmsSetting;
         private ConnectionString _connectionString;
         private MSSQLConnectionString _msSQLConnectionString;
         private PostgreSQLConnectionString _postgreSQLConnectionString;
@@ -60,6 +61,8 @@
 
             _jwtSetting = Configuration.GetSection(nameof(JwtSetting))
                 .Get<JwtSetting>();
+            _dbmsSetting = Configuration.GetSection(nameof(DBMSSetting))
+                .Get<DBMSSetting>();
             _connectionString = Configuration.GetSection(nameof(ConnectionString))
                 .Get<ConnectionString>();
             _msSQLConnectionString = Configuration.GetSection(nameof(MSSQLConnectionString))
@@ -74,6 +77,8 @@
             services
                 .Configure<JwtSetting>(
                     Configuration.GetSection(nameof(JwtSetting)))
+                .Configure<DBMSSetting>(
+                    Configuration.GetSection(nameof(DBMSSetting)))
                 .Configure<ConnectionString>(
                     Configuration.GetSection(nameof(ConnectionString)))
                 .Configure<MSSQLConnectionString>(
@@ -131,7 +136,12 @@
             return AutofacConfigurator.GetAutofacServiceProvider(
                 services,
                 ApplicationContainer,
-                _msSQLConnectionString.UsersConnectionString
+                DBMSSetting.GetDBMS(_dbmsSetting),
+                DBMSSetting.GetConnectionString(
+                    _dbmsSetting, 
+                    _connectionString, 
+                    _msSQLConnectionString, 
+                    _postgreSQLConnectionString)
             );
         }
 
@@ -156,6 +166,8 @@
 
             _jwtSetting = Configuration.GetSection(nameof(JwtSetting))
                 .Get<JwtSetting>();
+            _dbmsSetting = Configuration.GetSection(nameof(DBMSSetting))
+                .Get<DBMSSetting>();
             _connectionString = Configuration.GetSection(nameof(ConnectionString))
                 .Get<ConnectionString>();
             _msSQLConnectionString = Configuration.GetSection(nameof(MSSQLConnectionString))
@@ -170,6 +182,8 @@
             services
                 .Configure<JwtSetting>(
                     Configuration.GetSection(nameof(JwtSetting)))
+                .Configure<DBMSSetting>(
+                    Configuration.GetSection(nameof(DBMSSetting)))
                 .Configure<ConnectionString>(
                     Configuration.GetSection(nameof(ConnectionString)))
                 .Configure<MSSQLConnectionString>(
@@ -204,15 +218,30 @@
             
             EmbeddedServicesConfigurator.AddScoped(
                 services,
-                _msSQLConnectionString.UsersConnectionString);
+                DBMSSetting.GetDBMS(_dbmsSetting),
+                DBMSSetting.GetConnectionString(
+                    _dbmsSetting, 
+                    _connectionString, 
+                    _msSQLConnectionString, 
+                    _postgreSQLConnectionString));
             
             //EmbeddedServicesConfigurator.AddSingleton(
             //    services,
-            //    _msSQLConnectionString.UsersConnectionString);
+            //    DBMSSetting.GetDBMS(_dbmsSetting)
+            //    DBMSSetting.GetConnectionString(
+            //        _dbmsSetting, 
+            //        _connectionString, 
+            //        _msSQLConnectionString, 
+            //        _postgreSQLConnectionString));
             
             //EmbeddedServicesConfigurator.AddTransient(
             //    services,
-            //    _msSQLConnectionString.UsersConnectionString);
+            //    DBMSSetting.GetDBMS(_dbmsSetting),
+            //    DBMSSetting.GetConnectionString(
+            //    _dbmsSetting, 
+            //    _connectionString, 
+            //    _msSQLConnectionString, 
+            //    _postgreSQLConnectionString));
 
             // Register the Swagger generator, defining 1 or more Swagger documents.
             services.AddSwaggerGen(swagger =>
