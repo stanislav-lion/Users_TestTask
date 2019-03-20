@@ -14,8 +14,10 @@
         ///     Initializes a new instance of the <see cref="EntityRepository" /> class.
         /// </summary>
         /// <param name="dbContext">Database context.</param>
-        protected EntityRepository(DbContext dbContext) =>
+        protected EntityRepository(DbContext dbContext)
+        {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
 
         /// <summary>
         ///     Gets database context.

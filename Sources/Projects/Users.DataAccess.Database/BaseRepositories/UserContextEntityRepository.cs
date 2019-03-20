@@ -15,8 +15,10 @@
         /// </summary>
         /// <param name="dbContext">Database user context.</param>
         protected UserContextEntityRepository(UserContext userContext)
-            : base(userContext) =>
+            : base(userContext)
+        {
             _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
+        }
 
         /// <summary>
         ///     Gets database user context.
