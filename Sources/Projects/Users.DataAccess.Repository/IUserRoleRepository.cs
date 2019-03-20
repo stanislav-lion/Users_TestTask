@@ -33,19 +33,19 @@
         ///     Adds user role.
         /// </summary>
         /// <param name="userRole">Thr role of user.</param>
-        void Add(UserRole userRole);
+        int Add(UserRole userRole);
 
         /// <summary>
         ///     Deletes user roles by user identifier.
         /// </summary>
         /// <param name="userId">The identifier of user.</param>
-        void Delete(int userId);
+        int Delete(int userId);
 
         /// <summary>
         ///     Deletes user role by user identifier and account role identifier.
         /// </summary>
         /// <param name="userId">The identifier of user.</param>
         /// <param name="accountRoleId">The role identifier of account.</param>
-        void Delete(int userId, int accountRoleId);
+        int Delete(int userId, int accountRoleId);
     }
 }

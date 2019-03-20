@@ -27,31 +27,50 @@
         /// <inheritdoc />
         public UserRole Get(int userId, int accountRoleId)
         {
-            throw new NotImplementedException();
+            return UserContext.UserRole
+                .FirstOrDefault(userRole => 
+                    userRole.UserId == userId && 
+                    userRole.AccountRoleId == accountRoleId);
         }
 
         /// <inheritdoc />
         public List<UserRole> Get(int userId)
         {
-            throw new NotImplementedException();
+            return UserContext.UserRole
+                .Where(userRole => userRole.UserId == userId)
+                .ToList();
         }
 
         /// <inheritdoc />
-        public void Add(UserRole userRole)
+        public int Add(UserRole userRole)
         {
-            throw new NotImplementedException();
+            if (Get(userRole.UserId, userRole.AccountRoleId) == null)
+            {
+                UserContext.UserRole
+                    .Add(userRole);
+
+                return UserContext.SaveChanges();
+            }
+
+            return 0;
         }
 
         /// <inheritdoc />
-        public void Delete(int userId)
+        public int Delete(int userId)
         {
-            throw new NotImplementedException();
+            UserContext.UserRole
+                .RemoveRange(Get(userId));
+
+            return UserContext.SaveChanges();
         }
 
         /// <inheritdoc />
-        public void Delete(int userId, int accountRoleId)
+        public int Delete(int userId, int accountRoleId)
         {
-            throw new NotImplementedException();
+            UserContext.UserRole
+                .Remove(Get(userId, accountRoleId));
+
+            return UserContext.SaveChanges();
         }
     }
 }
