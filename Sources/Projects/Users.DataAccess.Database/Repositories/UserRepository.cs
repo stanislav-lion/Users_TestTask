@@ -30,13 +30,15 @@
         /// <inheritdoc />
         public User Get(int userId)
         {
-            throw new NotImplementedException();
+            return UserContext.User
+                .FirstOrDefault(user => user.UserId == userId);
         }
 
         /// <inheritdoc />
         public User Get(Guid userGuid)
         {
-            throw new NotImplementedException();
+            return UserContext.User
+                .FirstOrDefault(user => user.UserGuid == userGuid);
         }
 
         /// <inheritdoc />
@@ -49,31 +51,57 @@
         /// <inheritdoc />
         public List<User> GetByAccount(int accountId)
         {
-            throw new NotImplementedException();
+            return UserContext.User
+                .Where(user => user.AccountId == accountId)
+                .ToList();
         }
 
         /// <inheritdoc />
         public int? GetId(Guid userGuid)
         {
-            throw new NotImplementedException();
+            User user = Get(userGuid);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user.UserId;
         }
 
         /// <inheritdoc />
-        public void Upsert(User user)
+        public int Upsert(User user)
         {
-            throw new NotImplementedException();
+            if (Get(user.UserId) == null)
+            {
+                UserContext.User
+                    .Add(user);
+            }
+            else
+            {
+                UserContext.User
+                    .Update(user);
+            }
+
+            return UserContext.SaveChanges();
         }
 
         /// <inheritdoc />
-        public void Delete(int userId)
+        public int Delete(int userId)
         {
-            throw new NotImplementedException();
+            UserContext.User
+                .Remove(Get(userId));
+
+            return UserContext.SaveChanges();
         }
 
         /// <inheritdoc />
-        public void DeleteByAccount(int accountId)
+        public int DeleteByAccount(int accountId)
         {
-            throw new NotImplementedException();
+            UserContext.User
+                .RemoveRange(GetByAccount(accountId));
+
+            return UserContext.SaveChanges();
         }
 
         private IQueryable<User> GetUsersWithoutPasswords()

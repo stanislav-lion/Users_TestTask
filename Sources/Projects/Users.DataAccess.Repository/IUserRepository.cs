@@ -59,18 +59,18 @@
         ///     Adds or updates user.
         /// </summary>
         /// <param name="user">The user.</param>
-        void Upsert(User user);
+        int Upsert(User user);
 
         /// <summary>
         ///     Deletes user by user identifier.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        void Delete(int userId);
+        int Delete(int userId);
 
         /// <summary>
         ///     Deletes user by account identifier.
         /// </summary>
         /// <param name="accountId">>The account identifier.</param>
-        void DeleteByAccount(int accountId);
+        int DeleteByAccount(int accountId);
     }
 }
