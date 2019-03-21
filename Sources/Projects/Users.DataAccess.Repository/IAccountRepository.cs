@@ -46,12 +46,12 @@
         ///     Adds or updates account.
         /// </summary>
         /// <param name="account">The account.</param>
-        void Upsert(Account account);
+        int Upsert(Account account);
 
         /// <summary>
         ///     Deletes account.
         /// </summary>
         /// <param name="accountId">The identifier of account.</param>
-        void Delete(int accountId);
+        int Delete(int accountId);
     }
 }

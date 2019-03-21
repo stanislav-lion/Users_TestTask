@@ -26,37 +26,73 @@
         /// <inheritdoc />
         public Account Get(int accountId)
         {
-            throw new NotImplementedException();
+            return UserContext.Account
+                .FirstOrDefault(account => account.AccountId == accountId);
         }
 
         /// <inheritdoc />
         public Account Get(Guid accountGuid)
         {
-            throw new NotImplementedException();
+            return UserContext.Account
+                .FirstOrDefault(account => account.AccountGuid == accountGuid);
         }
 
         /// <inheritdoc />
         public int? GetId(Guid accountGuid)
         {
-            throw new NotImplementedException();
+            Account account = Get(accountGuid);
+
+            if (account == null)
+            {
+                return null;
+            }
+
+            return account.AccountId;
         }
 
         /// <inheritdoc />
         public int? GetId(string accountNumber)
         {
-            throw new NotImplementedException();
+            Account account = Get(accountNumber);
+
+            if (account == null)
+            {
+                return null;
+            }
+
+            return account.AccountId;
         }
 
         /// <inheritdoc />
-        public void Upsert(Account account)
+        public int Upsert(Account account)
         {
-            throw new NotImplementedException();
+            if (Get(account.AccountId) == null)
+            {
+                UserContext.Account
+                    .Add(account);
+            }
+            else
+            {
+                UserContext.Account
+                    .Update(account);
+            }
+
+            return UserContext.SaveChanges();
         }
 
         /// <inheritdoc />
-        public void Delete(int accountId)
+        public int Delete(int accountId)
         {
-            throw new NotImplementedException();
+            UserContext.Account
+                .Remove(Get(accountId));
+
+            return UserContext.SaveChanges();
+        }
+
+        private Account Get(string accountNumber)
+        {
+            return UserContext.Account
+                .FirstOrDefault(account => account.AccountNumber == accountNumber);
         }
     }
 }
