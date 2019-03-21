@@ -1,6 +1,5 @@
 ﻿namespace Users.DataAccess.Database.Repositories
 {
-    using System;
     using System.Linq;
     using Users.DataAccess.Database.BaseRepositories;
     using Users.DataAccess.Database.Contexts;
