@@ -24,6 +24,6 @@
         ///     Adds or updates account address.
         /// </summary>
         /// <param name="accountAddress">The address of account.</param>
-        void Upsert(AccountAddress accountAddress);
+        int Upsert(AccountAddress accountAddress);
     }
 }

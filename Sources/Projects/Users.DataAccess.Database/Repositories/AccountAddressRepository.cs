@@ -26,13 +26,25 @@
         /// <inheritdoc />
         public AccountAddress Get(int accountId)
         {
-            throw new NotImplementedException();
+            return UserContext.AccountAddress
+                .FirstOrDefault(accountAddress => accountAddress.AccountId == accountId);
         }
 
         /// <inheritdoc />
-        public void Upsert(AccountAddress accountAddress)
+        public int Upsert(AccountAddress accountAddress)
         {
-            throw new NotImplementedException();
+            if (Get(accountAddress.AccountId) == null)
+            {
+                UserContext.AccountAddress
+                    .Add(accountAddress);
+            }
+            else
+            {
+                UserContext.AccountAddress
+                    .Update(accountAddress);
+            }
+
+            return UserContext.SaveChanges();
         }
     }
 }
