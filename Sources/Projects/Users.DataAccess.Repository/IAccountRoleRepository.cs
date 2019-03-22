@@ -55,18 +55,18 @@
         ///     Adds or updates account role.
         /// </summary>
         /// <param name="accountRole">The role of account.</param>
-        void Upsert(AccountRole accountRole);
+        int Upsert(AccountRole accountRole);
 
         /// <summary>
         ///     Deletes account role by account role identifier.
         /// </summary>
         /// <param name="accountRoleId">The role identifier of account.</param>
-        void Delete(int accountRoleId);
+        int Delete(int accountRoleId);
 
         /// <summary>
         ///     Deletes account roles by account identifier.
         /// </summary>
         /// <param name="accountId">The identifier of account.</param>
-        void DeleteByAccount(int accountId);
+        int DeleteByAccount(int accountId);
     }
 }

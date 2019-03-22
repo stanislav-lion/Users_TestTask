@@ -1,7 +1,6 @@
 ﻿namespace Users.DataAccess.Database.Repositories
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Users.DataAccess.Database.BaseRepositories;
     using Users.DataAccess.Database.Contexts;
@@ -27,13 +26,15 @@
         /// <inheritdoc />
         public AccountRole Get(int accountRoleId)
         {
-            throw new NotImplementedException();
+            return UserContext.AccountRole
+                .FirstOrDefault(accountRole => accountRole.AccountRoleId == accountRoleId);
         }
 
         /// <inheritdoc />
         public AccountRole Get(Guid accountRoleGuid)
         {
-            throw new NotImplementedException();
+            return UserContext.AccountRole
+                .FirstOrDefault(accountRole => accountRole.AccountRoleGuid == accountRoleGuid);
         }
 
         /// <inheritdoc />
@@ -46,31 +47,74 @@
         /// <inheritdoc />
         public int? GetId(Guid accountRoleGuid)
         {
-            throw new NotImplementedException();
+            AccountRole accountRole = Get(accountRoleGuid);
+
+            if (accountRole == null)
+            {
+                return null;
+            }
+
+            return accountRole.AccountRoleId;
         }
 
         /// <inheritdoc />
-        public int? GetId(int accountId, string roleName)
+        public int? GetId(
+            int accountId,
+            string roleName)
         {
-            throw new NotImplementedException();
+            AccountRole accountRole = GetByAccount(accountId, roleName);
+
+            if (accountRole == null)
+            {
+                return null;
+            }
+
+            return accountRole.AccountRoleId;
         }
 
         /// <inheritdoc />
-        public void Upsert(AccountRole accountRole)
+        public int Upsert(AccountRole accountRole)
         {
-            throw new NotImplementedException();
+            if (Get(accountRole.AccountRoleId) == null)
+            {
+                UserContext.AccountRole
+                    .Add(accountRole);
+            }
+            else
+            {
+                UserContext.AccountRole
+                    .Update(accountRole);
+            }
+
+            return UserContext.SaveChanges();
         }
 
         /// <inheritdoc />
-        public void Delete(int accountRoleId)
+        public int Delete(int accountRoleId)
         {
-            throw new NotImplementedException();
+            UserContext.AccountRole
+                .Remove(Get(accountRoleId));
+
+            return UserContext.SaveChanges();
         }
 
         /// <inheritdoc />
-        public void DeleteByAccount(int accountId)
+        public int DeleteByAccount(int accountId)
         {
-            throw new NotImplementedException();
+            UserContext.AccountRole
+                .Remove(GetByAccount(accountId));
+
+            return UserContext.SaveChanges();
+        }
+
+        private AccountRole GetByAccount(
+            int accountId, 
+            string roleName)
+        {
+            return UserContext.AccountRole
+                .FirstOrDefault(accountRole => 
+                    accountRole.AccountId == accountId && 
+                    accountRole.RoleName.Equals(roleName));
         }
     }
 }
