@@ -24,11 +24,13 @@
         public IQueryable<UserRole> UserRoles => UserContext.UserRole;
 
         /// <inheritdoc />
-        public UserRole Get(int userId, int accountRoleId)
+        public UserRole Get(
+            int userId,
+            int accountRoleId)
         {
             return UserContext.UserRole
-                .FirstOrDefault(userRole => 
-                    userRole.UserId == userId && 
+                .FirstOrDefault(userRole =>
+                    userRole.UserId == userId &&
                     userRole.AccountRoleId == accountRoleId);
         }
 
@@ -64,7 +66,9 @@
         }
 
         /// <inheritdoc />
-        public int Delete(int userId, int accountRoleId)
+        public int Delete(
+            int userId, 
+            int accountRoleId)
         {
             UserContext.UserRole
                 .Remove(Get(userId, accountRoleId));
