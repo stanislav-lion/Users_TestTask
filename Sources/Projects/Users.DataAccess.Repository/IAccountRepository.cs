@@ -46,12 +46,14 @@
         ///     Adds or updates account.
         /// </summary>
         /// <param name="account">The account.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int Upsert(Account account);
 
         /// <summary>
         ///     Deletes account.
         /// </summary>
         /// <param name="accountId">The identifier of account.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int Delete(int accountId);
     }
 }

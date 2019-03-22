@@ -24,6 +24,7 @@
         ///     Adds or updates account address.
         /// </summary>
         /// <param name="accountAddress">The address of account.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int Upsert(AccountAddress accountAddress);
     }
 }

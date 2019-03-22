@@ -33,12 +33,14 @@
         ///     Adds user role.
         /// </summary>
         /// <param name="userRole">Thr role of user.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int Add(UserRole userRole);
 
         /// <summary>
         ///     Deletes user roles by user identifier.
         /// </summary>
         /// <param name="userId">The identifier of user.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int Delete(int userId);
 
         /// <summary>
@@ -46,6 +48,7 @@
         /// </summary>
         /// <param name="userId">The identifier of user.</param>
         /// <param name="accountRoleId">The role identifier of account.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int Delete(int userId, int accountRoleId);
     }
 }

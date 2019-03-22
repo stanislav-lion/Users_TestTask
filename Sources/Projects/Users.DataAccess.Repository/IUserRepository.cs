@@ -59,18 +59,21 @@
         ///     Adds or updates user.
         /// </summary>
         /// <param name="user">The user.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int Upsert(User user);
 
         /// <summary>
         ///     Deletes user by user identifier.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int Delete(int userId);
 
         /// <summary>
         ///     Deletes user by account identifier.
         /// </summary>
         /// <param name="accountId">>The account identifier.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         int DeleteByAccount(int accountId);
     }
 }
