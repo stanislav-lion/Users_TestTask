@@ -46,6 +46,11 @@
             return await Task.Run(
                 () =>
                 {
+                    if (login == null)
+                    {
+                        return BadRequest();
+                    }
+
                     if (_userService.CurrentUser != null)
                     {
                         return BadRequest(new
@@ -102,6 +107,11 @@
             return await Task.Run(
                 () =>
                 {
+                    if (register == null)
+                    {
+                        return BadRequest();
+                    }
+
                     UserShort user = _userService.Register(register.UserName, register.Password);
 
                     if (user == null)
