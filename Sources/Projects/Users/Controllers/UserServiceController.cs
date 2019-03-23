@@ -46,11 +46,9 @@
             return await Task.Run(
                 () =>
                 {
-                    IActionResult actionResult;
-
                     if (_userService.CurrentUser != null)
                     {
-                        actionResult = BadRequest(new
+                        return BadRequest(new
                         {
                             message = Resource.ErrorMessageByLogIn
                         });
@@ -60,13 +58,13 @@
 
                     if (user == null)
                     {
-                        actionResult = BadRequest(new
+                        return BadRequest(new
                         {
                             message = Resource.ErrorMessageByAuthenticate
                         });
                     }
 
-                    actionResult = Ok(user);
+                    IActionResult actionResult = Ok(user);
 
                     return actionResult;
                 });
@@ -80,11 +78,9 @@
             return await Task.Run(
                 () =>
                 {
-                    IActionResult actionResult;
-
                     if (_userService.CurrentUser == null)
                     {
-                        actionResult = BadRequest(new
+                        return BadRequest(new
                         {
                             message = Resource.ErrorMessageByLogOut
                         });
@@ -92,7 +88,7 @@
 
                     _userService.LogOut();
 
-                    actionResult = Ok(Resource.MessageLogOutSuccess);
+                    IActionResult actionResult = Ok(Resource.MessageLogOutSuccess);
 
                     return actionResult;
                 });
@@ -106,19 +102,17 @@
             return await Task.Run(
                 () =>
                 {
-                    IActionResult actionResult;
-
                     UserShort user = _userService.Register(register.UserName, register.Password);
 
                     if (user == null)
                     {
-                        actionResult = BadRequest(new
+                        return BadRequest(new
                         {
                             message = Resource.ErrorMessageByRegister
                         });
                     }
 
-                    actionResult = Ok(Resource.MessageLogOutSuccess);
+                    IActionResult actionResult = Ok(Resource.MessageLogOutSuccess);
 
                     return actionResult;
                 });
