@@ -1,6 +1,5 @@
 ﻿namespace Users.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
@@ -52,31 +51,112 @@
         
         // GET: api/users/[userId]
         [HttpGet("{userId}", Name = "GetUser")]
-        public async Task<User> GetUser(int userId)
+        public async Task<IActionResult> GetUser(int userId)
         {
             return await Task.Run(
-                () => _userRepository.Get(userId));
+                () =>
+                {
+                    IActionResult actionResult;
+
+                    if (userId < 1)
+                    {
+                        actionResult = BadRequest();
+                    }
+
+                    User user = _userRepository.Get(userId);
+
+                    if (user == null)
+                    {
+                        actionResult = BadRequest();
+                    }
+
+                    actionResult = Ok(user);
+
+                    return actionResult;
+                });
         }
         
         // POST: api/users
         [HttpPost]
-        public void AddUser([FromBody] User user)
+        public async Task<IActionResult> AddUser([FromBody] User user)
         {
-            throw new NotImplementedException();
+            return await Task.Run(
+                () =>
+                {
+                    IActionResult actionResult;
+
+                    if ((user == null) ||
+                        (user.UserId < 1))
+                    {
+                        actionResult = BadRequest();
+                    }
+
+                    int added = _userRepository.Upsert(user);
+
+                    if (added == 0)
+                    {
+                        actionResult = BadRequest();
+                    }
+
+                    actionResult = Ok(added);
+
+                    return actionResult;
+                });
         }
 
-        // PUT: api/users/[userId]
-        [HttpPut("{userId}")]
-        public void UpdateUser(int userId, [FromBody] User user)
+        // PUT: api/users/
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] User user)
         {
-            throw new NotImplementedException();
+            return await Task.Run(
+                () =>
+                {
+                    IActionResult actionResult;
+
+                    if ((user == null) ||
+                        (user.UserId < 1))
+                    {
+                        actionResult = BadRequest();
+                    }
+
+                    int updated = _userRepository.Upsert(user);
+
+                    if (updated == 0)
+                    {
+                        actionResult = BadRequest();
+                    }
+
+                    actionResult = Ok(updated);
+
+                    return actionResult;
+                });
         }
 
         // DELETE: api/users/[userId]
         [HttpDelete("{userId}")]
-        public void DeleteUser(int userId)
+        public async Task<IActionResult> DeleteUser(int userId)
         {
-            throw new NotImplementedException();
+            return await Task.Run(
+                () =>
+                {
+                    IActionResult actionResult = Ok();
+
+                    if (userId < 1)
+                    {
+                        actionResult = BadRequest();
+                    }
+
+                    int deleted = _userRepository.Delete(userId);
+
+                    if (deleted == 0)
+                    {
+                        actionResult = BadRequest();
+                    }
+
+                    actionResult = Ok(deleted);
+
+                    return actionResult;
+                });
         }
     }
 }
