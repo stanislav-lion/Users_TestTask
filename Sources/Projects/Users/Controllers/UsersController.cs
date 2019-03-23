@@ -56,21 +56,19 @@
             return await Task.Run(
                 () =>
                 {
-                    IActionResult actionResult;
-
                     if (userId < 1)
                     {
-                        actionResult = BadRequest();
+                        return BadRequest();
                     }
 
                     User user = _userRepository.Get(userId);
 
                     if (user == null)
                     {
-                        actionResult = BadRequest();
+                        return BadRequest();
                     }
 
-                    actionResult = Ok(user);
+                    IActionResult actionResult = Ok(user);
 
                     return actionResult;
                 });
@@ -83,22 +81,20 @@
             return await Task.Run(
                 () =>
                 {
-                    IActionResult actionResult;
-
                     if ((user == null) ||
                         (user.UserId < 1))
                     {
-                        actionResult = BadRequest();
+                        return BadRequest();
                     }
 
                     int added = _userRepository.Upsert(user);
 
                     if (added == 0)
                     {
-                        actionResult = BadRequest();
+                        return BadRequest();
                     }
 
-                    actionResult = Ok(added);
+                    IActionResult actionResult = Ok(added);
 
                     return actionResult;
                 });
@@ -111,22 +107,20 @@
             return await Task.Run(
                 () =>
                 {
-                    IActionResult actionResult;
-
                     if ((user == null) ||
                         (user.UserId < 1))
                     {
-                        actionResult = BadRequest();
+                        return BadRequest();
                     }
 
                     int updated = _userRepository.Upsert(user);
 
                     if (updated == 0)
                     {
-                        actionResult = BadRequest();
+                        return BadRequest();
                     }
 
-                    actionResult = Ok(updated);
+                    IActionResult actionResult = Ok(updated);
 
                     return actionResult;
                 });
@@ -139,21 +133,19 @@
             return await Task.Run(
                 () =>
                 {
-                    IActionResult actionResult = Ok();
-
                     if (userId < 1)
                     {
-                        actionResult = BadRequest();
+                        return BadRequest();
                     }
 
                     int deleted = _userRepository.Delete(userId);
 
                     if (deleted == 0)
                     {
-                        actionResult = BadRequest();
+                        return BadRequest();
                     }
 
-                    actionResult = Ok(deleted);
+                    IActionResult actionResult = Ok(deleted);
 
                     return actionResult;
                 });
