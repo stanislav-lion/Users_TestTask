@@ -43,10 +43,22 @@
         // GET: api/accounts
         [HttpGet(Name = "GetAccounts")]
         [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
-        public async Task<IEnumerable<Account>> GetAccounts()
+        public async Task<IActionResult> GetAccounts()
         {
             return await Task.Run(
-                () => _accountCacheList.GetValues());
+                () =>
+                {
+                    IEnumerable<Account> accounts = _accountCacheList.GetValues();
+
+                    if (accounts == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    IActionResult actionResult = Ok(accounts);
+
+                    return actionResult;
+                });
         }
 
         // GET: api/accounts/[accountId]
