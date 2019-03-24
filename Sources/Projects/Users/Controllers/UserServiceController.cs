@@ -23,10 +23,22 @@
         // GET: api/userservice/getcurrentuser
         [HttpGet(Name = "GetCurrentUser")]
         [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
-        public async Task<User> GetCurrentUser()
+        public async Task<IActionResult> GetCurrentUser()
         {
             return await Task.Run(
-                () => _userService.CurrentUser);
+                () =>
+                {
+                    User currentUser = _userService.CurrentUser;
+
+                    if (currentUser == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    IActionResult actionResult = Ok(currentUser);
+
+                    return actionResult;
+                });
         }
 
         // GET: api/userservice/getcurrentrole
