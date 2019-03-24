@@ -43,10 +43,22 @@
         // GET api/users
         [HttpGet(Name = "GetUsers")]
         [Authorize(Roles = "APPLICATION_ADMINISTRATOR")]
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             return await Task.Run(
-                () => _userCacheList.GetValues());
+                () =>
+                {
+                    IEnumerable<User> users = _userCacheList.GetValues();
+
+                    if (users == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    IActionResult actionResult = Ok(users);
+
+                    return actionResult;
+                });
         }
         
         // GET: api/users/[userId]
