@@ -10,6 +10,8 @@
 
         User CurrentUser { get; }
 
+        User CurrentUserWithoutPasswords { get; }
+
         string CurrentUserRole { get; }
 
         UserShort Register(string userName, string password);

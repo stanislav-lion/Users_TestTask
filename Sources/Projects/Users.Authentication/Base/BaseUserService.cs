@@ -100,5 +100,16 @@
         {
             return new Claim(ClaimsIdentity.DefaultRoleClaimType, roleType);
         }
+
+        protected User GetUserWithoutPasswords()
+        {
+            if (_currentUser != null)
+            {
+                _currentUser.PasswordSalt =
+                    _currentUser.PasswordHash = null;
+            }
+
+            return _currentUser;
+        }
     }
 }

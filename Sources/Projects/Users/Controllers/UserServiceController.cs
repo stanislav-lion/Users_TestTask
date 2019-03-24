@@ -28,7 +28,7 @@
             return await Task.Run(
                 () =>
                 {
-                    User currentUser = _userService.CurrentUser;
+                    User currentUser = _userService.CurrentUserWithoutPasswords;
 
                     if (currentUser == null)
                     {
@@ -75,7 +75,7 @@
                         return BadRequest();
                     }
 
-                    if (_userService.CurrentUser != null)
+                    if (_userService.CurrentUserWithoutPasswords != null)
                     {
                         return BadRequest(new
                         {
@@ -107,7 +107,7 @@
             return await Task.Run(
                 () =>
                 {
-                    if (_userService.CurrentUser == null)
+                    if (_userService.CurrentUserWithoutPasswords == null)
                     {
                         return BadRequest(new
                         {

@@ -49,6 +49,8 @@
 
         public virtual User CurrentUser => _currentUser;
 
+        public virtual User CurrentUserWithoutPasswords => GetUserWithoutPasswords();
+
         [ReplaceChars(OldValue = '_', NewValue = ' ')]
         public virtual string CurrentUserRole => GetCurrentUserRole();
 
