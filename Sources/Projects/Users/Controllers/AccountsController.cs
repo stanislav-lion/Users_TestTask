@@ -1,6 +1,5 @@
 ﻿namespace Users.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
@@ -52,31 +51,104 @@
 
         // GET: api/accounts/[accountId]
         [HttpGet("{accountId}", Name = "GetAccount")]
-        public async Task<Account> GetAccount(int accountId)
+        public async Task<IActionResult> GetAccount(int accountId)
         {
             return await Task.Run(
-                () => _accountRepository.Get(accountId));
+                () =>
+                {
+                    if (accountId < 1)
+                    {
+                        return BadRequest();
+                    }
+
+                    Account account = _accountRepository.Get(accountId);
+
+                    if (account == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    IActionResult actionResult = Ok(account);
+
+                    return actionResult;
+                });
         }
 
         // POST: api/accounts
         [HttpPost]
-        public void AddAccount([FromBody] Account account)
+        public async Task<IActionResult> AddAccount([FromBody] Account account)
         {
-            throw new NotImplementedException();
+            return await Task.Run(
+                () =>
+                {
+                    if ((account == null) ||
+                        (account.AccountId < 1))
+                    {
+                        return BadRequest();
+                    }
+
+                    int added = _accountRepository.Upsert(account);
+
+                    if (added == 0)
+                    {
+                        return BadRequest();
+                    }
+
+                    IActionResult actionResult = Ok(added);
+
+                    return actionResult;
+                });
         }
 
-        // PUT: api/accounts/[accountId]
-        [HttpPut("{accountId}")]
-        public void UpdateAccount(int accountId, [FromBody] Account account)
+        // PUT: api/accounts/
+        [HttpPut]
+        public async Task<IActionResult> UpdateAccount([FromBody] Account account)
         {
-            throw new NotImplementedException();
+            return await Task.Run(
+                () =>
+                {
+                    if ((account == null) ||
+                        (account.AccountId < 1))
+                    {
+                        return BadRequest();
+                    }
+
+                    int updated = _accountRepository.Upsert(account);
+
+                    if (updated == 0)
+                    {
+                        return BadRequest();
+                    }
+
+                    IActionResult actionResult = Ok(updated);
+
+                    return actionResult;
+                });
         }
 
         // DELETE: api/accounts/[accountId]
         [HttpDelete("{accountId}")]
-        public void DeleteAccount(int accountId)
+        public async Task<IActionResult> DeleteAccount(int accountId)
         {
-            throw new NotImplementedException();
+            return await Task.Run(
+                () =>
+                {
+                    if (accountId < 1)
+                    {
+                        return BadRequest();
+                    }
+
+                    int deleted = _accountRepository.Delete(accountId);
+
+                    if (deleted == 0)
+                    {
+                        return BadRequest();
+                    }
+
+                    IActionResult actionResult = Ok(deleted);
+
+                    return actionResult;
+                });
         }
     }
 }
