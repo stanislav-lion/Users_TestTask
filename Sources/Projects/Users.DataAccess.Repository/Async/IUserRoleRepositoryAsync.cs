@@ -13,7 +13,7 @@
         /// <summary>
         ///     Gets all user roles.
         /// </summary>
-        IQueryable<UserRole> UserRoles { get; }
+        Task<IQueryable<UserRole>> UserRolesAsync { get; }
 
         /// <summary>
         ///     Gets user role by user identifier and account role identifier.

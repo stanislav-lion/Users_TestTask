@@ -13,7 +13,7 @@
         /// <summary>
         ///     Gets all account roles.
         /// </summary>
-        IQueryable<AccountRole> AccountRoles { get; }
+        Task<IQueryable<AccountRole>> AccountRolesAsync { get; }
 
         /// <summary>
         ///     Gets account role by identifier.

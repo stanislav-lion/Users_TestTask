@@ -12,7 +12,7 @@
         /// <summary>
         ///     Gets all account adresses.
         /// </summary>
-        IQueryable<AccountAddress> AccountAddresses { get; }
+        Task<IQueryable<AccountAddress>> AccountAddressesAsync { get; }
 
         /// <summary>
         ///     Gets account address.

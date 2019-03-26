@@ -14,12 +14,12 @@
         /// <summary>
         ///     Gets all users.
         /// </summary>
-        IQueryable<User> Users { get; }
+        Task<IQueryable<User>> UsersAsync { get; }
 
         /// <summary>
         ///     Gets all users without passwords.
         /// </summary>
-        IQueryable<User> UsersWithoutPasswords { get; }
+        Task<IQueryable<User>> UsersWithoutPasswordsAsync { get; }
 
         /// <summary>
         ///     Gets user by identifier.

@@ -13,7 +13,7 @@
         /// <summary>
         ///     Gets all accounts.
         /// </summary>
-        IQueryable<Account> Accounts { get; }
+        Task<IQueryable<Account>> AccountsAsync { get; }
 
         /// <summary>
         ///     Gets account bu identifier.
