@@ -35,7 +35,7 @@
         /// <summary>
         ///     Gets service broker repository.
         /// </summary>
-        // IServiceBrokerRepository ServiceBrokerRepository { get; }
+        //IServiceBrokerRepository ServiceBrokerRepository { get; }
 
         /// <summary>
         ///     Begins changes.
