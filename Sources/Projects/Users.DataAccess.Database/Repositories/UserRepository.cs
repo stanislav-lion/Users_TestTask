@@ -70,6 +70,19 @@
         }
 
         /// <inheritdoc />
+        public int? GetId(string logonName)
+        {
+            User user = Get(logonName);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user.UserId;
+        }
+
+        /// <inheritdoc />
         public int Upsert(User user)
         {
             if (Get(user.UserId) == null)

@@ -57,6 +57,13 @@
         Task<int?> GetIdAsync(Guid userGuid);
 
         /// <summary>
+        ///     Gets user identifier by logon name.
+        /// </summary>
+        /// <param name="logonName">Logon name.</param>
+        /// <returns>User identifier.</returns>
+        Task<int?> GetIdAsync(string logonName);
+
+        /// <summary>
         ///     Adds or updates user.
         /// </summary>
         /// <param name="user">The user.</param>

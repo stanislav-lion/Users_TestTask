@@ -56,6 +56,13 @@
         int? GetId(Guid userGuid);
 
         /// <summary>
+        ///     Gets user identifier by logon name.
+        /// </summary>
+        /// <param name="logonName">Logon name.</param>
+        /// <returns>User identifier.</returns>
+        int? GetId(string logonName);
+
+        /// <summary>
         ///     Adds or updates user.
         /// </summary>
         /// <param name="user">The user.</param>
