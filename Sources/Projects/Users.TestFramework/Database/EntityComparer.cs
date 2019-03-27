@@ -9,12 +9,35 @@
     public static class EntityComparer
     {
         /// <summary>
+        ///     Compare accounts.
+        /// </summary>
+        /// <param name="account1">Account1</param>
+        /// <param name="account2">Account2</param>
+        /// <returns>Bool.</returns>
+        public static bool AreAccountEqual(
+            Account account1, 
+            Account account2)
+        {
+            return account1.AccountId == account2.AccountId &&
+                   account1.AccountGuid == account2.AccountGuid &&
+                   account1.AccountNumber == account2.AccountNumber &&
+                   account1.AccountName == account2.AccountName &&
+                   account1.IsEnabled == account2.IsEnabled &&
+                   account1.TimeZone == account2.TimeZone &&
+                   account1.PasswordExpirationPeriodInDays == account2.PasswordExpirationPeriodInDays &&
+                   account1.DataStorageTimeHrs == account2.DataStorageTimeHrs &&
+                   account1.NumberOfCodeManagementApps == account2.NumberOfCodeManagementApps;
+        }
+
+        /// <summary>
         ///     Compare users.
         /// </summary>
         /// <param name="user1">User1.</param>
         /// <param name="user2">User2.</param>
         /// <returns>Bool.</returns>
-        public static bool AreUserEqual(User user1, User user2)
+        public static bool AreUserEqual(
+            User user1, 
+            User user2)
         {
             return user1.UserId == user2.UserId &&
                    user1.UserGuid == user2.UserGuid &&
@@ -38,13 +61,17 @@
         /// <param name="userRole1">User role1</param>
         /// <param name="userRole2">User role2</param>
         /// <returns>Bool.</returns>
-        public static bool AreUserRoleEqual(UserRole userRole1, UserRole userRole2)
+        public static bool AreUserRoleEqual(
+            UserRole userRole1, 
+            UserRole userRole2)
         {
             return userRole1.UserId == userRole2.UserId &&
                    userRole1.AccountRoleId == userRole2.AccountRoleId;
         }
 
-        private static bool AreDateTimeEqual(DateTime? dateTime1, DateTime? dateTime2)
+        private static bool AreDateTimeEqual(
+            DateTime? dateTime1, 
+            DateTime? dateTime2)
         {
             if (dateTime1.HasValue && dateTime2.HasValue)
             {
