@@ -1,7 +1,6 @@
 ﻿namespace Users.DataAccess.DataModel.Types
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     ///     Account.
