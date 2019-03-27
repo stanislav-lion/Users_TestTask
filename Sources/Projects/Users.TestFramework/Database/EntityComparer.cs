@@ -11,9 +11,9 @@
         /// <summary>
         ///     Compare users.
         /// </summary>
-        /// <param name="user1">user1</param>
-        /// <param name="user2">user2</param>
-        /// <returns>bool</returns>
+        /// <param name="user1">User1.</param>
+        /// <param name="user2">User2.</param>
+        /// <returns>Bool.</returns>
         public static bool AreUserEqual(User user1, User user2)
         {
             return user1.UserId == user2.UserId &&
@@ -30,6 +30,18 @@
                    user1.IsLogonEnabled == user2.IsLogonEnabled &&
                    user1.TimeZone == user2.TimeZone &&
                    user1.CultureCode == user2.CultureCode;
+        }
+
+        /// <summary>
+        ///     Compare user roles.
+        /// </summary>
+        /// <param name="userRole1">User role1</param>
+        /// <param name="userRole2">User role2</param>
+        /// <returns>Bool.</returns>
+        public static bool AreUserRoleEqual(UserRole userRole1, UserRole userRole2)
+        {
+            return userRole1.UserId == userRole2.UserId &&
+                   userRole1.AccountRoleId == userRole2.AccountRoleId;
         }
 
         private static bool AreDateTimeEqual(DateTime? dateTime1, DateTime? dateTime2)
