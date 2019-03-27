@@ -19,12 +19,12 @@
         [Fact]
         public void CRUD_Test()
         {
+            var repositoryContext = new RepositoryContext();
+
             Account testAccount = TestEntities.GetTestAccount(
                 1,
                 Guid.Parse("579526DD-D75C-46E2-8A30-A1D3828F92A5"),
                 "UserOld");
-
-            var repositoryContext = new RepositoryContext();
 
             try
             {
