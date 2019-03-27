@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Users.DataAccess.DataModel\Users.DataAccess.DataModel.csproj" />
+    <ProjectReference Include="..\Users.DataAccess.Repository\Users.DataAccess.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
