@@ -28,8 +28,11 @@
 
             try
             {
-                // delete test account
-                TestDataCleaner.DeleteTestAccount(repositoryContext, testAccount.AccountGuid.Value);
+                if (testAccount.AccountGuid.HasValue)
+                {
+                    // delete test account
+                    TestDataCleaner.DeleteTestAccount(repositoryContext, testAccount.AccountGuid.Value);
+                }
 
                 // create account
                 repositoryContext.AccountRepository.Upsert(testAccount);
@@ -95,9 +98,12 @@
                 actualUser = repositoryContext.UserRepository.Get(expectedUserNew.UserId);
                 Assert.Null(actualUser);
 
-                // read by guid
-                actualUser = repositoryContext.UserRepository.Get(expectedUserNew.UserGuid.Value);
-                Assert.Null(actualUser);
+                if (expectedUserNew.UserGuid.HasValue)
+                {
+                    // read by guid
+                    actualUser = repositoryContext.UserRepository.Get(expectedUserNew.UserGuid.Value);
+                    Assert.Null(actualUser);
+                }
 
                 // read by logon name
                 actualUser = repositoryContext.UserRepository.Get(expectedUser.LogonName);
@@ -156,8 +162,11 @@
             }
             finally
             {
-                // delete test account
-                TestDataCleaner.DeleteTestAccount(repositoryContext, testAccount.AccountGuid.Value);
+                if (testAccount.AccountGuid.HasValue)
+                {
+                    // delete test account
+                    TestDataCleaner.DeleteTestAccount(repositoryContext, testAccount.AccountGuid.Value);
+                }
 
                 repositoryContext.Dispose();
             }
