@@ -13,6 +13,7 @@
         /// </summary>
         /// <param name="repositoryContext">Repository context.</param>
         /// <param name="accountGuid">Account identifier.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         public static int DeleteTestAccount(
             IRepositoryContext repositoryContext,
             int accountId)
@@ -25,6 +26,7 @@
         /// </summary>
         /// <param name="repositoryContext">Repository context.</param>
         /// <param name="accountGuid">Account unique identifier.</param>
+        /// <returns>The number of state entries written to the database.</returns>
         public static int DeleteTestAccount(
             IRepositoryContext repositoryContext,
             Guid accountGuid)
