@@ -61,6 +61,36 @@
         }
 
         /// <summary>
+        ///     Create test account address.
+        /// </summary>
+        /// <param name="number">Number.</param>
+        /// <param name="accountId">Account identifier.</param>
+        /// <returns>Account address.</returns>
+        public static AccountAddress GetTestAccountAddress(
+            int number, 
+            int accountId)
+        {
+            if (number > 99)
+            {
+                throw new ArgumentException("Number for CountryTwoLetterCode is invalid");
+            }
+
+            return new AccountAddress
+            {
+                AccountId = accountId,
+                AddressLine1 = number.ToString(),
+                AddressLine2 = number.ToString(),
+                AddressLine3 = number.ToString(),
+                AddressType = IntToEnum<AddressType>(number),
+                City = number.ToString(),
+                CountryTwoLetterCode = (number + 10).ToString(),
+                County = number.ToString(),
+                PostalCode = number.ToString(),
+                StateProvince = number.ToString()
+            };
+        }
+
+        /// <summary>
         ///     Create test user.
         /// </summary>
         /// <param name="number">Number.</param>

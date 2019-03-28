@@ -48,6 +48,28 @@
         }
 
         /// <summary>
+        ///     Compare account addresses.
+        /// </summary>
+        /// <param name="accountAddress1">AccountAddress1</param>
+        /// <param name="accountAddress2">AccountAddress2</param>
+        /// <returns>Bool.</returns>
+        public static bool AreAccountAddressEqual(
+            AccountAddress accountAddress1, 
+            AccountAddress accountAddress2)
+        {
+            return accountAddress1.AccountId == accountAddress2.AccountId &&
+                   accountAddress1.AddressType == accountAddress2.AddressType &&
+                   accountAddress1.AddressLine1 == accountAddress2.AddressLine1 &&
+                   accountAddress1.AddressLine2 == accountAddress2.AddressLine2 &&
+                   accountAddress1.AddressLine3 == accountAddress2.AddressLine3 &&
+                   accountAddress1.City == accountAddress2.City &&
+                   accountAddress1.County == accountAddress2.County &&
+                   accountAddress1.StateProvince == accountAddress2.StateProvince &&
+                   accountAddress1.PostalCode == accountAddress2.PostalCode &&
+                   accountAddress1.CountryTwoLetterCode == accountAddress2.CountryTwoLetterCode;
+        }
+
+        /// <summary>
         ///     Compare users.
         /// </summary>
         /// <param name="user1">User1.</param>
