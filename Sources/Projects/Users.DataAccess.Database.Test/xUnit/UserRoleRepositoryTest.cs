@@ -28,11 +28,8 @@
 
             try
             {
-                if (testAccount.AccountGuid.HasValue)
-                {
-                    // delete test account
-                    TestDataCleaner.DeleteTestAccount(repositoryContext, testAccount.AccountGuid.Value);
-                }
+                // delete test account
+                TestDataCleaner.DeleteTestAccount(repositoryContext, testAccount.AccountId);
 
                 // create account
                 repositoryContext.AccountRepository.Upsert(testAccount);
@@ -118,11 +115,8 @@
             }
             finally
             {
-                if (testAccount.AccountGuid.HasValue)
-                {
-                    // delete test account
-                    TestDataCleaner.DeleteTestAccount(repositoryContext, testAccount.AccountGuid.Value);
-                }
+                // delete test account
+                TestDataCleaner.DeleteTestAccount(repositoryContext, testAccount.AccountId);
 
                 repositoryContext.Dispose();
             }
