@@ -13,11 +13,11 @@
         /// </summary>
         /// <param name="repositoryContext">Repository context.</param>
         /// <param name="accountGuid">Account identifier.</param>
-        public static void DeleteTestAccount(
+        public static int DeleteTestAccount(
             IRepositoryContext repositoryContext,
             int accountId)
         {
-            repositoryContext.AccountRepository.Delete(accountId);
+            return repositoryContext.AccountRepository.Delete(accountId);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@
         /// </summary>
         /// <param name="repositoryContext">Repository context.</param>
         /// <param name="accountGuid">Account unique identifier.</param>
-        public static void DeleteTestAccount(
+        public static int DeleteTestAccount(
             IRepositoryContext repositoryContext,
             Guid accountGuid)
         {
@@ -33,8 +33,10 @@
 
             if (accountId.HasValue)
             {
-                repositoryContext.AccountRepository.Delete(accountId.Value);
+                return repositoryContext.AccountRepository.Delete(accountId.Value);
             }
+
+            return 0;
         }
     }
 }
