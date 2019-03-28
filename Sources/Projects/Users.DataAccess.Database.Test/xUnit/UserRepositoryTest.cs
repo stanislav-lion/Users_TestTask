@@ -77,7 +77,7 @@
                 // update
                 User expectedUserNew = TestEntities.GetTestUser(
                     2,
-                    expectedUser.UserGuid.Value,
+                    expectedUser?.UserGuid.Value ?? null,
                     "UserNew",
                     expectedUser.AccountId);
 
