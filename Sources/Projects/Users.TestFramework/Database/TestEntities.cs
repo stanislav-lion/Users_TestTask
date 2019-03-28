@@ -45,7 +45,7 @@
         /// <returns>Account role.</returns>
         public static AccountRole GetTestAccountRole(
             int number,
-            Guid accountRoleGuid,
+            Guid? accountRoleGuid,
             int accountId,
             string roleName)
         {

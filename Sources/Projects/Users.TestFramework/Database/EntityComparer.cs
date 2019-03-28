@@ -11,8 +11,8 @@
         /// <summary>
         ///     Compare accounts.
         /// </summary>
-        /// <param name="account1">Account1</param>
-        /// <param name="account2">Account2</param>
+        /// <param name="account1">Account1.</param>
+        /// <param name="account2">Account2.</param>
         /// <returns>Bool.</returns>
         public static bool AreAccountEqual(
             Account account1, 
@@ -27,6 +27,24 @@
                    account1.PasswordExpirationPeriodInDays == account2.PasswordExpirationPeriodInDays &&
                    account1.DataStorageTimeHrs == account2.DataStorageTimeHrs &&
                    account1.NumberOfCodeManagementApps == account2.NumberOfCodeManagementApps;
+        }
+
+        /// <summary>
+        ///     Compare account roles.
+        /// </summary>
+        /// <param name="accountRole1">AccountRole1.</param>
+        /// <param name="accountRole2">AccountRole2.</param>
+        /// <returns>Bool.</returns>
+        public static bool AreAccountRoleEqual(
+            AccountRole accountRole1,
+            AccountRole accountRole2)
+        {
+            return accountRole1.AccountRoleId == accountRole2.AccountRoleId &&
+                   accountRole1.AccountRoleGuid == accountRole2.AccountRoleGuid &&
+                   accountRole1.AccountId == accountRole2.AccountId &&
+                   accountRole1.RoleName == accountRole2.RoleName &&
+                   accountRole1.RoleType == accountRole2.RoleType &&
+                   accountRole1.PrivilegeType == accountRole2.PrivilegeType;
         }
 
         /// <summary>
