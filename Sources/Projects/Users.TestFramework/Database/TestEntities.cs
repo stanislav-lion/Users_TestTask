@@ -18,7 +18,7 @@
         /// <returns>Account.</returns>
         public static Account GetTestAccount(
             int number,
-            Guid accountGuid,
+            Guid? accountGuid,
             string accountNumber)
         {
             return new Account
@@ -100,7 +100,7 @@
         /// <returns>User.</returns>
         public static User GetTestUser(
             int number,
-            Guid userGuid,
+            Guid? userGuid,
             string logonName,
             int accountId)
         {
