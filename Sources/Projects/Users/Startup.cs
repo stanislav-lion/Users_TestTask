@@ -26,7 +26,7 @@
         private JwtSetting _jwtSetting;
         private DBMSSetting _dbmsSetting;
         private ConnectionString _connectionString;
-        private MSSQLConnectionString _msSQLConnectionString;
+        private SQLServerConnectionString _sqlServerConnectionString;
         private PostgreSQLConnectionString _postgreSQLConnectionString;
         private CacheSetting _cacheSetting;
         private AppSetting _appSetting;
@@ -65,8 +65,8 @@
                 .Get<DBMSSetting>();
             _connectionString = Configuration.GetSection(nameof(ConnectionString))
                 .Get<ConnectionString>();
-            _msSQLConnectionString = Configuration.GetSection(nameof(MSSQLConnectionString))
-                .Get<MSSQLConnectionString>();
+            _sqlServerConnectionString = Configuration.GetSection(nameof(SQLServerConnectionString))
+                .Get<SQLServerConnectionString>();
             _postgreSQLConnectionString = Configuration.GetSection(nameof(PostgreSQLConnectionString))
                 .Get<PostgreSQLConnectionString>();
             _cacheSetting = Configuration.GetSection(nameof(CacheSetting))
@@ -81,8 +81,8 @@
                     Configuration.GetSection(nameof(DBMSSetting)))
                 .Configure<ConnectionString>(
                     Configuration.GetSection(nameof(ConnectionString)))
-                .Configure<MSSQLConnectionString>(
-                    Configuration.GetSection(nameof(MSSQLConnectionString)))
+                .Configure<SQLServerConnectionString>(
+                    Configuration.GetSection(nameof(SQLServerConnectionString)))
                 .Configure<PostgreSQLConnectionString>(
                     Configuration.GetSection(nameof(PostgreSQLConnectionString)))
                 .Configure<CacheSetting>(
@@ -139,8 +139,8 @@
                 DBMSSetting.GetDBMS(_dbmsSetting),
                 DBMSSetting.GetConnectionString(
                     _dbmsSetting, 
-                    _connectionString, 
-                    _msSQLConnectionString, 
+                    _connectionString,
+                    _sqlServerConnectionString, 
                     _postgreSQLConnectionString)
             );
         }
@@ -170,8 +170,8 @@
                 .Get<DBMSSetting>();
             _connectionString = Configuration.GetSection(nameof(ConnectionString))
                 .Get<ConnectionString>();
-            _msSQLConnectionString = Configuration.GetSection(nameof(MSSQLConnectionString))
-                .Get<MSSQLConnectionString>();
+            _sqlServerConnectionString = Configuration.GetSection(nameof(SQLServerConnectionString))
+                .Get<SQLServerConnectionString>();
             _postgreSQLConnectionString = Configuration.GetSection(nameof(PostgreSQLConnectionString))
                 .Get<PostgreSQLConnectionString>();
             _cacheSetting = Configuration.GetSection(nameof(CacheSetting))
@@ -186,8 +186,8 @@
                     Configuration.GetSection(nameof(DBMSSetting)))
                 .Configure<ConnectionString>(
                     Configuration.GetSection(nameof(ConnectionString)))
-                .Configure<MSSQLConnectionString>(
-                    Configuration.GetSection(nameof(MSSQLConnectionString)))
+                .Configure<SQLServerConnectionString>(
+                    Configuration.GetSection(nameof(SQLServerConnectionString)))
                 .Configure<PostgreSQLConnectionString>(
                     Configuration.GetSection(nameof(PostgreSQLConnectionString)))
                 .Configure<CacheSetting>(
@@ -222,7 +222,7 @@
                 DBMSSetting.GetConnectionString(
                     _dbmsSetting, 
                     _connectionString, 
-                    _msSQLConnectionString, 
+                    _sqlServerConnectionString, 
                     _postgreSQLConnectionString));
             
             //EmbeddedServicesConfigurator.AddSingleton(
@@ -231,7 +231,7 @@
             //    DBMSSetting.GetConnectionString(
             //        _dbmsSetting, 
             //        _connectionString, 
-            //        _msSQLConnectionString, 
+            //        _sqlServerConnectionString, 
             //        _postgreSQLConnectionString));
             
             //EmbeddedServicesConfigurator.AddTransient(
@@ -240,7 +240,7 @@
             //    DBMSSetting.GetConnectionString(
             //    _dbmsSetting, 
             //    _connectionString, 
-            //    _msSQLConnectionString, 
+            //    _sqlServerConnectionString, 
             //    _postgreSQLConnectionString));
 
             // Register the Swagger generator, defining 1 or more Swagger documents.

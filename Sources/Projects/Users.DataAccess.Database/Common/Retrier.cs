@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Common;
     using System.Runtime.ExceptionServices;
     using System.Threading;
 
@@ -24,7 +25,7 @@
             Action action,
             int retriesNumber,
             int sleepBetweenRetriesMilliSeconds,
-            Func<Exception, bool> isErrorRetriable)
+            Func<DbException, bool> isErrorRetriable)
         {
             if (action == null)
             {
@@ -56,7 +57,7 @@
                     action.Invoke();
                     return;
                 }
-                catch (Exception exception)
+                catch (DbException exception)
                 {
                     if (!isErrorRetriable(exception))
                     {

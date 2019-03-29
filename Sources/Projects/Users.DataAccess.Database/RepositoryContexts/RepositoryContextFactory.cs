@@ -1,6 +1,7 @@
 ﻿namespace Users.DataAccess.Database.RepositoryContexts
 {
     using System;
+    using Users.DataAccess.DataModel.EventArgs;
     using Users.DataAccess.Repository;
 
     /// <inheritdoc />
@@ -15,6 +16,11 @@
         }
 
         /// <summary>
+        ///     Event that is triggered when stored procedure runs too long.
+        /// </summary>
+        public event EventHandler<LongRunningStoredProcedureEventArgs> OnLongRunningStoredProcedure;
+
+        /// <summary>
         ///     Gets the instance.
         /// </summary>
         public static RepositoryContextFactory Instance => Lazy.Value;
@@ -22,7 +28,13 @@
         /// <inheritdoc />
         public IRepositoryContext CreateRepositoryContext()
         {
-            return new RepositoryContext();
+            var repositoryContext = new RepositoryContext();
+
+            repositoryContext.OnLongRunningStoredProcedure += (s, e) => OnLongRunningStoredProcedure?.Invoke(
+                this,
+                new LongRunningStoredProcedureEventArgs(e.StoredProcedureName, e.ExecutionTimeSeconds));
+
+            return repositoryContext;
         }
     }
 }

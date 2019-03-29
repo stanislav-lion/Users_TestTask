@@ -1,6 +1,6 @@
 ﻿namespace Users.DataAccess.Database.AppSettings
 {
-    public class MSSQLConnectionString
+    public class SQLServerConnectionString
     {
         public string UsersConnectionString { get; set; }
     }

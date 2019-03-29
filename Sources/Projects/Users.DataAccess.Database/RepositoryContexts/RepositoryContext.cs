@@ -2,14 +2,14 @@
 {
     using System;
     using System.Runtime.ExceptionServices;
-    using Microsoft.EntityFrameworkCore;
     using Users.DataAccess.Database;
     using Users.DataAccess.Database.Common;
     using Users.DataAccess.Database.Contexts;
     using Users.DataAccess.Database.Repositories;
+    using Users.DataAccess.DataModel.EventArgs;
     using Users.DataAccess.Repository;
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="IRepositoryContext" />
     public sealed class RepositoryContext : IRepositoryContext
     {
         private readonly UserContext[] _userContexts;
@@ -89,6 +89,11 @@
             Dispose(false);
         }
 
+        /// <summary>
+        ///     Event that is triggered when stored procedure runs too long.
+        /// </summary>
+        public event EventHandler<LongRunningStoredProcedureEventArgs> OnLongRunningStoredProcedure;
+
         /// <inheritdoc />
         public IAccountRepository AccountRepository => _accountRepository.Value;
 
@@ -121,9 +126,9 @@
         {
             if (!_inChanges)
             {
-                foreach (DbContext dbContext in _userContexts)
+                foreach (UserContext userContext in _userContexts)
                 {
-                    dbContext?.Database.BeginTransaction();
+                    userContext?.BeginTransaction();
                 }
 
                 _inChanges = true;
@@ -142,9 +147,9 @@
 
             if (_inChanges && _changesCount == 0)
             {
-                foreach (DbContext dbContext in _userContexts)
+                foreach (UserContext userContext in _userContexts)
                 {
-                    dbContext?.SaveChanges();
+                    userContext?.CommitTransaction();
                 }
 
                 _inChanges = false;
@@ -158,9 +163,9 @@
 
             if (_inChanges)
             {
-                foreach (DbContext dbContext in _userContexts)
+                foreach (UserContext userContext in _userContexts)
                 {
-                    dbContext?.Database.RollbackTransaction();
+                    userContext?.RollbackTransaction();
                 }
 
                 _inChanges = false;
@@ -194,9 +199,9 @@
 
             Retrier.InvokeAction(
                 InternalAction,
-                /*Settings.Default.RetriesNumber*/ 3,
-                /*Settings.Default.SleepBetweenRetriesMilliSeconds*/ 3000,
-                RetrierHelper.IsRetriableSqlError);
+                Settings.DBContextSetting.RetriesNumber,
+                Settings.DBContextSetting.SleepBetweenRetriesMilliSeconds,
+                RetrierHelper.IsRetriableError);
         }
 
         private void Dispose(bool disposing)
@@ -223,7 +228,25 @@
 
         private UserContext GetUserContext(DBType dbType)
         {
-            return _userContexts[(int)dbType];
+            var dbOrdinal = (int)dbType;
+
+            if (_userContexts[dbOrdinal] == null)
+            {
+                var userContext = _userContexts[(int) dbType];
+
+                userContext.OnLongRunningStoredProcedure += (s, e) => OnLongRunningStoredProcedure?.Invoke(
+                    this,
+                    new LongRunningStoredProcedureEventArgs(e.StoredProcedureName, e.ExecutionTimeSeconds));
+
+                _userContexts[dbOrdinal] = userContext;
+
+                if (_inChanges)
+                {
+                    _userContexts[dbOrdinal]?.Database.BeginTransaction();
+                }
+            }
+
+            return _userContexts[dbOrdinal];
         }
     }
 }

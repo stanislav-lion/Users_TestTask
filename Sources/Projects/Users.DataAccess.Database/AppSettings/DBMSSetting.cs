@@ -25,12 +25,12 @@
         public static string GetConnectionString(
             DBMSSetting dbmsSetting,
             ConnectionString connectionString,
-            MSSQLConnectionString msSQLConnectionString,
+            SQLServerConnectionString sqlServerConnectionString,
             PostgreSQLConnectionString postgreSQLConnectionString)
         {
             if (dbmsSetting.UseMSSQL)
             {
-                return msSQLConnectionString.UsersConnectionString;
+                return sqlServerConnectionString.UsersConnectionString;
             }
             else if (dbmsSetting.UsePostgreSQL)
             {

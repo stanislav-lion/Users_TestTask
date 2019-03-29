@@ -1,27 +1,98 @@
 ﻿namespace Users.DataAccess.Database.Contexts
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Common;
     using Microsoft.EntityFrameworkCore;
+    using Users.DataAccess.Database.Interfaces;
     using Users.DataAccess.DataModel.Enums;
+    using Users.DataAccess.DataModel.EventArgs;
     using Users.DataAccess.DataModel.Types;
+    using Users.DataAccess.Database.Common;
+    using System.Runtime.ExceptionServices;
+    using System.Linq;
+    using Users.DataAccess.Database.AppSettings;
 
-    public class UserContext : DbContext
+    /// <inheritdoc cref="DbContext" />
+    public class UserContext : DbContext, IDbContext
     {
+        private readonly string _connectionString;
+
+        private readonly IConnectionStringPrioritizer _connectionStringPrioritizer;
+        private readonly IStoredProcedurePrioritizer _storedProcedurePrioritizer;
+
+        private DbConnection _connection;
+        private DbTransaction _transaction;
+        private int _transactionCount;
+
+        private bool _disposed;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="UserContext"/> class.
+        /// </summary>
+        /// <param name="options">Database context options.</param>
         public UserContext(DbContextOptions<UserContext> options)
             : base(options)
         {
+            _connectionString = null;
 
+            _connectionStringPrioritizer = new DefaultConnectionStringPrioritizer();
+            _storedProcedurePrioritizer = new DefaultStoredProcedurePrioritizer();
+
+            _connection = null;
+            _transaction = null;
+            _transactionCount = 0;
+
+            _disposed = false;
+        }
+        
+        /// <summary>
+        ///     Finalizes an instance of the <see cref="UserContext"/> class.
+        /// </summary>
+        ~UserContext()
+        {
+            Dispose(false);
         }
 
+        /// <summary>
+        ///     Database table Account.
+        /// </summary>
         public DbSet<Account> Account { get; set; }
 
+        /// <summary>
+        ///     Database table AccountRole.
+        /// </summary>
         public DbSet<AccountRole> AccountRole { get; set; }
 
+        /// <summary>
+        ///     Database table AccountAddress.
+        /// </summary>
         public DbSet<AccountAddress> AccountAddress { get; set; }
 
+        /// <summary>
+        ///     Database table User.
+        /// </summary>
         public DbSet<User> User { get; set; }
 
+        /// <summary>
+        ///     Database table UserRole.
+        /// </summary>
         public DbSet<UserRole> UserRole { get; set; }
 
+        /// <summary>
+        ///     Event that is triggered when stored procedure runs too long.
+        /// </summary>
+        public event EventHandler<LongRunningStoredProcedureEventArgs> OnLongRunningStoredProcedure;
+
+        /// <inheritdoc />
+        public override void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>()
@@ -138,6 +209,275 @@
 
             modelBuilder.Entity<UserRole>()
                 .HasKey(userRole => userRole.UserId);
+        }
+
+        /// <inheritdoc />
+        public void BeginTransaction()
+        {
+            //Database.BeginTransaction();
+
+            if (_transaction == null)
+            {
+                CreateConnection(null);
+
+                if (_connection.State != ConnectionState.Open)
+                {
+                    _connection.Open();
+                }
+
+                _transaction = _connection.BeginTransaction();
+            }
+
+            _transactionCount++;
+        }
+
+        /// <inheritdoc />
+        public void CommitTransaction()
+        {
+            //Database.CommitTransaction();
+
+            if (_transactionCount > 0)
+            {
+                _transactionCount--;
+            }
+
+            if (_transaction != null && _transactionCount == 0)
+            {
+                try
+                {
+                    _transaction.Commit();
+                }
+                finally
+                {
+                    DisposeConnection();
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        public void RollbackTransaction()
+        {
+            //Database.RollbackTransaction();
+
+            _transactionCount = 0;
+
+            if (_transaction != null)
+            {
+                try
+                {
+                    _transaction.Rollback();
+                }
+                catch (InvalidOperationException)
+                {
+                    // Rollback generates InvalidOperationException if the connection is broken
+                    // or the transaction has already been committed or rolled back on the server
+                }
+                finally
+                {
+                    DisposeConnection();
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        public bool InTransaction()
+        {
+            return (_transaction != null);
+        }
+
+        /// <inheritdoc />
+        public void ExecuteStoredProcedureNoResult(
+            string storedProcedureName, 
+            DbParameter[] parameters)
+        {
+            if (string.IsNullOrWhiteSpace(storedProcedureName))
+            {
+                throw new ArgumentNullException(nameof(storedProcedureName));
+            }
+
+            ExecuteCommand(
+                storedProcedureName,
+                parameters,
+                command =>
+                {
+                    command.ExecuteNonQuery();
+                },
+                true);
+        }
+
+        /// <inheritdoc />
+        public TEntity GetEntity<TEntity>(
+            string storedProcedureName,
+            DbParameter[] parameters,
+            Func<IDataRecord, TEntity> buildEntity)
+        {
+            if (string.IsNullOrWhiteSpace(storedProcedureName))
+            {
+                throw new ArgumentNullException(nameof(storedProcedureName));
+            }
+
+            return GetEntities(storedProcedureName, parameters, buildEntity)
+                .SingleOrDefault();
+        }
+
+        /// <inheritdoc />
+        public List<TEntity> GetEntities<TEntity>(
+            string storedProcedureName, 
+            DbParameter[] parameters, 
+            Func<IDataRecord, TEntity> buildEntity)
+        {
+            if (string.IsNullOrWhiteSpace(storedProcedureName))
+            {
+                throw new ArgumentNullException(nameof(storedProcedureName));
+            }
+
+            try
+            {
+                using (DbDataReader reader = ExecuteStoredProcedureReader(storedProcedureName, parameters))
+                {
+                    var entities = new List<TEntity>();
+                    while (reader.Read())
+                    {
+                        entities.Add(buildEntity(reader));
+                    }
+
+                    return entities;
+                }
+            }
+            finally
+            {
+                if (!InTransaction())
+                {
+                    DisposeConnection();
+                }
+            }
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                DisposeConnection();
+            }
+
+            _disposed = true;
+        }
+
+        private void DisposeConnection()
+        {
+            if (_transaction != null)
+            {
+                _transaction.Dispose();
+                _transaction = null;
+            }
+
+            if (_connection != null)
+            {
+                _connection.Dispose();
+                _connection = null;
+            }
+        }
+
+        private void CreateConnection(string connectionString)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ExecuteCommand(
+            string storedProcedureName,
+            DbParameter[] parameters,
+            Action<DbCommand> action,
+            bool closeConnection)
+        {
+            void InternalAction()
+            {
+                DbCommand command = CreateCommand(storedProcedureName, parameters);
+
+                try
+                {
+                    if (_connection.State != ConnectionState.Open)
+                    {
+                        _connection.Open();
+                    }
+
+                    DateTime startUtc = DateTime.UtcNow;
+                    action.Invoke(command);
+                    var executionTimeSeconds = (int)DateTime.UtcNow.Subtract(startUtc).TotalSeconds;
+
+                    if (executionTimeSeconds >= Settings.DBContextSetting.LongRunningStoredProcedureTimeSeconds)
+                    {
+                        OnLongRunningStoredProcedure?.Invoke(
+                            this,
+                            new LongRunningStoredProcedureEventArgs(storedProcedureName, executionTimeSeconds));
+                    }
+                }
+                catch (Exception exception)
+                {
+                    //DbConnection.ClearPool(_connection);
+                    ExceptionDispatchInfo.Capture(exception).Throw();
+                }
+                finally
+                {
+                    if (!InTransaction() && closeConnection)
+                    {
+                        DisposeConnection();
+                    }
+                }
+            }
+
+            if (InTransaction())
+            {
+                InternalAction();
+            }
+            else
+            {
+                Retrier.InvokeAction(
+                    InternalAction,
+                    Settings.DBContextSetting.RetriesNumber,
+                    Settings.DBContextSetting.SleepBetweenRetriesMilliSeconds,
+                    RetrierHelper.IsRetriableError);
+            }
+        }
+
+        private DbDataReader ExecuteStoredProcedureReader(
+            string storedProcedureName, 
+            DbParameter[] parameters)
+        {
+            DbDataReader sqlDataReader = null;
+
+            ExecuteCommand(
+                storedProcedureName,
+                parameters,
+                command =>
+                {
+                    sqlDataReader =
+                        command.ExecuteReader(
+                            InTransaction() 
+                                ? CommandBehavior.Default 
+                                : CommandBehavior.CloseConnection);
+                },
+                false);
+
+            return sqlDataReader;
+        }
+
+        private DbCommand CreateCommand(
+            string storedProcedureName,
+            DbParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        private string GetConnectionStringForStoredProcedure(string storedProcedureName)
+        {
+            return _storedProcedurePrioritizer.IsLowPriorityStoredProcedure(storedProcedureName)
+                ? _connectionStringPrioritizer.GetLowPriorityConnectionString(_connectionString)
+                : _connectionString;
         }
     }
 }
