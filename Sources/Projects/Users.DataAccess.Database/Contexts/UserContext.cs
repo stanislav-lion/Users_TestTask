@@ -12,7 +12,6 @@
     using Users.DataAccess.Database.Common;
     using System.Runtime.ExceptionServices;
     using System.Linq;
-    using Users.DataAccess.Database.AppSettings;
 
     /// <inheritdoc cref="DbContext" />
     public class UserContext : DbContext, IDbContext
