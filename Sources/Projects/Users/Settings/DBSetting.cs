@@ -13,7 +13,9 @@
                 .Options);
         }
 
-        public static UserContext GetUserContext(DBMS dbms, string connectionString)
+        public static UserContext GetUserContext(
+            DBMS dbms, 
+            string connectionString)
         {
             switch (dbms)
             {
