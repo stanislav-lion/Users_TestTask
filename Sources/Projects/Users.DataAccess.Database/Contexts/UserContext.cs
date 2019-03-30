@@ -408,7 +408,7 @@
                     action.Invoke(command);
                     var executionTimeSeconds = (int)DateTime.UtcNow.Subtract(startUtc).TotalSeconds;
 
-                    if (executionTimeSeconds >= Settings.DBContextSetting.LongRunningStoredProcedureTimeSeconds)
+                    if (executionTimeSeconds >= Settings.Instance.DBContextSetting.LongRunningStoredProcedureTimeSeconds)
                     {
                         OnLongRunningStoredProcedure?.Invoke(
                             this,
@@ -437,8 +437,8 @@
             {
                 Retrier.InvokeAction(
                     InternalAction,
-                    Settings.DBContextSetting.RetriesNumber,
-                    Settings.DBContextSetting.SleepBetweenRetriesMilliSeconds,
+                    Settings.Instance.DBContextSetting.RetriesNumber,
+                    Settings.Instance.DBContextSetting.SleepBetweenRetriesMilliSeconds,
                     RetrierHelper.IsRetriableError);
             }
         }

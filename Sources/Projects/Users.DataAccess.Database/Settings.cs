@@ -1,17 +1,27 @@
 ﻿namespace Users.DataAccess.Database
 {
+    using Microsoft.Extensions.Configuration;
     using Users.DataAccess.Database.AppSettings;
+    using Users.DesignPatterns.Creational;
 
-    public class Settings
+    public class Settings : LazyInitialization<Settings>
     {
-        public static DBMSSetting DBMSSetting { get; set; }
+        public Settings()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddJsonFile("appSettings.json", optional: false);
 
-        public static ConnectionString ConnectionString { get; set; }
+            IConfigurationRoot configuration = builder.Build();
+        }
 
-        public static SQLServerConnectionString SQLServerConnectionString { get; set; }
+        public DBMSSetting DBMSSetting { get; set; }
 
-        public static PostgreSQLConnectionString PostgreSQLConnectionString { get; set; }
+        public ConnectionString ConnectionString { get; set; }
 
-        public static DBContextSetting DBContextSetting { get; set; }
+        public SQLServerConnectionString SQLServerConnectionString { get; set; }
+
+        public PostgreSQLConnectionString PostgreSQLConnectionString { get; set; }
+
+        public DBContextSetting DBContextSetting { get; set; }
     }
 }

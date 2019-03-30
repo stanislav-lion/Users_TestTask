@@ -199,8 +199,8 @@
 
             Retrier.InvokeAction(
                 InternalAction,
-                Settings.DBContextSetting.RetriesNumber,
-                Settings.DBContextSetting.SleepBetweenRetriesMilliSeconds,
+                Settings.Instance.DBContextSetting.RetriesNumber,
+                Settings.Instance.DBContextSetting.SleepBetweenRetriesMilliSeconds,
                 RetrierHelper.IsRetriableError);
         }
 
