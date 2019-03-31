@@ -1,22 +1,43 @@
 ﻿namespace Users.DataAccess.Database.Repositories.Async
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository.Async;
 
-    public class AccountRepositoryAsync : IAccountAddressRepositoryAsync
+    public class AccountRepositoryAsync : IAccountRepositoryAsync
     {
-        public Task<IQueryable<AccountAddress>> AccountAddressesAsync => throw new System.NotImplementedException();
+        public Task<IQueryable<Account>> AccountsAsync => throw new NotImplementedException();
 
-        public Task<AccountAddress> GetAsync(int accountId)
+        public Task<int> DeleteAsync(int accountId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Task<int> UpsertAsync(AccountAddress accountAddress)
+        public Task<Account> GetAsync(int accountId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public Task<Account> GetAsync(Guid accountGuid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int?> GetIdAsync(Guid accountGuid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int?> GetIdAsync(string accountNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpsertAsync(Account account)
+        {
+            throw new NotImplementedException();
         }
     }
 }
