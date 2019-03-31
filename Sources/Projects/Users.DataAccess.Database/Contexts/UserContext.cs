@@ -16,8 +16,6 @@
     /// <inheritdoc cref="DbContext" />
     public class UserContext : DbContext, IDbContext
     {
-        private readonly string _connectionString;
-
         private readonly IConnectionStringPrioritizer _connectionStringPrioritizer;
         private readonly IStoredProcedurePrioritizer _storedProcedurePrioritizer;
 
@@ -34,8 +32,6 @@
         public UserContext(DbContextOptions<UserContext> options)
             : base(options)
         {
-            _connectionString = null;
-
             _connectionStringPrioritizer = new DefaultConnectionStringPrioritizer();
             _storedProcedurePrioritizer = new DefaultStoredProcedurePrioritizer();
 
@@ -470,13 +466,6 @@
             DbParameter[] parameters)
         {
             throw new NotImplementedException();
-        }
-
-        private string GetConnectionStringForStoredProcedure(string storedProcedureName)
-        {
-            return _storedProcedurePrioritizer.IsLowPriorityStoredProcedure(storedProcedureName)
-                ? _connectionStringPrioritizer.GetLowPriorityConnectionString(_connectionString)
-                : _connectionString;
         }
     }
 }
