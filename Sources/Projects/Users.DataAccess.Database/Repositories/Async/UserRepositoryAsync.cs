@@ -13,7 +13,7 @@
     public class UserRepositoryAsync : UserContextEntityRepository, IUserRepositoryAsync
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="UserRepository" /> class.
+        ///     Initializes a new instance of the <see cref="UserRepositoryAsync" /> class.
         /// </summary>
         /// <param name="userContext">Database user context.</param>
         public UserRepositoryAsync(UserContext userContext)
@@ -23,10 +23,10 @@
         }
 
         /// <inheritdoc />
-        public Task<IQueryable<User>> UsersAsync => GetUsers();
+        public Task<IQueryable<User>> UsersAsync => GetUsersAsync();
 
         /// <inheritdoc />
-        public Task<IQueryable<User>> UsersWithoutPasswordsAsync => GetUsersWithoutPasswords();
+        public Task<IQueryable<User>> UsersWithoutPasswordsAsync => GetUsersWithoutPasswordsAsync();
 
         /// <inheritdoc />
         public async Task<User> GetAsync(int userId)
@@ -134,7 +134,7 @@
             return await UserContext.SaveChangesAsync();
         }
 
-        private async Task<IQueryable<User>> GetUsers()
+        private async Task<IQueryable<User>> GetUsersAsync()
         {
             return await Task.Run(
                 () =>
@@ -143,7 +143,7 @@
                 });
         }
 
-        private async Task<IQueryable<User>> GetUsersWithoutPasswords()
+        private async Task<IQueryable<User>> GetUsersWithoutPasswordsAsync()
         {
             return await Task.Run(
                 () =>
