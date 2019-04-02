@@ -3,36 +3,95 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Users.DataAccess.Database.BaseRepositories;
+    using Users.DataAccess.Database.Contexts;
     using Users.DataAccess.DataModel.Types;
     using Users.DataAccess.Repository.Async;
 
-    public class UserRoleRepositoryAsync : IUserRoleRepositoryAsync
+    /// <inheritdoc cref="IUserRoleRepositoryAsync" />
+    public class UserRoleRepositoryAsync : UserContextEntityRepository, IUserRoleRepositoryAsync
     {
-        public Task<IQueryable<UserRole>> UserRolesAsync => throw new System.NotImplementedException();
-
-        public Task<int> AddAsync(UserRole userRole)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="UserRoleRepositoryAsync" /> class.
+        /// </summary>
+        /// <param name="userContext">Database user context.</param>
+        public UserRoleRepositoryAsync(UserContext userContext)
+            : base(userContext)
         {
-            throw new System.NotImplementedException();
+
         }
 
-        public Task<int> DeleteAsync(int userId)
+        /// <inheritdoc />
+        public Task<IQueryable<UserRole>> UserRolesAsync => GetUsersRolesAsync();
+
+        /// <inheritdoc />
+        public async Task<UserRole> GetAsync(
+            int userId,
+            int accountRoleId)
         {
-            throw new System.NotImplementedException();
+            return await Task.Run(
+                () =>
+                {
+                    return UserContext.UserRole
+                        .FirstOrDefault(userRole =>
+                            userRole.UserId == userId &&
+                            userRole.AccountRoleId == accountRoleId);
+                });
         }
 
-        public Task<int> DeleteAsync(int userId, int accountRoleId)
+        /// <inheritdoc />
+        public async Task<List<UserRole>> GetAsync(int userId)
         {
-            throw new System.NotImplementedException();
+            return await Task.Run(
+                () =>
+                {
+                    return UserContext.UserRole
+                        .Where(userRole => userRole.UserId == userId)
+                        .ToList();
+                });
         }
 
-        public Task<UserRole> GetAsync(int userId, int accountRoleId)
+        /// <inheritdoc />
+        public async Task<int> AddAsync(UserRole userRole)
         {
-            throw new System.NotImplementedException();
+            if (GetAsync(userRole.UserId, userRole.AccountRoleId) == null)
+            {
+                UserContext.UserRole
+                    .Add(userRole);
+
+                return await UserContext.SaveChangesAsync();
+            }
+
+            return 0;
         }
 
-        public Task<List<UserRole>> GetAsync(int userId)
+        /// <inheritdoc />
+        public async Task<int> DeleteAsync(int userId)
         {
-            throw new System.NotImplementedException();
+            UserContext.UserRole
+                .RemoveRange(await GetAsync(userId));
+
+            return await UserContext.SaveChangesAsync();
+        }
+
+        /// <inheritdoc />
+        public async Task<int> DeleteAsync(
+            int userId,
+            int accountRoleId)
+        {
+            UserContext.UserRole
+                .Remove(await GetAsync(userId, accountRoleId));
+
+            return await UserContext.SaveChangesAsync();
+        }
+
+        private async Task<IQueryable<UserRole>> GetUsersRolesAsync()
+        {
+            return await Task.Run(
+                () =>
+                {
+                    return UserContext.UserRole;
+                });
         }
     }
 }
