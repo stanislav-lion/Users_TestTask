@@ -119,7 +119,7 @@
                 });
         }
 
-        private Task<Account> GetAsync(string accountNumber)
+        private async Task<Account> GetAsync(string accountNumber)
         {
             return await Task.Run(
                 () =>
