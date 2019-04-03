@@ -49,39 +49,27 @@
         /// <inheritdoc />
         public async Task<int?> GetIdAsync(Guid accountGuid)
         {
-            //return await Task.Run(
-            //    () =>
-            //    {
-            //        Account account = GetAsync(accountGuid);
+            Account account = await GetAsync(accountGuid);
 
-            //        if (account == null)
-            //        {
-            //            return null;
-            //        }
+            if (account == null)
+            {
+                return null;
+            }
 
-            //        return account.AccountId;
-            //    });
-
-            throw new NotImplementedException();
+            return account.AccountId;
         }
 
         /// <inheritdoc />
         public async Task<int?> GetIdAsync(string accountNumber)
         {
-            //return await Task.Run(
-            //    () =>
-            //    {
-            //        Account account = GetAsync(accountNumber);
+            Account account = await GetAsync(accountNumber);
 
-            //        if (account == null)
-            //        {
-            //            return null;
-            //        }
+            if (account == null)
+            {
+                return null;
+            }
 
-            //        return account.AccountId;
-            //    });
-
-            throw new NotImplementedException();
+            return account.AccountId;
         }
 
         /// <inheritdoc />
