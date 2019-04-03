@@ -22,7 +22,7 @@
         }
 
         /// <inheritdoc />
-        public Task<IQueryable<UserRole>> UserRolesAsync => GetUsersRolesAsync();
+        public Task<IQueryable<UserRole>> UserRolesAsync => GetUserRolesAsync();
 
         /// <inheritdoc />
         public async Task<UserRole> GetAsync(
@@ -85,7 +85,7 @@
             return await UserContext.SaveChangesAsync();
         }
 
-        private async Task<IQueryable<UserRole>> GetUsersRolesAsync()
+        private async Task<IQueryable<UserRole>> GetUserRolesAsync()
         {
             return await Task.Run(
                 () =>
