@@ -60,20 +60,14 @@
         /// <inheritdoc />
         public async Task<int?> GetIdAsync(Guid accountRoleGuid)
         {
-            //return await Task.Run(
-            //    () =>
-            //    {
-            //        AccountRole accountRole = GetAsync(accountRoleGuid);
+            AccountRole accountRole = await GetAsync(accountRoleGuid);
 
-            //        if (accountRole == null)
-            //        {
-            //            return null;
-            //        }
+            if (accountRole == null)
+            {
+                return null;
+            }
 
-            //        return accountRole.AccountRoleId;
-            //    });
-
-            throw new NotImplementedException();
+            return accountRole.AccountRoleId;
         }
 
         /// <inheritdoc />
@@ -81,20 +75,14 @@
             int accountId,
             string roleName)
         {
-            //return await Task.Run(
-            //    () =>
-            //    {
-            //        AccountRole accountRole = GetByAccountAsync(accountId, roleName);
+            AccountRole accountRole = await GetByAccountAsync(accountId, roleName);
 
-            //        if (accountRole == null)
-            //        {
-            //            return null;
-            //        }
+            if (accountRole == null)
+            {
+                return null;
+            }
 
-            //        return accountRole.AccountRoleId;
-            //    });
-
-            throw new NotImplementedException();
+            return accountRole.AccountRoleId;
         }
 
         /// <inheritdoc />
