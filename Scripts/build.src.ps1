@@ -10,5 +10,5 @@ dotnet msbuild $solutionFilePath /nodeReuse:False /maxcpucount `
 
 if ($lastexitcode)
 {
-    Write-Error "Build Streaming Server Solution Failed"
+    Write-Error "Build Users Solution Failed"
 }
