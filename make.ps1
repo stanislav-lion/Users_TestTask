@@ -11,6 +11,7 @@ $startDate = Get-Date
 & "$scriptPath\cleanup.ps1"
 
 & "$scriptPath\scripts\build.src.ps1"
+& "$scriptPath\scripts\clean.analysis.results.ps1"
 
 $elapsed = (Get-Date) - $startDate
 Write-Output "Build duration: $elapsed"
