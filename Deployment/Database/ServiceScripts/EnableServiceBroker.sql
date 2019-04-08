@@ -1,0 +1,1 @@
+ALTER DATABASE [$(DatabaseName)] SET ENABLE_BROKER
