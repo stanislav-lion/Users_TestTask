@@ -68,12 +68,12 @@
                 if (expectedUser.UserGuid.HasValue)
                 {
                     actualUserId = repositoryContext.UserRepository.GetId(expectedUser.UserGuid.Value);
-                    Assert.Equals(expectedUser.UserId, actualUserId);
+                    Assert.AreEqual(expectedUser.UserId, actualUserId);
                 }
 
                 // read id by logon name
                 actualUserId = repositoryContext.UserRepository.GetId(expectedUser.LogonName);
-                Assert.Equals(expectedUser.UserId, actualUserId);
+                Assert.AreEqual(expectedUser.UserId, actualUserId);
 
                 // update
                 User expectedUserNew = TestEntities.GetTestUser(
@@ -83,7 +83,7 @@
                     expectedUser.AccountId);
 
                 repositoryContext.UserRepository.Upsert(expectedUserNew);
-                Assert.Equals(expectedUser.UserId, expectedUserNew.UserId);
+                Assert.AreEqual(expectedUser.UserId, expectedUserNew.UserId);
 
                 User actualUserNew = repositoryContext.UserRepository.Get(expectedUserNew.UserId);
                 Assert.NotNull(actualUserNew);
@@ -143,7 +143,7 @@
 
                 // read by account
                 List<User> actualUsers = repositoryContext.UserRepository.GetByAccount(testAccount.AccountId);
-                Assert.Equal(expectedUsers.Count, actualUsers.Count);
+                Assert.AreEqual(expectedUsers.Count, actualUsers.Count);
 
                 foreach (User user in expectedUsers)
                 {
@@ -156,7 +156,7 @@
 
                 // read by account
                 actualUsers = repositoryContext.UserRepository.GetByAccount(testAccount.AccountId);
-                Assert.Empty(actualUsers);
+                Assert.IsEmpty(actualUsers);
             }
             finally
             {
