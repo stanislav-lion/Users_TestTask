@@ -145,9 +145,10 @@
             }
         }
 
-        private TestCaseData[] TestCaseData_TestValues_InvalidAndLongStrings() => new[]
-        {
-            new TestCaseData(nameof(TestValues.InvalidAndLongStrings))
-        };
+        private TestCaseData[] TestCaseData_TestValues_InvalidAndLongStrings() => 
+            new[]
+            {
+                new TestCaseData(nameof(TestValues.InvalidAndLongStrings))
+            };
     }
 }
