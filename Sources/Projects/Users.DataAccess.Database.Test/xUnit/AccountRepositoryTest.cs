@@ -13,38 +13,6 @@
     public class AccountRepositoryTest
     {
         /// <summary>
-        ///     UpsertAccount_ThrowsValidationExceptionAccountNumberIsInvalid.
-        /// </summary>
-        /// <param name="invalidString">Invalid string.</param>
-        [Theory]
-        [MemberData(nameof(TestValues.InvalidAndLongStrings), MemberType = typeof(TestValues))]
-        public void UpsertAccount_ThrowsValidationExceptionIfAccountNumberIsInvalid(string invalidString)
-        {
-            using (var repositoryContext = new RepositoryContext())
-            {
-                Account account = TestEntities.GetTestAccount(1, Guid.Empty, TestValues.ValidString);
-                account.AccountNumber = invalidString;
-                Assert.Throws<ValidationException>(() => repositoryContext.AccountRepository.Upsert(account));
-            }
-        }
-
-        /// <summary>
-        ///     UpsertAccount_ThrowsValidationExceptionIfAccountNameIsInvalid.
-        /// </summary>
-        /// <param name="invalidString">Invalid string.</param>
-        [Theory]
-        [MemberData(nameof(TestValues.InvalidAndLongStrings), MemberType = typeof(TestValues))]
-        public void UpsertAccount_ThrowsValidationExceptionIfAccountNameIsInvalid(string invalidString)
-        {
-            using (var repositoryContext = new RepositoryContext())
-            {
-                Account account = TestEntities.GetTestAccount(1, Guid.Empty, TestValues.ValidString);
-                account.AccountName = invalidString;
-                Assert.Throws<ValidationException>(() => repositoryContext.AccountRepository.Upsert(account));
-            }
-        }
-
-        /// <summary>
         ///     CRUD tests.
         /// </summary>
         [Fact]
@@ -141,6 +109,38 @@
             using (var repositoryContext = new RepositoryContext())
             {
                 Assert.Throws<ArgumentNullException>(() => repositoryContext.AccountRepository.Upsert(null));
+            }
+        }
+
+        /// <summary>
+        ///     UpsertAccount_ThrowsValidationExceptionAccountNumberIsInvalid.
+        /// </summary>
+        /// <param name="invalidString">Invalid string.</param>
+        [Theory]
+        [MemberData(nameof(TestValues.InvalidAndLongStrings), MemberType = typeof(TestValues))]
+        public void UpsertAccount_ThrowsValidationExceptionIfAccountNumberIsInvalid(string invalidString)
+        {
+            using (var repositoryContext = new RepositoryContext())
+            {
+                Account account = TestEntities.GetTestAccount(1, Guid.Empty, TestValues.ValidString);
+                account.AccountNumber = invalidString;
+                Assert.Throws<ValidationException>(() => repositoryContext.AccountRepository.Upsert(account));
+            }
+        }
+
+        /// <summary>
+        ///     UpsertAccount_ThrowsValidationExceptionIfAccountNameIsInvalid.
+        /// </summary>
+        /// <param name="invalidString">Invalid string.</param>
+        [Theory]
+        [MemberData(nameof(TestValues.InvalidAndLongStrings), MemberType = typeof(TestValues))]
+        public void UpsertAccount_ThrowsValidationExceptionIfAccountNameIsInvalid(string invalidString)
+        {
+            using (var repositoryContext = new RepositoryContext())
+            {
+                Account account = TestEntities.GetTestAccount(1, Guid.Empty, TestValues.ValidString);
+                account.AccountName = invalidString;
+                Assert.Throws<ValidationException>(() => repositoryContext.AccountRepository.Upsert(account));
             }
         }
     }
