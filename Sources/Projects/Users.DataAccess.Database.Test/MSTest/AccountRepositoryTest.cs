@@ -2,6 +2,7 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
+    using System.ComponentModel.DataAnnotations;
     using Users.DataAccess.Database.RepositoryContexts;
     using Users.DataAccess.DataModel.Types;
     using Users.TestFramework.Database;
@@ -111,5 +112,41 @@
                 Assert.ThrowsException<ArgumentNullException>(() => repositoryContext.AccountRepository.Upsert(null));
             }
         }
+
+        /// <summary>
+        ///     UpsertAccount_ThrowsValidationExceptionAccountNumberIsInvalid.
+        /// </summary>
+        /// <param name="invalidString">Invalid string.</param>
+        [DataSource(nameof(TestCaseData_TestValues_InvalidAndLongStrings))]
+        public void UpsertAccount_ThrowsValidationExceptionIfAccountNumberIsInvalid(string invalidString)
+        {
+            using (var repositoryContext = new RepositoryContext())
+            {
+                Account account = TestEntities.GetTestAccount(1, Guid.Empty, TestValues.ValidString);
+                account.AccountNumber = invalidString;
+                Assert.ThrowsException<ValidationException>(() => repositoryContext.AccountRepository.Upsert(account));
+            }
+        }
+
+        /// <summary>
+        ///     UpsertAccount_ThrowsValidationExceptionIfAccountNameIsInvalid.
+        /// </summary>
+        /// <param name="invalidString">Invalid string.</param>
+        [DataSource(nameof(TestCaseData_TestValues_InvalidAndLongStrings))]
+        public void UpsertAccount_ThrowsValidationExceptionIfAccountNameIsInvalid(string invalidString)
+        {
+            using (var repositoryContext = new RepositoryContext())
+            {
+                Account account = TestEntities.GetTestAccount(1, Guid.Empty, TestValues.ValidString);
+                account.AccountName = invalidString;
+                Assert.ThrowsException<ValidationException>(() => repositoryContext.AccountRepository.Upsert(account));
+            }
+        }
+
+        private string[] TestCaseData_TestValues_InvalidAndLongStrings() =>
+            new[]
+            {
+                new string(nameof(TestValues.InvalidAndLongStrings))
+            };
     }
 }
